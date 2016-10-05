@@ -83,10 +83,10 @@ namespace xlinq
 		return other.build(enumerable);
 	}
 
-	template<typename TElem>
 	class _First
 	{
 	public:
+		template<typename TElem>
 		TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
 			auto it = enumerable->getEnumerator();
@@ -95,10 +95,9 @@ namespace xlinq
 		}
 	};
 
-	template<typename TElem>
-	_First<TElem> first()
+	decltype(auto) first()
 	{
-		return _First<TElem>();
+		return _First();
 	}
 
 	template<typename TElem, typename TSelect>
@@ -142,46 +141,47 @@ namespace xlinq
 		}
 	};
 
-	template<typename TElem, typename TSelect>
+	template<typename TSelector>
 	class _Select
 	{
 	private:
-		std::function<TSelect(TElem)> _selector;
+		TSelector _selector;
 	public:
-		_Select(std::function<TSelect(TElem)> selector) : _selector(selector) {}
+		_Select(TSelector selector) : _selector(selector) {}
 
-		std::shared_ptr<IEnumerable<TSelect>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+		template<typename TElem>
+		decltype(auto) build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
+			using TSelect = decltype(_selector(enumerable->getEnumerator()->current()));
 			return std::shared_ptr<IEnumerable<TSelect>>(new _SelectEnumerable<TElem, TSelect>(enumerable, _selector));
 		}
 	};
 
-	template<typename TElem, typename TSelect>
-	_Select<TElem, TSelect> select(std::function<TSelect(TElem)> selector)
+	template<typename TSelector>
+	_Select<TSelector> select(TSelector selector)
 	{
-		return _Select<TElem, TSelect>(selector);
+		return _Select<TSelector>(selector);
 	}
 
-	template<typename TElem>
 	class _Iter
 	{
 	public:
+		template<typename TElem>
 		std::shared_ptr<IEnumerator<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
 			return enumerable->getEnumerator();
 		}
 	};
 
-	template<typename TElem>
-	_Iter<TElem> iter()
+	decltype(auto) iter()
 	{
-		return _Iter<TElem>();
+		return _Iter();
 	}
 
-	template<typename TElem>
 	class _Count
 	{
 	public:
+		template<typename TElem>
 		decltype(auto) build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
 			unsigned int count = 0;
@@ -193,10 +193,9 @@ namespace xlinq
 		}
 	};
 
-	template<typename TElem>
-	_Count<TElem> count()
+	decltype(auto) count()
 	{
-		return _Count<TElem>();
+		return _Count();
 	}
 
 	template<typename TElem>
@@ -240,20 +239,19 @@ namespace xlinq
 		}
 	};
 
-	template<typename TElem>
 	class _StdContainerBuilder
 	{
 	public:
+		template<typename TElem>
 		decltype(auto) build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
 			return StdContainer<TElem>(enumerable);
 		}
 	};
 
-	template<typename TElem>
 	decltype(auto) toStdContainer()
 	{
-		return _StdContainerBuilder<TElem>();
+		return _StdContainerBuilder();
 	}
 }
 
