@@ -12,5 +12,7 @@
 #include "xlinq_std.h"
 #include "xlinq_sum.h"
 #include "xlinq_where.h"
+#include "xlinq_min.h"
+#include "xlinq_max.h"
 
 #endif

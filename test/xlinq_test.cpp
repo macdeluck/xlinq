@@ -268,5 +268,25 @@ namespace xlinq
 				Assert::IsFalse(i == 2);
 			}
 		};
+
+		TEST_CLASS(testMin)
+		{
+		public:
+			TEST_METHOD(Min_Test)
+			{
+				int elems[] = { 1, -2, 5, -4, 3 };
+				Assert::AreEqual(-4, from(elems) ^ min());
+			}
+		};
+
+		TEST_CLASS(testMax)
+		{
+		public:
+			TEST_METHOD(Max_Test)
+			{
+				int elems[] = { 1, -2, 5, -4, 3 };
+				Assert::AreEqual(5, from(elems) ^ max());
+			}
+		};
 	}
 }
