@@ -247,5 +247,26 @@ namespace xlinq
 				Assert::AreEqual(10, i);
 			}
 		};
+
+		TEST_CLASS(testWhere)
+		{
+		public:
+			TEST_METHOD(Where_Test)
+			{
+				int elems[] = { 1, -2, 3, -4, 5 };
+				int positive[] = { 1, 3, 5 };
+
+				int i = 0;
+				for (auto it = 
+					from(elems) ^ 
+					where([](auto i) { return i > 0; }) ^ 
+					getEnumerator(); it->next();)
+				{
+					Assert::IsTrue(i < 3);
+					Assert::AreEqual(positive[i++], it->current());
+				}
+				Assert::IsFalse(i == 2);
+			}
+		};
 	}
 }

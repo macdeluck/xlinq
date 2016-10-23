@@ -11,5 +11,6 @@
 #include "xlinq_select_many.h"
 #include "xlinq_std.h"
 #include "xlinq_sum.h"
+#include "xlinq_where.h"
 
 #endif

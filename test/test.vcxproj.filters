@@ -70,5 +70,8 @@
     <ClInclude Include="..\include\xlinq_sum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\xlinq_where.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

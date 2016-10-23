@@ -164,6 +164,7 @@
     <ClInclude Include="..\include\xlinq_select_many.h" />
     <ClInclude Include="..\include\xlinq_std.h" />
     <ClInclude Include="..\include\xlinq_sum.h" />
+    <ClInclude Include="..\include\xlinq_where.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="xlinq_test.cpp" />
