@@ -79,5 +79,8 @@
     <ClInclude Include="..\include\xlinq_max.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\xlinq_average.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

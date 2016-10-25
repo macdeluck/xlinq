@@ -14,5 +14,6 @@
 #include "xlinq_where.h"
 #include "xlinq_min.h"
 #include "xlinq_max.h"
+#include "xlinq_average.h"
 
 #endif

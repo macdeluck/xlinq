@@ -288,5 +288,28 @@ namespace xlinq
 				Assert::AreEqual(5, from(elems) ^ max());
 			}
 		};
+
+		TEST_CLASS(testAverage)
+		{
+		public:
+			TEST_METHOD(Average_Test)
+			{
+				double eps = 1e-06;
+				int elems[] = { 1, -2, 5, -4, 3, 9 };
+				Assert::IsTrue((2.0 - (from(elems) ^ average())) < eps);
+			}
+
+			struct FloatWrapper
+			{
+				float value;
+			};
+
+			TEST_METHOD(Average_CustomTest)
+			{
+				double eps = 1e-06;
+				FloatWrapper elems[] = { 1, -2, 5, -4, 3, 9 };
+				Assert::IsTrue((2.0 - (from(elems) ^ average([](FloatWrapper n) { return n.value;}))) < eps);
+			}
+		};
 	}
 }

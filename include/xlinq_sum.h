@@ -18,62 +18,62 @@ namespace xlinq
 	public:
 		decltype(auto) build(std::shared_ptr<IEnumerable<char>> enumerable)
 		{
-			return sum(enumerable, '\x0');
+			return sum(enumerable, static_cast<char>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<unsigned char>> enumerable)
 		{
-			return sum(enumerable, (unsigned char)'\x0');
+			return sum(enumerable, static_cast<unsigned char>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<short>> enumerable)
 		{
-			return sum(enumerable, (short)0);
+			return sum(enumerable, static_cast<short>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<unsigned short>> enumerable)
 		{
-			return sum(enumerable, (unsigned short)0);
+			return sum(enumerable, static_cast<unsigned short>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<int>> enumerable)
 		{
-			return sum(enumerable, 0);
+			return sum(enumerable, static_cast<int>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<unsigned int>> enumerable)
 		{
-			return sum(enumerable, 0U);
+			return sum(enumerable, static_cast<unsigned int>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<long>> enumerable)
 		{
-			return sum(enumerable, 0L);
+			return sum(enumerable, static_cast<long>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<unsigned long>> enumerable)
 		{
-			return sum(enumerable, 0LU);
+			return sum(enumerable, static_cast<unsigned long>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<long long>> enumerable)
 		{
-			return sum(enumerable, 0LL);
+			return sum(enumerable, static_cast<long long>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<unsigned long long>> enumerable)
 		{
-			return sum(enumerable, 0LLU);
+			return sum(enumerable, static_cast<unsigned long long>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<float>> enumerable)
 		{
-			return sum(enumerable, 0.0F);
+			return sum(enumerable, static_cast<float>(0));
 		}
 
 		decltype(auto) build(std::shared_ptr<IEnumerable<double>> enumerable)
 		{
-			return sum(enumerable, 0.0);
+			return sum(enumerable, static_cast<double>(0));
 		}
 	};
 

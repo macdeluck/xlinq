@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\xlinq.h" />
     <ClInclude Include="..\include\xlinq_aggregate.h" />
+    <ClInclude Include="..\include\xlinq_average.h" />
     <ClInclude Include="..\include\xlinq_base.h" />
     <ClInclude Include="..\include\xlinq_cast.h" />
     <ClInclude Include="..\include\xlinq_count.h" />
