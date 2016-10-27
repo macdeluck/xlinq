@@ -15,5 +15,6 @@
 #include "xlinq_min.h"
 #include "xlinq_max.h"
 #include "xlinq_average.h"
+#include "xlinq_join.h"
 
 #endif

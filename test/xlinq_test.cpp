@@ -311,5 +311,62 @@ namespace xlinq
 				Assert::IsTrue((2.0 - (from(elems) ^ average([](FloatWrapper n) { return n.value;}))) < eps);
 			}
 		};
+
+		TEST_CLASS(testJoin)
+		{
+			struct First
+			{
+				int first_id;
+				int second_id;
+			};
+
+			struct Second
+			{
+				int second_id;
+				char code;
+			};
+
+			struct Third
+			{
+				int first_id;
+				int second_id;
+				char code;
+
+				Third() {}
+				Third(int first_id, int second_id, char code)
+					: first_id(first_id), second_id(second_id), code(code) {}
+			};
+
+		public:
+			TEST_METHOD(Join_Test)
+			{
+				First firsts[] = { { 1, 2 }, { 2, 3 }, { 3, 1 }, { 4, 12 } };
+				Second seconds[] = { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' } };
+				Third results[] = { { 1, 2, 'B' }, { 2, 3, 'C' }, { 3, 1, 'A' } };
+				bool visitedResults[] = { false, false, false };
+
+				for (auto it =
+					from(firsts) ^
+					join(from(seconds),
+						[](First f) { return f.second_id; },
+						[](Second s) { return s.second_id; },
+						[](First f, Second s) { return Third(f.first_id, s.second_id, s.code); }) ^
+					getEnumerator(); it->next();)
+				{
+					Third c = it->current();
+					for (int i = 0; i < 3; i++)
+						if (results[i].first_id == c.first_id &&
+							results[i].second_id == c.second_id &&
+							results[i].code == c.code)
+						{
+							Assert::IsFalse(visitedResults[i]);
+							visitedResults[i] = true;
+							break;
+						}
+				}
+				for (int i = 0; i < 3; i++)
+					Assert::IsTrue(visitedResults[i]);
+			}
+		};
 	}
 }

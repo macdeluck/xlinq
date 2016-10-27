@@ -82,5 +82,8 @@
     <ClInclude Include="..\include\xlinq_average.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\xlinq_join.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
