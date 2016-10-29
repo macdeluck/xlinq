@@ -24,14 +24,14 @@ namespace xlinq
 		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() =0;
 	};
 
-	template<typename TElem, typename TOther>
-	decltype(auto) build(std::shared_ptr<IEnumerable<TElem>>& enumerable, TOther& other)
+	template<typename TElem, typename TOtherElem>
+	decltype(auto) build(std::shared_ptr<IEnumerable<TElem>>& enumerable, TOtherElem& other)
 	{
 		return other.build(enumerable);
 	}
 
-	template<typename TElem, typename TOther>
-	decltype(auto) operator^(std::shared_ptr<IEnumerable<TElem>>& enumerable, TOther& other)
+	template<typename TElem, typename TOtherElem>
+	decltype(auto) operator^(std::shared_ptr<IEnumerable<TElem>>& enumerable, TOtherElem& other)
 	{
 		return other.build(enumerable);
 	}
