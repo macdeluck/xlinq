@@ -85,5 +85,20 @@
     <ClInclude Include="..\include\xlinq_join.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\xlinq_groupjoin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xlinq_skipwhile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xlinq_skip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xlinq_take.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\xlinq_takewhile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

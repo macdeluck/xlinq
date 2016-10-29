@@ -17,5 +17,9 @@
 #include "xlinq_average.h"
 #include "xlinq_join.h"
 #include "xlinq_groupjoin.h"
+#include "xlinq_skipwhile.h"
+#include "xlinq_skip.h"
+#include "xlinq_take.h"
+#include "xlinq_takewhile.h"
 
 #endif

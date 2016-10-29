@@ -161,6 +161,7 @@
     <ClInclude Include="..\include\xlinq_cast.h" />
     <ClInclude Include="..\include\xlinq_count.h" />
     <ClInclude Include="..\include\xlinq_first.h" />
+    <ClInclude Include="..\include\xlinq_groupjoin.h" />
     <ClInclude Include="..\include\xlinq_join.h" />
     <ClInclude Include="..\include\xlinq_max.h" />
     <ClInclude Include="..\include\xlinq_min.h" />
@@ -168,6 +169,10 @@
     <ClInclude Include="..\include\xlinq_select_many.h" />
     <ClInclude Include="..\include\xlinq_std.h" />
     <ClInclude Include="..\include\xlinq_sum.h" />
+    <ClInclude Include="..\include\xlinq_skip.h" />
+    <ClInclude Include="..\include\xlinq_skipwhile.h" />
+    <ClInclude Include="..\include\xlinq_take.h" />
+    <ClInclude Include="..\include\xlinq_takewhile.h" />
     <ClInclude Include="..\include\xlinq_where.h" />
   </ItemGroup>
   <ItemGroup>

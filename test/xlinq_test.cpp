@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 #include <xlinq.h>
 
+#include <string>
 #include <array>
 #include <vector>
 #include <list>
@@ -366,6 +367,180 @@ namespace xlinq
 				}
 				for (int i = 0; i < 3; i++)
 					Assert::IsTrue(visitedResults[i]);
+			}
+		};
+
+		TEST_CLASS(testGroupJoin)
+		{
+			struct Person
+			{
+				using Ptr = shared_ptr<Person>;
+				string name;
+
+				Person() {}
+				Person(string name) : name(name) {}
+			};
+
+			struct Pet
+			{
+				using Ptr = shared_ptr<Pet>;
+				string name;
+				Person::Ptr owner;
+
+				Pet() {}
+				Pet(string name) : name(name) {}
+				Pet(string name, Person::Ptr owner) : name(name), owner(owner) {}
+			};
+
+			struct PersonWithPets
+			{
+				using Ptr = shared_ptr<PersonWithPets>;
+				string name;
+				IEnumerable<Pet::Ptr>::Ptr pets;
+
+				PersonWithPets() {}
+				PersonWithPets(string name) : name(name) {}
+				PersonWithPets(string name, IEnumerable<Pet::Ptr>::Ptr pets) : name(name), pets(pets) {}
+			};
+
+		public:
+			TEST_METHOD(GroupJoin_Test)
+			{
+				Person::Ptr magnus(new Person("Magnus"));
+				Person::Ptr terry(new Person("Terry"));
+				Person::Ptr charlotte(new Person("Charlotte"));
+
+				Pet::Ptr barley(new Pet("Barley", terry));
+				Pet::Ptr boots(new Pet("Boots", terry));
+				Pet::Ptr whiskey(new Pet("Whiskey", charlotte));
+				Pet::Ptr daisy(new Pet("Daisy", magnus));
+
+				list<Person::Ptr> people = { magnus, terry, charlotte };
+				list<Pet::Ptr> pets = { barley, boots, whiskey, daisy };
+				
+				map<string, vector<string>> personsWithPets = {
+					{ magnus->name, { daisy->name } },
+					{ terry->name, { barley->name, boots->name } },
+					{ charlotte->name, { whiskey->name } }
+				};
+				map<string, vector<bool>> personWithPetsValid = {
+					{ magnus->name, { false } },
+					{ terry->name, { false, false } },
+					{ charlotte->name, { false } }
+				};
+
+				for (auto it =
+					from(people) ^
+					groupJoin(from(pets),
+						[](Person::Ptr person) { return person->name; },
+						[](Pet::Ptr pet) { return pet->owner->name; },
+						[](Person::Ptr person, IEnumerable<Pet::Ptr>::Ptr pets)
+						{
+							return PersonWithPets::Ptr(new PersonWithPets(person->name, pets));
+						}) ^
+					getEnumerator(); it->next();)
+				{
+					PersonWithPets::Ptr pwp = it->current();
+					auto pwpdest = personsWithPets[pwp->name];
+					for (auto pt : pwp->pets ^ iter())
+					{
+						size_t i;
+						for (i = 0; i < pwpdest.size(); i++)
+						{
+							if (pwpdest[i] == pt->name)
+							{
+								Assert::IsFalse(personWithPetsValid[pwp->name][i]);
+								personWithPetsValid[pwp->name][i] = true;
+								break;
+							}
+						}
+						Assert::AreNotEqual(pwpdest.size(), i);
+					}
+				}
+
+				for (auto kv : personWithPetsValid)
+					for (auto val : kv.second)
+						Assert::IsTrue(val);
+			}
+		};
+
+		TEST_CLASS(testSkipWhile)
+		{
+		public:
+			TEST_METHOD(SkipWhile_Test)
+			{
+				int numbers[] = { 1, 3, 2, 5, 4 };
+				int targetNumbers[] = { 2, 5, 4 };
+
+				int i = 0;
+				for (auto it =
+					from(numbers) ^
+					skipWhile([](int i) { return (i % 2) == 1; }) ^
+					getEnumerator(); it->next();)
+				{
+					Assert::AreEqual(targetNumbers[i++], it->current());
+				}
+				Assert::AreEqual(3, i);
+			}
+		};
+
+		TEST_CLASS(testSkip)
+		{
+		public:
+			TEST_METHOD(Skip_Test)
+			{
+				int numbers[] = { 1, 3, 2, 5, 4 };
+				int targetNumbers[] = { 2, 5, 4 };
+
+				int i = 0;
+				for (auto it =
+					from(numbers) ^
+					skip(2) ^
+					getEnumerator(); it->next();)
+				{
+					Assert::AreEqual(targetNumbers[i++], it->current());
+				}
+				Assert::AreEqual(3, i);
+			}
+		};
+
+		TEST_CLASS(testTake)
+		{
+		public:
+			TEST_METHOD(Take_Test)
+			{
+				int numbers[] = { 1, 3, 2, 5, 4 };
+				int targetNumbers[] = { 1, 3 };
+
+				int i = 0;
+				for (auto it =
+					from(numbers) ^
+					take(2) ^
+					getEnumerator(); it->next();)
+				{
+					Assert::AreEqual(targetNumbers[i++], it->current());
+				}
+				Assert::AreEqual(2, i);
+			}
+		};
+
+		TEST_CLASS(testTakeWhile)
+		{
+		public:
+			TEST_METHOD(TakeWhile_Test)
+			{
+				int numbers[] = { 1, 3, 2, 5, 4 };
+				int targetNumbers[] = { 1, 3 };
+
+				int i = 0;
+				for (auto it =
+					from(numbers) ^
+					takeWhile([](int i) { return (i % 2) == 1; }) ^
+					getEnumerator(); it->next();)
+				{
+					Assert::AreEqual(targetNumbers[i++], it->current());
+				}
+				Assert::AreEqual(2, i);
 			}
 		};
 	}
