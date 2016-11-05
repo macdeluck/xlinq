@@ -103,5 +103,8 @@
     <ClInclude Include="..\include\xlinq_oftype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\xlinq_concat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,5 +22,6 @@
 #include "xlinq_take.h"
 #include "xlinq_takewhile.h"
 #include "xlinq_oftype.h"
+#include "xlinq_concat.h"
 
 #endif

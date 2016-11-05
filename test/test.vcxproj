@@ -159,6 +159,7 @@
     <ClInclude Include="..\include\xlinq_average.h" />
     <ClInclude Include="..\include\xlinq_base.h" />
     <ClInclude Include="..\include\xlinq_cast.h" />
+    <ClInclude Include="..\include\xlinq_concat.h" />
     <ClInclude Include="..\include\xlinq_count.h" />
     <ClInclude Include="..\include\xlinq_first.h" />
     <ClInclude Include="..\include\xlinq_groupjoin.h" />

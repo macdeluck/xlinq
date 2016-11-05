@@ -614,5 +614,23 @@ namespace xlinq
 					delete v;
 			}
 		};
+
+		TEST_CLASS(testConcat)
+		{
+		public:
+			TEST_METHOD(Concat_Test)
+			{
+				int col1[] = { 1, 2, 3 };
+				int col2[] = { 4, 5, 6 };
+				int resl[] = { 1, 2, 3, 4, 5, 6 };
+
+				int i = 0;
+				for (auto v : from(col1) ^ concat(from(col2)) ^ iter())
+				{
+					Assert::AreEqual(resl[i++], v);
+				}
+				Assert::AreEqual(6, i);
+			}
+		};
 	}
 }
