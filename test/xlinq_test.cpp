@@ -543,5 +543,76 @@ namespace xlinq
 				Assert::AreEqual(2, i);
 			}
 		};
+
+		TEST_CLASS(testOfType)
+		{
+			class TestBase
+			{
+			public:
+				using Ptr = std::shared_ptr<TestBase>;
+				int member;
+
+				virtual ~TestBase() {}
+				TestBase(int member) : member(member) {}
+			};
+
+			class Test1 : public TestBase
+			{
+			public:
+				using Ptr = std::shared_ptr<Test1>;
+
+				Test1(int member) : TestBase(member) {}
+			};
+
+			class Test2 : public TestBase
+			{
+			public:
+				using Ptr = std::shared_ptr<Test2>;
+
+				Test2(int member) : TestBase(member) {}
+			};
+
+		public:
+			TEST_METHOD(OfType_TestSharedPtr)
+			{
+				vector<TestBase::Ptr> vec = {
+					TestBase::Ptr(new Test1(1)),
+					TestBase::Ptr(new Test2(-1)),
+					TestBase::Ptr(new Test1(2)),
+					TestBase::Ptr(new Test2(-2)),
+					TestBase::Ptr(new Test1(3))
+				};
+				int test1m[] = { 1, 2, 3 };
+
+				int i = 0;
+				for (auto v : from(vec) ^ oftype<Test1>() ^ iter())
+				{
+					Assert::AreEqual(test1m[i++], v->member);
+				}
+				Assert::AreEqual(3, i);
+			}
+
+			TEST_METHOD(OfType_TestPtr)
+			{
+				vector<TestBase*> vec = {
+					new Test1(1),
+					new Test2(-1),
+					new Test1(2),
+					new Test2(-2),
+					new Test1(3)
+				};
+				int test1m[] = { 1, 2, 3 };
+
+				int i = 0;
+				for (auto v : from(vec) ^ oftype<Test1>() ^ iter())
+				{
+					Assert::AreEqual(test1m[i++], v->member);
+				}
+				Assert::AreEqual(3, i);
+
+				for (auto v : vec)
+					delete v;
+			}
+		};
 	}
 }

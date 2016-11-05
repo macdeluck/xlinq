@@ -21,5 +21,6 @@
 #include "xlinq_skip.h"
 #include "xlinq_take.h"
 #include "xlinq_takewhile.h"
+#include "xlinq_oftype.h"
 
 #endif

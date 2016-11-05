@@ -11,6 +11,8 @@ namespace xlinq
 	public:
 		using Ptr = std::shared_ptr<IEnumerator<TElem>>;
 
+		virtual ~IEnumerator() {}
+
 		virtual bool next() =0;
 
 		virtual TElem current() =0;
@@ -21,6 +23,9 @@ namespace xlinq
 	{
 	public:
 		using Ptr = std::shared_ptr<IEnumerable<TElem>>;
+
+		virtual ~IEnumerable() {}
+
 		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() =0;
 	};
 

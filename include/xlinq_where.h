@@ -6,23 +6,23 @@
 
 namespace xlinq
 {
-	template<typename TElem>
+	template<typename TElem, typename TPredicate>
 	class _WhereEnumerable : public IEnumerable<TElem>
 	{
 	private:
 		std::shared_ptr<IEnumerable<TElem>> _source;
-		std::function<bool(TElem)> _predicate;
+		TPredicate _predicate;
 	public:
-		_WhereEnumerable(std::shared_ptr<IEnumerable<TElem>> source, std::function<bool(TElem)> predicate)
+		_WhereEnumerable(std::shared_ptr<IEnumerable<TElem>> source, TPredicate predicate)
 			: _source(source), _predicate(predicate) {}
 
 		class _WhereEnumerator : public IEnumerator<TElem>
 		{
 		private:
 			std::shared_ptr<IEnumerator<TElem>> _source;
-			std::function<bool(TElem)> _predicate;
+			TPredicate _predicate;
 		public:
-			_WhereEnumerator(std::shared_ptr<IEnumerator<TElem>> source, std::function<bool(TElem)> predicate)
+			_WhereEnumerator(std::shared_ptr<IEnumerator<TElem>> source, TPredicate predicate)
 				: _source(source), _predicate(predicate) {}
 
 			virtual bool next() override
@@ -58,7 +58,7 @@ namespace xlinq
 		template<typename TElem>
 		std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
-			return std::shared_ptr<IEnumerable<TElem>>(new _WhereEnumerable<TElem>(enumerable, _predicate));
+			return std::shared_ptr<IEnumerable<TElem>>(new _WhereEnumerable<TElem, TPredicate>(enumerable, _predicate));
 		}
 	};
 

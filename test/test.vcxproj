@@ -165,6 +165,7 @@
     <ClInclude Include="..\include\xlinq_join.h" />
     <ClInclude Include="..\include\xlinq_max.h" />
     <ClInclude Include="..\include\xlinq_min.h" />
+    <ClInclude Include="..\include\xlinq_oftype.h" />
     <ClInclude Include="..\include\xlinq_select.h" />
     <ClInclude Include="..\include\xlinq_select_many.h" />
     <ClInclude Include="..\include\xlinq_std.h" />
