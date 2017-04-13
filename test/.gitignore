@@ -1,0 +1,13 @@
+# CMake generated files
+*.cmake
+CMakeCache.txt
+CMakeFiles/*
+Makefile
+
+# Windows build
+*.exe
+*.ilk
+*.pdb
+
+# Test results
+Testing/*
