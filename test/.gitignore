@@ -11,3 +11,6 @@ Makefile
 
 # Test results
 Testing/*
+
+# Visual Studio cache
+.vs/*

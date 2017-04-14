@@ -32,10 +32,10 @@ namespace xlinq
 	/**
 		Exception indicating, that function cannot be called due to iteration has been finished.
 	*/
-	class IteratioFinishedException : IterationException
+	class IterationFinishedException : IterationException
 	{
 	public:
-		IteratioFinishedException() : IterationException("Call of function failed due to iteration has been finished.") {}
+		IterationFinishedException() : IterationException("Call of function failed due to iteration has been finished.") {}
 	};
 
 	/**
@@ -56,8 +56,6 @@ namespace xlinq
 	class IEnumerator
 	{
 	public:
-		typedef typename std::shared_ptr<IEnumerator<TElem>> Ptr;
-
 		virtual ~IEnumerator() {}
 
 		virtual bool next() XLINQ_ABSTRACT;
@@ -72,16 +70,14 @@ namespace xlinq
 	class IEnumerable
 	{
 	public:
-		typedef typename std::shared_ptr<IEnumerable<TElem>> Ptr;
-
-		virtual IEnumerator<TElem>::Ptr getEnumerator() XLINQ_ABSTRACT;
+		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() XLINQ_ABSTRACT;
 	};
 
 	/**
 		Explicit method to build new object from enumerable using builder.
 	*/
 	template<typename TElem, typename TBuilder>
-	decltype(auto) build(IEnumerable<TElem>::Ptr enumerable, TBuilder& builder)
+	decltype(auto) build(std::shared_ptr<IEnumerable<TElem>> enumerable, TBuilder& builder)
 	{
 		return builder.build(enumerable);
 	}
@@ -90,7 +86,7 @@ namespace xlinq
 		Nice-syntax operator used to build new object from enumerable.
 	*/
 	template<typename TElem, typename TBuilder>
-	decltype(auto) operator>>(IEnumerable<TElem>::Ptr enumerable, TBuilder& builder)
+	decltype(auto) operator>>(std::shared_ptr<IEnumerable<TElem>> enumerable, TBuilder& builder)
 	{
 		return build(enumerable, builder);
 	}
@@ -102,7 +98,7 @@ namespace xlinq
 	{
 	public:
 		template<typename TElem>
-		IEnumerator<TElem>::Ptr build(IEnumerable<TElem>::Ptr enumerable)
+		std::shared_ptr<IEnumerator<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 		{
 			return enumerable->getEnumerator();
 		}
