@@ -74,19 +74,20 @@ namespace xlinq
 	};
 
 	/**
-		Explicit method to build new object from enumerable using builder.
+		Explicit creating new object using given builder.
 	*/
-	template<typename TElem, typename TBuilder>
-	decltype(auto) build(std::shared_ptr<IEnumerable<TElem>> enumerable, TBuilder& builder)
+	template<typename TEnumerable, typename TBuilder>
+	decltype(auto) build(std::shared_ptr<TEnumerable> enumerable, TBuilder& builder)
 	{
-		return builder.build(enumerable);
+		typedef typename decltype(enumerable->getEnumerator()->current()) TElem;
+		return builder.build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
 	}
 
 	/**
-		Nice-syntax operator used to build new object from enumerable.
+		Nice syntax operator for creating new object using given builder.
 	*/
-	template<typename TElem, typename TBuilder>
-	decltype(auto) operator>>(std::shared_ptr<IEnumerable<TElem>> enumerable, TBuilder& builder)
+	template<typename TEnumerable, typename TBuilder>
+	decltype(auto) operator>>(std::shared_ptr<TEnumerable> enumerable, TBuilder& builder)
 	{
 		return build(enumerable, builder);
 	}

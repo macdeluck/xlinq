@@ -81,9 +81,79 @@ TEST (XLinqBaseTest, BasicEnumerationTest)
 
 	ASSERT_FALSE(enumerator->next());
 }
- 
+
+TEST(XLinqBaseTest, CallCurrentBeforeEnumerationWasStarted)
+{
+	PersonEnumerable enumerable;
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqBaseTest, CallCurrentWhenEnumerationWasFinished)
+{
+	PersonEnumerable enumerable;
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqBaseTest, CallNextWhenEnumerationWasFinished)
+{
+	PersonEnumerable enumerable;
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqBaseTest, XlinqGetEnumeratorTest)
+{
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ("Piotr", enumerator->current().firstName);
+	ASSERT_EQ("Kempa", enumerator->current().secondName);
+	ASSERT_EQ(21, enumerator->current().age);
+}
+
 int main(int argc, char **argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();;
+	return RUN_ALL_TESTS();
 }
