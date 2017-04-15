@@ -147,3 +147,79 @@ TEST(XLinqFromTest, XLinqStlIterableFromVector)
 
 	ASSERT_FALSE(enumerator->next());
 }
+
+TEST(XLinqFromTest, XLinqArrayEnumerator)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentBeforeEnumerationWasStarted)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentWhenEnumerationWasFinished)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	while (enumerator->next());
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromTest, XLinqArrayEnumeratorCallNextWhenEnumerationWasFinished)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
