@@ -151,9 +151,3 @@ TEST(XLinqBaseTest, XlinqGetEnumeratorTest)
 	ASSERT_EQ("Kempa", enumerator->current().secondName);
 	ASSERT_EQ(21, enumerator->current().age);
 }
-
-int main(int argc, char **argv)
-{
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}

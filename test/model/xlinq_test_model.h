@@ -14,7 +14,7 @@ namespace xlinq
 		int age;
 	};
 
-	std::vector<Person> getPersons()
+	inline std::vector<Person> getPersons()
 	{
 		std::vector<Person> result = {
 			Person { "Piotr", "Kempa", 21 },
