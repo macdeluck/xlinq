@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "model/xlinq_test_model.h"
 #include <xlinq/xlinq_base.h>
 #include <memory>
