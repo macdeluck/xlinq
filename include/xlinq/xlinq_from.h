@@ -43,6 +43,27 @@ namespace xlinq
 			return *_begin;
 		}
 	};
+
+	template<typename TContainer, typename TElem>
+	class _StlEnumerable : public IEnumerable<TElem>
+	{
+	private:
+		TContainer& _container;
+	public:
+		_StlEnumerable(TContainer& container) : _container(container) {}
+
+		std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+		{
+			typedef typename TContainer::iterator iterator;
+			return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container.begin(), _container.end()));
+		}
+	};
+
+	template<typename TContainer>
+	auto from(TContainer& container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
+	{
+		return std::shared_ptr<IEnumerable<typename TContainer::value_type>>(new _StlEnumerable<TContainer, typename TContainer::value_type>(container));
+	}
 }
 
 #endif
