@@ -1,6 +1,7 @@
 #ifndef XLINQ_FROM_H_
 #define XLINQ_FROM_H_
 
+#include <cstdlib>
 #include <memory>
 #include <iterator>
 #include "xlinq_base.h"
@@ -58,6 +59,64 @@ namespace xlinq
 			return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container.begin(), _container.end()));
 		}
 	};
+
+	template<typename TElem, size_t SIZE>
+	class _ArrayEnumerator : public IEnumerator<TElem>
+	{
+	private:
+		TElem* _begin;
+		size_t _index;
+		bool _started;
+
+		void assert_finished()
+		{
+			if (_index == SIZE)
+				throw IterationFinishedException();
+		}
+
+	public:
+		_ArrayEnumerator(TElem* begin) : _begin(begin), _index(0), _started(false) {}
+
+		bool next() override
+		{
+			assert_finished();
+			if (!_started)
+				_started = true;
+			else
+			{
+				++_begin;
+				++_index;
+			}
+			return _index != SIZE;
+		}
+
+		TElem current()
+		{
+			if (!_started) throw IterationNotStartedException();
+			assert_finished();
+			return *_begin;
+		}
+	};
+
+	template<typename TElem, size_t SIZE>
+	class _ArrayEnumerable : public IEnumerable<TElem>
+	{
+	private:
+		TElem(&_array)[SIZE];
+	public:
+		_ArrayEnumerable(TElem(&array)[SIZE]) : _array(array) {}
+
+		std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+		{
+			return std::shared_ptr<IEnumerator<TElem>>(new _ArrayEnumerator<TElem, SIZE>((TElem*)_array));
+		}
+	};
+
+	template<typename TElem, size_t SIZE>
+	std::shared_ptr<IEnumerable<TElem>> from(TElem(&array)[SIZE])
+	{
+		return std::shared_ptr<IEnumerable<TElem>>(new _ArrayEnumerable<TElem, SIZE>(array));
+	}
 
 	template<typename TContainer>
 	auto from(TContainer& container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
