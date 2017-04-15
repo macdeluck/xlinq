@@ -18,22 +18,27 @@ namespace xlinq
 		void assert_finished()
 		{
 			if (_begin == _end)
-				throw new IterationFinishedException();
+				throw IterationFinishedException();
 		}
+
 	public:
 		_StlEnumerator(TIterator begin, TIterator end) : _begin(begin), _end(end), _started(false) {}
 
 		bool next() override
 		{
-			_started = true;
 			assert_finished();
-			return ++_begin == _end;
+			if (!_started)
+				_started = true;
+			else ++_begin;
+			return _begin != _end;
 		}
 
 		TElem current() override
 		{
 			if (!_started)
-				throw new IterationNotStartedException();
+			{
+				throw IterationNotStartedException();
+			}
 			assert_finished();
 			return *_begin;
 		}

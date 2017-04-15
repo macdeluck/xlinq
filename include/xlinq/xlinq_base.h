@@ -1,10 +1,8 @@
 #ifndef XLINQ_BASE_H_
 #define XLINQ_BASE_H_
 
-#define XLINQ_INLINE inline
-#define XLINQ_ABSTRACT = 0
-
 #include <memory>
+#include "xlinq_defs.h"
 #include "xlinq_exception.h"
 
 namespace xlinq
@@ -45,7 +43,7 @@ namespace xlinq
 		
 		typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
 		
-		static BaseType cast(std::shared_ptr<TValue> value)
+		XLINQ_INLINE static BaseType cast(std::shared_ptr<TValue> value)
 		{
 			return (BaseType)value;
 		}
