@@ -10,6 +10,7 @@ goto EOF
 :BUILD
 set ROOT=%~dp0
 set OUT_WIN=out/win
+rmdir /s /q "%OUT_WIN%"
 mkdir "%OUT_WIN%" > NUL
 cd "%OUT_WIN%" > NUL
 cmake %ROOT% && cmake --build .
