@@ -5,50 +5,10 @@
 #define XLINQ_ABSTRACT = 0
 
 #include <memory>
-#include <exception>
+#include "xlinq_exception.h"
 
 namespace xlinq
 {
-	/**
-		General exception for iteration errors.
-	*/
-	class IterationException : std::exception
-	{
-	public:
-		IterationException() : std::exception("Iteration has failed for unknown reason.") {}
-
-		IterationException(const char* message) : std::exception(message) {}
-	};
-
-	/**
-		Exception indicating, that function cannot be called due to iteration has not been started.
-	*/
-	class IterationNotStartedException : IterationException
-	{
-	public:
-		IterationNotStartedException() : IterationException("Call of function failed due to iteration hasn't been started yet.") {}
-	};
-
-	/**
-		Exception indicating, that function cannot be called due to iteration has been finished.
-	*/
-	class IterationFinishedException : IterationException
-	{
-	public:
-		IterationFinishedException() : IterationException("Call of function failed due to iteration has been finished.") {}
-	};
-
-	/**
-		Helper class which cleans type from const and reference indicators.
-	*/
-	template<typename TValue>
-	class _cleanup_type
-	{
-	public:
-		typedef typename std::remove_const<
-				typename std::remove_reference<TValue>::type>::type type;
-	};
-
 	/**
 		Interface for enumerator.
 	*/
@@ -56,6 +16,8 @@ namespace xlinq
 	class IEnumerator
 	{
 	public:
+		typedef TElem ElemType;
+		
 		virtual ~IEnumerator() {}
 
 		virtual bool next() XLINQ_ABSTRACT;
@@ -70,27 +32,24 @@ namespace xlinq
 	class IEnumerable
 	{
 	public:
+		typedef TElem ElemType;
+		
 		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() XLINQ_ABSTRACT;
 	};
 
-	/**
-		Explicit creating new object using given builder.
-	*/
-	template<typename TEnumerable, typename TBuilder>
-	decltype(auto) build(std::shared_ptr<TEnumerable> enumerable, TBuilder& builder)
+	template<typename TValue>
+	struct typeinfo
 	{
-		typedef typename decltype(enumerable->getEnumerator()->current()) TElem;
-		return builder.build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
-	}
-
-	/**
-		Nice syntax operator for creating new object using given builder.
-	*/
-	template<typename TEnumerable, typename TBuilder>
-	decltype(auto) operator>>(std::shared_ptr<TEnumerable> enumerable, TBuilder& builder)
-	{
-		return build(enumerable, builder);
-	}
+		typedef typename std::remove_const<
+				typename std::remove_reference<typename TValue::ElemType>::type>::type ElemType;
+		
+		typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
+		
+		static BaseType cast(std::shared_ptr<TValue> value)
+		{
+			return (BaseType)value;
+		}
+	};
 
 	/**
 		Simple builder extracting enumerator from enumerable.
@@ -104,6 +63,18 @@ namespace xlinq
 			return enumerable->getEnumerator();
 		}
 	};
+
+	template<typename TValue, typename TBuilder>
+	auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(typeinfo<TValue>::cast(ptr)))
+	{
+		return builder.build(typeinfo<TValue>::cast(ptr));
+	}
+
+	template<typename TValue, typename TBuilder>
+	auto operator>>(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(build(ptr, builder))
+	{
+		return build(ptr, builder);
+	}
 
 	/**
 		Function extracting enumerator from enumerable.

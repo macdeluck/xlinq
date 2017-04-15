@@ -47,8 +47,8 @@ public:
 
 TEST (XLinqBaseTest, BasicEnumerationTest)
 {
-	PersonEnumerable enumerable;
-	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable->getEnumerator();
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ("Piotr", enumerator->current().firstName);
 	ASSERT_EQ("Kempa", enumerator->current().secondName);
@@ -84,8 +84,8 @@ TEST (XLinqBaseTest, BasicEnumerationTest)
 
 TEST(XLinqBaseTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	PersonEnumerable enumerable;
-	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable->getEnumerator();
 	try
 	{
 		enumerator->current();
@@ -103,8 +103,8 @@ TEST(XLinqBaseTest, CallCurrentBeforeEnumerationWasStarted)
 
 TEST(XLinqBaseTest, CallCurrentWhenEnumerationWasFinished)
 {
-	PersonEnumerable enumerable;
-	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable->getEnumerator();
 	while (enumerator->next());
 	try
 	{
@@ -123,8 +123,8 @@ TEST(XLinqBaseTest, CallCurrentWhenEnumerationWasFinished)
 
 TEST(XLinqBaseTest, CallNextWhenEnumerationWasFinished)
 {
-	PersonEnumerable enumerable;
-	shared_ptr<IEnumerator<Person>> enumerator = enumerable.getEnumerator();
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	shared_ptr<IEnumerator<Person>> enumerator = enumerable->getEnumerator();
 	while (enumerator->next());
 	try
 	{

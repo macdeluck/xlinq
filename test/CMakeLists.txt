@@ -3,6 +3,10 @@ project (xLinqTests)
 
 include_directories("../include")
 
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions(-std=c++11)
+endif()
+
 enable_testing()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
