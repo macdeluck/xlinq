@@ -14,8 +14,8 @@ private:
 	class PersonEnumerator : public IEnumerator<Person>
 	{
 	private:
-		int _index;
 		PersonEnumerable* _parent;
+		int _index;
 
 	public:
 		PersonEnumerator(PersonEnumerable* parent)

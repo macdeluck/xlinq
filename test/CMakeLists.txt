@@ -5,6 +5,8 @@ include_directories("../include")
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=c++11)
+    add_definitions(-Wall)
+    add_definitions(-Wpedantic)
 endif()
 
 enable_testing()

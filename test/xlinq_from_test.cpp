@@ -74,7 +74,6 @@ TEST(XLinqFromTest, XLinqStlIteratorFromVectorCallCurrentWhenEnumerationWasFinis
 {
 	auto persons = getPersons();
 	shared_ptr<IEnumerator<Person>> enumerator(new PersonEnumerator(persons.begin(), persons.end()));
-	auto exception = new IterationFinishedException();
 	while (enumerator->next());
 	try
 	{
