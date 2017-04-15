@@ -5,3 +5,4 @@ mkdir "%OUT_WIN%" > NUL
 cd "%OUT_WIN%" > NUL
 ctest
 cd %ROOT%
+pause
