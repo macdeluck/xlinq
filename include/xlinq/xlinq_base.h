@@ -37,7 +37,6 @@ namespace xlinq
 
 	namespace internal
 	{
-
 		template<typename TEnumerable>
 		struct typeinfo
 		{
