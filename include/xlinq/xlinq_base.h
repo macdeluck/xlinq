@@ -35,37 +35,41 @@ namespace xlinq
 		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() XLINQ_ABSTRACT;
 	};
 
-	template<typename TEnumerable>
-	struct typeinfo
+	namespace internal
 	{
-		typedef typename std::remove_const<
+
+		template<typename TEnumerable>
+		struct typeinfo
+		{
+			typedef typename std::remove_const<
 				typename std::remove_reference<typename TEnumerable::ElemType>::type>::type ElemType;
-		
-		typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
-		
-		XLINQ_INLINE static BaseType cast(std::shared_ptr<TEnumerable> value)
-		{
-			return (BaseType)value;
-		}
-	};
 
-	/**
+			typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
+
+			XLINQ_INLINE static BaseType cast(std::shared_ptr<TEnumerable> value)
+			{
+				return (BaseType)value;
+			}
+		};
+
+		/**
 		Simple builder extracting enumerator from enumerable.
-	*/
-	class _GetEnumeratorBuilder
-	{
-	public:
-		template<typename TElem>
-		std::shared_ptr<IEnumerator<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+		*/
+		class _GetEnumeratorBuilder
 		{
-			return enumerable->getEnumerator();
-		}
-	};
+		public:
+			template<typename TElem>
+			std::shared_ptr<IEnumerator<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEnumerator();
+			}
+		};
 
-	template<typename TValue, typename TBuilder>
-	auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(typeinfo<TValue>::cast(ptr)))
-	{
-		return builder.build(typeinfo<TValue>::cast(ptr));
+		template<typename TValue, typename TBuilder>
+		auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(typeinfo<TValue>::cast(ptr)))
+		{
+			return builder.build(typeinfo<TValue>::cast(ptr));
+		}
 	}
 
 	/**
@@ -74,16 +78,16 @@ namespace xlinq
 	template<typename TValue, typename TBuilder>
 	auto operator>>(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(build(ptr, builder))
 	{
-		return build(ptr, builder);
+		return internal::build(ptr, builder);
 	}
 
 	/**
 		Function extracting enumerator from enumerable.
 		Example: auto enumerator = enumerable >> getEnumerator();
 	*/
-	XLINQ_INLINE _GetEnumeratorBuilder getEnumerator()
+	XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()
 	{
-		return _GetEnumeratorBuilder();
+		return internal::_GetEnumeratorBuilder();
 	}
 }
 

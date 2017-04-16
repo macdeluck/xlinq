@@ -11,7 +11,7 @@ using namespace std;
 using namespace xlinq;
 
 typedef typename vector<Person>::iterator PersonIterator;
-typedef _StlEnumerator<PersonIterator, Person> PersonEnumerator;
+typedef internal::_StlEnumerator<PersonIterator, Person> PersonEnumerator;
 
 TEST(XLinqFromTest, XLinqStlIteratorFromVector)
 {
@@ -227,7 +227,7 @@ TEST(XLinqFromTest, XLinqEnumerableFromOtherEnumerable)
 TEST(XLinqFromTest, XLinqArrayEnumerator)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
-	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	shared_ptr<internal::_ArrayEnumerator<int, 5>> enumerator(new internal::_ArrayEnumerator<int, 5>(values));
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(1, enumerator->current());
 	ASSERT_TRUE(enumerator->next());
@@ -244,7 +244,7 @@ TEST(XLinqFromTest, XLinqArrayEnumerator)
 TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentBeforeEnumerationWasStarted)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
-	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	shared_ptr<internal::_ArrayEnumerator<int, 5>> enumerator(new internal::_ArrayEnumerator<int, 5>(values));
 	try
 	{
 		enumerator->current();
@@ -263,7 +263,7 @@ TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentBeforeEnumerationWasStarted)
 TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentWhenEnumerationWasFinished)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
-	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	shared_ptr<internal::_ArrayEnumerator<int, 5>> enumerator(new internal::_ArrayEnumerator<int, 5>(values));
 	while (enumerator->next());
 	try
 	{
@@ -283,7 +283,7 @@ TEST(XLinqFromTest, XLinqArrayEnumeratorCallCurrentWhenEnumerationWasFinished)
 TEST(XLinqFromTest, XLinqArrayEnumeratorCallNextWhenEnumerationWasFinished)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
-	shared_ptr<_ArrayEnumerator<int, 5>> enumerator(new _ArrayEnumerator<int, 5>(values));
+	shared_ptr<internal::_ArrayEnumerator<int, 5>> enumerator(new internal::_ArrayEnumerator<int, 5>(values));
 	while (enumerator->next());
 	try
 	{
