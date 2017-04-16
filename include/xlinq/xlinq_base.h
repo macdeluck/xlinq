@@ -35,15 +35,15 @@ namespace xlinq
 		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() XLINQ_ABSTRACT;
 	};
 
-	template<typename TValue>
+	template<typename TEnumerable>
 	struct typeinfo
 	{
 		typedef typename std::remove_const<
-				typename std::remove_reference<typename TValue::ElemType>::type>::type ElemType;
+				typename std::remove_reference<typename TEnumerable::ElemType>::type>::type ElemType;
 		
 		typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
 		
-		XLINQ_INLINE static BaseType cast(std::shared_ptr<TValue> value)
+		XLINQ_INLINE static BaseType cast(std::shared_ptr<TEnumerable> value)
 		{
 			return (BaseType)value;
 		}
@@ -68,6 +68,9 @@ namespace xlinq
 		return builder.build(typeinfo<TValue>::cast(ptr));
 	}
 
+	/**
+		Nice syntax operator for executing xlinq command.
+	*/
 	template<typename TValue, typename TBuilder>
 	auto operator>>(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(build(ptr, builder))
 	{

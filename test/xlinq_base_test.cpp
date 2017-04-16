@@ -6,45 +6,6 @@
 using namespace std;
 using namespace xlinq;
 
-class PersonEnumerable : public IEnumerable<Person>
-{
-private:
-	std::vector<Person> _source;
-
-	class PersonEnumerator : public IEnumerator<Person>
-	{
-	private:
-		PersonEnumerable* _parent;
-		int _index;
-
-	public:
-		PersonEnumerator(PersonEnumerable* parent)
-			: _parent(parent), _index(-1) 
-		{
-		}
-
-		Person current() override
-		{
-			if (_index < 0) throw IterationNotStartedException();
-			if (_index >= (int)_parent->_source.size()) throw IterationFinishedException();
-			return _parent->_source[_index];
-		}
-
-		bool next() override
-		{
-			if (_index >= (int)_parent->_source.size()) throw IterationFinishedException();
-			return ++_index < (int)_parent->_source.size();
-		}
-	};
-public:
-	PersonEnumerable() : _source(getPersons()) {}
-
-	shared_ptr<IEnumerator<Person>> getEnumerator() override
-	{
-		return shared_ptr<IEnumerator<Person>>(new PersonEnumerator(this));
-	}
-};
-
 TEST (XLinqBaseTest, BasicEnumerationTest)
 {
 	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());

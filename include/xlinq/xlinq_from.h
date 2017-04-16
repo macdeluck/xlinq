@@ -60,6 +60,21 @@ namespace xlinq
 		}
 	};
 
+	template<typename TContainer, typename TElem>
+	class _StlPointerEnumerable : public IEnumerable<TElem>
+	{
+	private:
+		std::shared_ptr<TContainer> _container;
+	public:
+		_StlPointerEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
+
+		std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+		{
+			typedef typename TContainer::iterator iterator;
+			return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container->begin(), _container->end()));
+		}
+	};
+
 	template<typename TElem, size_t SIZE>
 	class _ArrayEnumerator : public IEnumerator<TElem>
 	{
@@ -116,6 +131,18 @@ namespace xlinq
 	std::shared_ptr<IEnumerable<TElem>> from(TElem(&array)[SIZE])
 	{
 		return std::shared_ptr<IEnumerable<TElem>>(new _ArrayEnumerable<TElem, SIZE>(array));
+	}
+
+	template<typename TContainer>
+	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
+	{
+		return std::shared_ptr<IEnumerable<typename TContainer::value_type>>(new _StlPointerEnumerable<TContainer, typename TContainer::value_type>(container));
+	}
+
+	template<typename TEnumerable>
+	auto from(std::shared_ptr<TEnumerable> enumerable) -> std::shared_ptr<IEnumerable<typename TEnumerable::ElemType>>
+	{
+		return (std::shared_ptr<IEnumerable<typename TEnumerable::ElemType>>)enumerable;
 	}
 
 	template<typename TContainer>

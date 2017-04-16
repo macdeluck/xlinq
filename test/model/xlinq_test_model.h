@@ -1,8 +1,11 @@
 #ifndef XLINQ_TEST_MODEL_H_
 #define XLINQ_TEST_MODEL_H_
 
+#include <xlinq/xlinq_defs.h>
+#include <xlinq/xlinq_base.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace xlinq
 {
@@ -26,6 +29,45 @@ namespace xlinq
 		};
 		return result;
 	}
+
+	class PersonEnumerable : public IEnumerable<Person>
+	{
+	private:
+		std::vector<Person> _source;
+
+		class PersonEnumerator : public IEnumerator<Person>
+		{
+		private:
+			PersonEnumerable* _parent;
+			int _index;
+
+		public:
+			XLINQ_INLINE PersonEnumerator(PersonEnumerable* parent)
+				: _parent(parent), _index(-1)
+			{
+			}
+
+			XLINQ_INLINE Person current() override
+			{
+				if (_index < 0) throw IterationNotStartedException();
+				if (_index >= (int)_parent->_source.size()) throw IterationFinishedException();
+				return _parent->_source[_index];
+			}
+
+			XLINQ_INLINE bool next() override
+			{
+				if (_index >= (int)_parent->_source.size()) throw IterationFinishedException();
+				return ++_index < (int)_parent->_source.size();
+			}
+		};
+	public:
+		XLINQ_INLINE PersonEnumerable() : _source(getPersons()) {}
+
+		XLINQ_INLINE std::shared_ptr<IEnumerator<Person>> getEnumerator() override
+		{
+			return std::shared_ptr<IEnumerator<Person>>(new PersonEnumerator(this));
+		}
+	};
 }
 
 #endif
