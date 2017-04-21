@@ -110,7 +110,7 @@ namespace xlinq
 	*	@param selector Function used to convert elements of source collection
 	*	to elements of result collection. It is common to used lambda expression
 	*	as selector.
-	*	@return Enumerable with elements converted from source.
+	*	@return Builder of select expression.
 	*/
 	template<typename TSelector>
 	internal::_SelectBuilder<TSelector> select(TSelector selector)

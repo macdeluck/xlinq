@@ -158,7 +158,7 @@ namespace xlinq
 
 	/**
 	*	Function extracting enumerator from enumerable.
-	*	@return IEnumerator instance created from collection.
+	*	@return Builder of getEnumerator expression.
 	*/
 	XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()
 	{

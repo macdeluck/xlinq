@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>xLinq: include/xlinq/xlinq_defs.h Source File</title>
+<title>xLinq: include/xlinq/all.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,10 +86,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">xlinq_defs.h</div>  </div>
+<div class="title">all.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="xlinq__defs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="all_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">MIT License</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Copyright (c) 2017 TrolleY</span></div>
@@ -112,15 +112,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">SOFTWARE.</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef XLINQ_DEFS_H_</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XLINQ_DEFS_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef XLINQ_ALL_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XLINQ_ALL_H_</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">   35</a></span>&#160;<span class="preprocessor">#define XLINQ_INLINE inline</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">   41</a></span>&#160;<span class="preprocessor">#define XLINQ_ABSTRACT = 0</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__defs_8h.html">xlinq_defs.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__exception_8h.html">xlinq_exception.h</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__base_8h.html">xlinq_base.h</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__from_8h.html">xlinq_from.h</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__select_8h.html">xlinq_select.h</a>&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__gather_8h.html">xlinq_gather.h</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="xlinq__base_8h_html"><div class="ttname"><a href="xlinq__base_8h.html">xlinq_base.h</a></div><div class="ttdoc">Base xlinq definitions and expressions. </div></div>
+<div class="ttc" id="xlinq__gather_8h_html"><div class="ttname"><a href="xlinq__gather_8h.html">xlinq_gather.h</a></div><div class="ttdoc">Gathering the collection elements. </div></div>
+<div class="ttc" id="xlinq__select_8h_html"><div class="ttname"><a href="xlinq__select_8h.html">xlinq_select.h</a></div><div class="ttdoc">Converting collection of one type to another. </div></div>
+<div class="ttc" id="xlinq__exception_8h_html"><div class="ttname"><a href="xlinq__exception_8h.html">xlinq_exception.h</a></div><div class="ttdoc">Definitions of exceptions used by xlinq. </div></div>
+<div class="ttc" id="xlinq__defs_8h_html"><div class="ttname"><a href="xlinq__defs_8h.html">xlinq_defs.h</a></div><div class="ttdoc">Common xlinq symbols. </div></div>
+<div class="ttc" id="xlinq__from_8h_html"><div class="ttname"><a href="xlinq__from_8h.html">xlinq_from.h</a></div><div class="ttdoc">Creating enumerable object from containers and arrays. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

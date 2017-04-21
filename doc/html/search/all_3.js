@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getenumerator',['getEnumerator',['../classxlinq_1_1IEnumerable.html#a21bdf784d028b6a34ebb084c58a28bbe',1,'xlinq::IEnumerable::getEnumerator()'],['../namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c',1,'xlinq::getEnumerator()']]]
+  ['from',['from',['../namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db',1,'xlinq::from(TElem(&amp;array)[SIZE])'],['../namespacexlinq.html#ace159b237fbafd4ecb9b00c053389da2',1,'xlinq::from(std::shared_ptr&lt; TContainer &gt; container) -&gt; std::shared_ptr&lt; IEnumerable&lt; typename TContainer::value_type &gt;&gt;'],['../namespacexlinq.html#aae2da1f78a03b2d08516ba942cf30658',1,'xlinq::from(std::shared_ptr&lt; TEnumerable &gt; enumerable) -&gt; std::shared_ptr&lt; IEnumerable&lt; typename TEnumerable::ElemType &gt;&gt;'],['../namespacexlinq.html#a54a976342befd0a967eee63b7d40961e',1,'xlinq::from(TContainer &amp;container) -&gt; std::shared_ptr&lt; IEnumerable&lt; typename TContainer::value_type &gt;&gt;']]]
 ];

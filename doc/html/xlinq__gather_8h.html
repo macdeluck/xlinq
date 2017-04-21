@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>xLinq: Main Page</title>
+<title>xLinq: include/xlinq/xlinq_gather.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -36,11 +36,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -59,7 +59,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,45 +79,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ae1cbb39237af1a38199a349f21292c5.html">xlinq</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">xLinq Documentation</div>  </div>
+<div class="title">xlinq_gather.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>xLinq is header only library allowing to use LINQ like expressions in C++ code. It was inspired by <a href="https://github.com/mrange/cpplinq">cpplinq</a> project. Xlinq uses similar syntax like cpplinq but it defines IEnumerable interface, thus it allows to grab enumerable object without need to gather elements.</p>
-<p>This library needs to have c++11 standard enabled during compilation. Library was tested on MS Visual C++ Compiler and C++.</p>
-<p>To start use xlinq u need only download code, add the include folder to your include path and voila!</p>
-<p>Here u may see some examples how to use xlinq:</p>
-<p>Iterate over array: </p>
-<p><code> int numbers[] = { 1, 2, 3, 4, 5 };<br/>
- for (auto it = from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; <a class="el" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c" title="Function extracting enumerator from enumerable. ">getEnumerator()</a>; it-&gt;next();)<br/>
- {<br/>
- &#160; std::cout &lt;&lt; it-&gt;current() &lt;&lt; " ";<br/>
- }<br/>
- // Result: 2 4 6 8 10 <br/>
- </code></p>
-<p>Returning last element of vector:</p>
-<p><code> std::vector&lt;std::string&gt; vec = { "Eeny", "Meeny", "Miny", "Moe" };<br/>
- auto lastOne = from(vec) &gt;&gt; last();<br/>
- std::cout &lt;&lt; lastOne;<br/>
- // Result: Moe <br/>
- </code></p>
-<p>Returning enumerable from other function: </p>
-<p><code> std::shared_ptr&lt;IEnumerable&lt;size_t&gt;&gt; nameLengths()<br/>
- {<br/>
- &#160; std::vector&lt;std::string&gt; vec = { "Ken", "John", "David", "Thomas", "Richard" };<br/>
- &#160; return from(vec) &gt;&gt; select([](std::string name) { return name.size(); }) &gt;&gt; <a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b" title="Gathers elements of collection. ">gather()</a>;<br/>
- &#160; //gather is needed here, because vec will be deallocated when function will exit. <br/>
- }<br/>
- <br/>
- void printNameLengths()<br/>
- {<br/>
- &#160; auto lengths = nameLengths();<br/>
- &#160; for (auto it = lengths &gt;&gt; <a class="el" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c" title="Function extracting enumerator from enumerable. ">getEnumerator()</a>; it-&gt;next();)<br/>
- &#160; std::cout &lt;&lt; it-&gt;current() &lt;&lt; " ";<br/>
- }<br/>
- // Result: 3 4 5 6 7 <br/>
- </code></p>
+
+<p>Gathering the collection elements.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="xlinq__base_8h_source.html">xlinq_base.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="xlinq__from_8h_source.html">xlinq_from.h</a>&quot;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
+</div>
+<p><a href="xlinq__gather_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacexlinq"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html">xlinq</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ad8c906f78dfc6d4f875df1328acc010b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">xlinq::gather</a> ()</td></tr>
+<tr class="memdesc:ad8c906f78dfc6d4f875df1328acc010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection.  <a href="#ad8c906f78dfc6d4f875df1328acc010b">More...</a><br/></td></tr>
+<tr class="separator:ad8c906f78dfc6d4f875df1328acc010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Gathering the collection elements. </p>
+<dl class="section author"><dt>Author</dt><dd>TrolleY </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

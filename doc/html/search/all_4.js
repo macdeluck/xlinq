@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['ienumerable',['IEnumerable',['../classxlinq_1_1IEnumerable.html',1,'xlinq']]],
-  ['ienumerator',['IEnumerator',['../classxlinq_1_1IEnumerator.html',1,'xlinq']]],
-  ['iterationfinishedexception',['IterationFinishedException',['../classxlinq_1_1IterationFinishedException.html#a4e6ce1ac34b75054211d7888dd4a2539',1,'xlinq::IterationFinishedException']]],
-  ['iterationfinishedexception',['IterationFinishedException',['../classxlinq_1_1IterationFinishedException.html',1,'xlinq']]],
-  ['iterationnotstartedexception',['IterationNotStartedException',['../classxlinq_1_1IterationNotStartedException.html',1,'xlinq']]],
-  ['iterationnotstartedexception',['IterationNotStartedException',['../classxlinq_1_1IterationNotStartedException.html#a327da03712253d25027075da672d818f',1,'xlinq::IterationNotStartedException']]]
+  ['gather',['gather',['../namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b',1,'xlinq']]],
+  ['getenumerator',['getEnumerator',['../classxlinq_1_1IEnumerable.html#a21bdf784d028b6a34ebb084c58a28bbe',1,'xlinq::IEnumerable::getEnumerator()'],['../namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c',1,'xlinq::getEnumerator()']]]
 ];

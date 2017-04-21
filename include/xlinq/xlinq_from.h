@@ -91,6 +91,16 @@ namespace xlinq
 			}
 		};
 
+		template<typename TContainer, typename TIterator, typename TElem>
+		class _StlPointerEnumerator : public _StlEnumerator<TIterator, TElem>
+		{
+		private:
+			std::shared_ptr<TContainer> _container;
+		public:
+			_StlPointerEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
+				: _StlEnumerator<TIterator, TElem>(begin, end), _container(container) {}
+		};
+
 		template<typename TContainer, typename TElem>
 		class _StlPointerEnumerable : public IEnumerable<TElem>
 		{
@@ -102,7 +112,7 @@ namespace xlinq
 			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container->begin(), _container->end()));
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
 			}
 		};
 

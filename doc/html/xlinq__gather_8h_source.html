@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>xLinq: include/xlinq/xlinq_defs.h Source File</title>
+<title>xLinq: include/xlinq/xlinq_gather.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,10 +86,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">xlinq_defs.h</div>  </div>
+<div class="title">xlinq_gather.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="xlinq__defs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="xlinq__gather_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">MIT License</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Copyright (c) 2017 TrolleY</span></div>
@@ -112,15 +112,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">SOFTWARE.</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef XLINQ_DEFS_H_</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XLINQ_DEFS_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef XLINQ_GATHER_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define XLINQ_GATHER_H_</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">   35</a></span>&#160;<span class="preprocessor">#define XLINQ_INLINE inline</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">   41</a></span>&#160;<span class="preprocessor">#define XLINQ_ABSTRACT = 0</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__base_8h.html">xlinq_base.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__from_8h.html">xlinq_from.h</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>xlinq</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">/*@cond INTERNAL*/</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">namespace </span>internal</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">class </span>_GatherBuilder</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; build(std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; enumerable)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                <span class="keyword">auto</span> vec = std::shared_ptr&lt;std::vector&lt;TElem&gt;&gt;(<span class="keyword">new</span> std::vector&lt;TElem&gt;());</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = enumerable-&gt;getEnumerator(); it-&gt;next();)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                    vec-&gt;push_back(it-&gt;current());</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(vec);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">/*@endcond*/</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">   65</a></span>&#160;    <a class="code" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GatherBuilder <a class="code" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">gather</a>()</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> internal::_GatherBuilder();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="xlinq__base_8h_html"><div class="ttname"><a href="xlinq__base_8h.html">xlinq_base.h</a></div><div class="ttdoc">Base xlinq definitions and expressions. </div></div>
+<div class="ttc" id="xlinq__defs_8h_html_a6318da9f1c33143464070eb48ed158b7"><div class="ttname"><a href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a></div><div class="ttdeci">#define XLINQ_INLINE</div><div class="ttdoc">Defines xlinq inline function. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:35</div></div>
+<div class="ttc" id="namespacexlinq_html_ad34419de7720a6cb04b210f1681ae9db"><div class="ttname"><a href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">xlinq::from</a></div><div class="ttdeci">std::shared_ptr&lt; IEnumerable&lt; TElem &gt; &gt; from(TElem(&amp;array)[SIZE])</div><div class="ttdoc">Creates enumerable from fixed size array. </div><div class="ttdef"><b>Definition:</b> xlinq_from.h:181</div></div>
+<div class="ttc" id="namespacexlinq_html_ad8c906f78dfc6d4f875df1328acc010b"><div class="ttname"><a href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">xlinq::gather</a></div><div class="ttdeci">XLINQ_INLINE internal::_GatherBuilder gather()</div><div class="ttdoc">Gathers elements of collection. </div><div class="ttdef"><b>Definition:</b> xlinq_gather.h:65</div></div>
+<div class="ttc" id="xlinq__from_8h_html"><div class="ttname"><a href="xlinq__from_8h.html">xlinq_from.h</a></div><div class="ttdoc">Creating enumerable object from containers and arrays. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

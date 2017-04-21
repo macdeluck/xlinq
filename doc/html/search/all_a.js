@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['what',['what',['../classxlinq_1_1Exception.html#a0edfe366ca916f37a607dd9e053df46a',1,'xlinq::Exception']]]
+  ['select',['select',['../namespacexlinq.html#ab738e44970df0cc013b01175278396ff',1,'xlinq']]]
 ];

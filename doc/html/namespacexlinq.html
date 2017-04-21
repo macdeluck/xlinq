@@ -134,6 +134,10 @@ internal::_GetEnumeratorBuilder&#160;</td><td class="memItemRight" valign="botto
 <tr class="memitem:a54a976342befd0a967eee63b7d40961e"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a54a976342befd0a967eee63b7d40961e">from</a> (TContainer &amp;container) -&gt; std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a>&lt; typename TContainer::value_type &gt;&gt;</td></tr>
 <tr class="memdesc:a54a976342befd0a967eee63b7d40961e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from STL container.  <a href="#a54a976342befd0a967eee63b7d40961e">More...</a><br/></td></tr>
 <tr class="separator:a54a976342befd0a967eee63b7d40961e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8c906f78dfc6d4f875df1328acc010b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">gather</a> ()</td></tr>
+<tr class="memdesc:ad8c906f78dfc6d4f875df1328acc010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection.  <a href="#ad8c906f78dfc6d4f875df1328acc010b">More...</a><br/></td></tr>
+<tr class="separator:ad8c906f78dfc6d4f875df1328acc010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab738e44970df0cc013b01175278396ff"><td class="memTemplParams" colspan="2">template&lt;typename TSelector &gt; </td></tr>
 <tr class="memitem:ab738e44970df0cc013b01175278396ff"><td class="memTemplItemLeft" align="right" valign="top">internal::_SelectBuilder<br class="typebreak"/>
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ab738e44970df0cc013b01175278396ff">select</a> (TSelector selector)</td></tr>
@@ -256,6 +260,25 @@ template&lt;typename TContainer &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad8c906f78dfc6d4f875df1328acc010b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GatherBuilder xlinq::gather </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gathers elements of collection. </p>
+<p>This function allows to gather elements of collection to improve query performance, or to copy collection elements preventing from deallocating enumeration source collection. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of gather expression. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a29c51dfbb405e91dbf589ba4864d700c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +293,7 @@ template&lt;typename TContainer &gt; </div>
 </div><div class="memdoc">
 
 <p>Function extracting enumerator from enumerable. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1IEnumerator.html" title="Interface for enumerator. ">IEnumerator</a> instance created from collection. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of getEnumerator expression. </dd></dl>
 
 </div>
 </div>
@@ -337,14 +360,14 @@ template&lt;typename TSelector &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable with elements converted from source. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of select expression. </dd></dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 21 2017 12:37:16 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 21 2017 15:19:17 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
