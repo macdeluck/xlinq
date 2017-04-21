@@ -7,38 +7,38 @@ To start use xlinq u need only download code, add the include folder to your inc
 Here u may see some examples how to use xlinq:
 
 Iterate over array:
-```C++
-int numbers[] = { 1, 2, 3, 4, 5 };
-for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumerator(); it->next();)
-{
-    std::cout << it->current() << " ";
-}
-/* Result: 2 4 6 8 10 */
-```
+<p><code>
+int numbers[] = { 1, 2, 3, 4, 5 };<br>
+for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumerator(); it->next();)<br>
+{<br>
+    std::cout << it->current() << " ";<br>
+}<br>
+// Result: 2 4 6 8 10 <br>
+</code></p>
 
 Returning last element of vector:
 
-```C++
-std::vector<std::string> vec = { "Eeny", "Meeny", "Miny", "Moe" };
-auto lastOne = from(vec) >> last();
-std::cout << lastOne;
-/* Result: Moe */
-```
+<p><code>
+std::vector<std::string> vec = { "Eeny", "Meeny", "Miny", "Moe" };<br>
+auto lastOne = from(vec) >> last();<br>
+std::cout << lastOne;<br>
+// Result: Moe <br>
+</code></p>
 
 Returning enumerable from other function:
-```C++
-std::shared_ptr<IEnumerable<size_t>> nameLengths()
-{
-    std::vector<std::string> vec = { "Ken", "John", "David", "Thomas", "Richard" };
-    return from(vec) >> select([](std::string name) { return name.size(); }) >> gather();
-    /*gather is needed here, because vec will be deallocated when function will exit. */
-}
-
-void printNameLengths()
-{
-    auto lengths = nameLengths();
-    for (auto it = lengths >> getEnumerator(); it->next();)
-    std::cout << it->current() << " ";
-}
-/* Result: 3 4 5 6 7 */
-```
+<p><code>
+std::shared_ptr<IEnumerable<size_t>> nameLengths()<br>
+{<br>
+  std::vector<std::string> vec = { "Ken", "John", "David", "Thomas", "Richard" };<br>
+  return from(vec) >> select([](std::string name) { return name.size(); }) >> gather();<br>
+  //gather is needed here, because vec will be deallocated when function will exit. <br>
+}<br>
+<br>
+void printNameLengths()<br>
+{<br>
+  auto lengths = nameLengths();<br>
+  for (auto it = lengths >> getEnumerator(); it->next();)<br>
+  std::cout << it->current() << " ";<br>
+}<br>
+// Result: 3 4 5 6 7 <br>
+</code></p>
