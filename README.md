@@ -9,9 +9,9 @@ Here u may see some examples how to use xlinq:
 Iterate over array:
 <p><code>
 int numbers[] = { 1, 2, 3, 4, 5 };<br>
-for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumerator(); it->next();)<br>
+for (auto it = from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; getEnumerator(); it-&gt;next();)<br>
 {<br>
-    std::cout << it->current() << " ";<br>
+    std::cout &lt;&lt; it-&gt;current() &lt;&lt; " ";<br>
 }<br>
 // Result: 2 4 6 8 10 <br>
 </code></p>
@@ -19,26 +19,26 @@ for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumera
 Returning last element of vector:
 
 <p><code>
-std::vector<std::string> vec = { "Eeny", "Meeny", "Miny", "Moe" };<br>
-auto lastOne = from(vec) >> last();<br>
-std::cout << lastOne;<br>
+std::vector&lt;std::string&gt; vec = { "Eeny", "Meeny", "Miny", "Moe" };<br>
+auto lastOne = from(vec) &gt;&gt; last();<br>
+std::cout &lt;&lt; lastOne;<br>
 // Result: Moe <br>
 </code></p>
 
 Returning enumerable from other function:
 <p><code>
-std::shared_ptr<IEnumerable<size_t>> nameLengths()<br>
+std::shared_ptr&lt;IEnumerable&lt;size_t&gt;&gt; nameLengths()<br>
 {<br>
-  std::vector<std::string> vec = { "Ken", "John", "David", "Thomas", "Richard" };<br>
-  return from(vec) >> select([](std::string name) { return name.size(); }) >> gather();<br>
+  std::vector&lt;std::string&gt; vec = { "Ken", "John", "David", "Thomas", "Richard" };<br>
+  return from(vec) &gt;&gt; select([](std::string name) { return name.size(); }) &gt;&gt; gather();<br>
   //gather is needed here, because vec will be deallocated when function will exit. <br>
 }<br>
 <br>
 void printNameLengths()<br>
 {<br>
   auto lengths = nameLengths();<br>
-  for (auto it = lengths >> getEnumerator(); it->next();)<br>
-  std::cout << it->current() << " ";<br>
+  for (auto it = lengths &gt;&gt; getEnumerator(); it-&gt;next();)<br>
+  std::cout &lt;&lt; it-&gt;current() &lt;&lt; " ";<br>
 }<br>
 // Result: 3 4 5 6 7 <br>
 </code></p>
