@@ -1,3 +1,31 @@
+/*
+MIT License
+
+Copyright (c) 2017 TrolleY
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+/**
+*	@file xlinq_from.h
+*	Creating enumerable object from containers and arrays.
+*	@author TrolleY
+*/
 #ifndef XLINQ_FROM_H_
 #define XLINQ_FROM_H_
 
@@ -9,6 +37,7 @@
 
 namespace xlinq
 {
+	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
 		template<typename TIterator, typename TElem>
@@ -129,9 +158,14 @@ namespace xlinq
 			}
 		};
 	}
+	/*@endcond*/
 
 	/**
-		Creates enumerable from fixed size array.
+	*	Creates enumerable from fixed size array.
+	*	This function may be used to create enumerable from fixed size array.
+	*	Please note, that enumeration will fail if array will be deallocated.
+	*	@param array Source fixed size array.
+	*	@return Enumerable from array.
 	*/
 	template<typename TElem, size_t SIZE>
 	std::shared_ptr<IEnumerable<TElem>> from(TElem(&array)[SIZE])
@@ -140,7 +174,10 @@ namespace xlinq
 	}
 
 	/**
-		Creates enumerable from shared pointer to STL container.
+	*	Creates enumerable from shared pointer to STL container.
+	*	This function may be used to create enumerable from pointer to STL container.
+	*	@param container Source STL container.
+	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
 	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
@@ -149,7 +186,10 @@ namespace xlinq
 	}
 
 	/**
-		Creates enumerable from shared pointer to enumerable.
+	*	Creates enumerable from shared pointer to enumerable.
+	*	This function just returns given enumerable.
+	*	@param enumerable Source enumerable
+	*	@return Given pointer.
 	*/
 	template<typename TEnumerable>
 	auto from(std::shared_ptr<TEnumerable> enumerable) -> std::shared_ptr<IEnumerable<typename TEnumerable::ElemType>>
@@ -158,7 +198,11 @@ namespace xlinq
 	}
 
 	/**
-		Creates enumerable from STL container.
+	*	Creates enumerable from STL container.
+	*	This function may be used to create enumerable from STL container.
+	*	Please note, that enumeration will fail if container will be deallocated.
+	*	@param container Source container.
+	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
 	auto from(TContainer& container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>

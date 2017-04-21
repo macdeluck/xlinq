@@ -1,4 +1,3 @@
-/*
 MIT License
 
 Copyright (c) 2017 TrolleY
@@ -20,24 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-/**
-*	@file xlinq_defs.h
-*	Common xlinq symbols.
-*	@author TrolleY
-*/
-#ifndef XLINQ_DEFS_H_
-#define XLINQ_DEFS_H_
-
-/**
-*	Defines xlinq inline function.
-*/
-#define XLINQ_INLINE inline
-
-
-/**
-*	Defines xlinq abstract function.
-*/
-#define XLINQ_ABSTRACT = 0
-
-#endif
