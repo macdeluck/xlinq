@@ -2,9 +2,9 @@ xLinq is header only library allowing to use LINQ like expressions in C++ code. 
 
 This library needs to have c++11 standard enabled during compilation. Library was tested on MS Visual C++ Compiler 19.10 and G++ 4.8.4.
 
-To start use xlinq u need only download code, add the include folder to your include path and voila!
+To start use xlinq you need only download code, add the include folder to your include path and voila!
 
-Here u may see some examples how to use xlinq:
+Here you may see some examples how to use xlinq:
 
 Iterate over array:
 <p><code>
