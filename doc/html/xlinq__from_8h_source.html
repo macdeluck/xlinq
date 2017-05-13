@@ -256,41 +256,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    }</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="comment">/*@endcond*/</span></div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem, <span class="keywordtype">size_t</span> SIZE&gt;</div>
-<div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">  181</a></span>&#160;    std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(TElem(&amp;array)[SIZE])</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt;(<span class="keyword">new</span> internal::_ArrayEnumerable&lt;TElem, SIZE&gt;(array));</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TContainer&gt;</div>
-<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="namespacexlinq.html#ace159b237fbafd4ecb9b00c053389da2">  193</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(std::shared_ptr&lt;TContainer&gt; container) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    {</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;(<span class="keyword">new</span> internal::_StlPointerEnumerable&lt;TContainer, typename TContainer::value_type&gt;(container));</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    }</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TEnumerable&gt;</div>
-<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="namespacexlinq.html#aae2da1f78a03b2d08516ba942cf30658">  205</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(std::shared_ptr&lt;TEnumerable&gt; enumerable) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TEnumerable::ElemType&gt;&gt;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keywordflow">return</span> (std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;typename TEnumerable::ElemType&gt;</a>&gt;)enumerable;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    }</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TContainer&gt;</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="namespacexlinq.html#a54a976342befd0a967eee63b7d40961e">  218</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(TContainer&amp; container) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;(<span class="keyword">new</span> internal::_StlEnumerable&lt;TContainer, typename TContainer::value_type&gt;(container));</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classxlinq_1_1IEnumerable_html"><div class="ttname"><a href="classxlinq_1_1IEnumerable.html">xlinq::IEnumerable</a></div><div class="ttdoc">Interface for enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:91</div></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem, <span class="keywordtype">size_t</span> SIZE&gt;</div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">  183</a></span>&#160;    std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(TElem(&amp;array)[SIZE])</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    {</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt;(<span class="keyword">new</span> internal::_ArrayEnumerable&lt;TElem, SIZE&gt;(array));</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TContainer&gt;</div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="namespacexlinq.html#ace159b237fbafd4ecb9b00c053389da2">  197</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(std::shared_ptr&lt;TContainer&gt; container) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;(<span class="keyword">new</span> internal::_StlPointerEnumerable&lt;TContainer, typename TContainer::value_type&gt;(container));</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TEnumerable&gt;</div>
+<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="namespacexlinq.html#aae2da1f78a03b2d08516ba942cf30658">  209</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(std::shared_ptr&lt;TEnumerable&gt; enumerable) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TEnumerable::ElemType&gt;&gt;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    {</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        <span class="keywordflow">return</span> (std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;typename TEnumerable::ElemType&gt;</a>&gt;)enumerable;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TContainer&gt;</div>
+<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="namespacexlinq.html#a54a976342befd0a967eee63b7d40961e">  224</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a>(TContainer&amp; container) -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;(<span class="keyword">new</span> internal::_StlEnumerable&lt;TContainer, typename TContainer::value_type&gt;(container));</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    }</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classxlinq_1_1IEnumerable_html"><div class="ttname"><a href="classxlinq_1_1IEnumerable.html">xlinq::IEnumerable</a></div><div class="ttdoc">Interface for enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:94</div></div>
 <div class="ttc" id="xlinq__base_8h_html"><div class="ttname"><a href="xlinq__base_8h.html">xlinq_base.h</a></div><div class="ttdoc">Base xlinq definitions and expressions. </div></div>
-<div class="ttc" id="namespacexlinq_html_a29c51dfbb405e91dbf589ba4864d700c"><div class="ttname"><a href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()</div><div class="ttdoc">Function extracting enumerator from enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:163</div></div>
+<div class="ttc" id="namespacexlinq_html_a29c51dfbb405e91dbf589ba4864d700c"><div class="ttname"><a href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()</div><div class="ttdoc">Function extracting enumerator from enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:166</div></div>
 <div class="ttc" id="xlinq__exception_8h_html"><div class="ttname"><a href="xlinq__exception_8h.html">xlinq_exception.h</a></div><div class="ttdoc">Definitions of exceptions used by xlinq. </div></div>
-<div class="ttc" id="namespacexlinq_html_ad34419de7720a6cb04b210f1681ae9db"><div class="ttname"><a href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">xlinq::from</a></div><div class="ttdeci">std::shared_ptr&lt; IEnumerable&lt; TElem &gt; &gt; from(TElem(&amp;array)[SIZE])</div><div class="ttdoc">Creates enumerable from fixed size array. </div><div class="ttdef"><b>Definition:</b> xlinq_from.h:181</div></div>
+<div class="ttc" id="namespacexlinq_html_ad34419de7720a6cb04b210f1681ae9db"><div class="ttname"><a href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">xlinq::from</a></div><div class="ttdeci">std::shared_ptr&lt; IEnumerable&lt; TElem &gt; &gt; from(TElem(&amp;array)[SIZE])</div><div class="ttdoc">Creates enumerable from fixed size array. </div><div class="ttdef"><b>Definition:</b> xlinq_from.h:183</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 21 2017 15:19:17 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 13 2017 10:00:24 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

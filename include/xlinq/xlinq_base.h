@@ -39,7 +39,9 @@ namespace xlinq
 	*	Interface for enumerator.
 	*	This is the basic enumerator interface which is used to
 	*	obtain elements from collection. New enumerator instance
-	*	should point a guard member, so call of next 
+	*	should point a guard member, so call of next is required
+	*	before iteration starts. Enumerator should support deffered
+	*	execution whenever it is possible.
 	*/
 	template<typename TElem>
 	class IEnumerator
@@ -64,7 +66,8 @@ namespace xlinq
 		*	should start at the begin enumeration guard so call of this method
 		*	is required to begin enumeration. This method should return false
 		*	if collection does not have more elemends and end enumeration guard
-		*	has been reached.
+		*	has been reached. It should support deffered execution whenever it is possible
+		*	and return whenever it is safe to return next collection element.
 		*	@return true, if next element of enumeration has been found. Otherwise
 		*	false.
 		*/

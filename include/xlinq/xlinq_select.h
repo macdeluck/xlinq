@@ -106,9 +106,10 @@ namespace xlinq
 	/**
 	*	Converts collection elements from one form to another.
 	*	This function may be used to create collection of elements of one type
-	*	from collection of emelents of another type.
+	*	from collection of emelents of another type. It is implemented using deffered execution so 
+	*	traversing of the source enumerable will wait until its next element will be requested.
 	*	@param selector Function used to convert elements of source collection
-	*	to elements of result collection. It is common to used lambda expression
+	*	to elements of result collection. It is common to use lambda expression
 	*	as selector.
 	*	@return Builder of select expression.
 	*/

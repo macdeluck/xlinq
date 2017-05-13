@@ -143,6 +143,11 @@ internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a c
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ab738e44970df0cc013b01175278396ff">select</a> (TSelector selector)</td></tr>
 <tr class="memdesc:ab738e44970df0cc013b01175278396ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts collection elements from one form to another.  <a href="#ab738e44970df0cc013b01175278396ff">More...</a><br/></td></tr>
 <tr class="separator:ab738e44970df0cc013b01175278396ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
+<tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplItemLeft" align="right" valign="top">internal::_WhereBuilder<br class="typebreak"/>
+&lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7">where</a> (TPredicate predicate)</td></tr>
+<tr class="memdesc:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements of collection using predicate.  <a href="#a439f2d6992edc6ceb1d4457168f7d7b7">More...</a><br/></td></tr>
+<tr class="separator:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ad34419de7720a6cb04b210f1681ae9db"></a>
@@ -162,7 +167,7 @@ template&lt;typename TElem , size_t SIZE&gt; </div>
 </div><div class="memdoc">
 
 <p>Creates enumerable from fixed size array. </p>
-<p>This function may be used to create enumerable from fixed size array. Please note, that enumeration will fail if array will be deallocated. </p>
+<p>This function may be used to create enumerable from fixed size array. It is implemented using deffered execution so traversing of the array will wait until its next element will be requested. Please note, that enumeration will fail if array will be deallocated. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">array</td><td>Source fixed size array. </td></tr>
@@ -191,7 +196,7 @@ template&lt;typename TContainer &gt; </div>
 </div><div class="memdoc">
 
 <p>Creates enumerable from shared pointer to STL container. </p>
-<p>This function may be used to create enumerable from pointer to STL container. </p>
+<p>This function may be used to create enumerable from pointer to STL container. It is implemented using deffered execution so traversing of the collection will wait until its next element will be requested. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">container</td><td>Source STL container. </td></tr>
@@ -249,7 +254,7 @@ template&lt;typename TContainer &gt; </div>
 </div><div class="memdoc">
 
 <p>Creates enumerable from STL container. </p>
-<p>This function may be used to create enumerable from STL container. Please note, that enumeration will fail if container will be deallocated. </p>
+<p>This function may be used to create enumerable from STL container. It is implemented using deffered execution so traversing of the container will wait until its next element will be requested. Please note, that enumeration will fail if container will be deallocated. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">container</td><td>Source container. </td></tr>
@@ -274,7 +279,7 @@ template&lt;typename TContainer &gt; </div>
 </div><div class="memdoc">
 
 <p>Gathers elements of collection. </p>
-<p>This function allows to gather elements of collection to improve query performance, or to copy collection elements preventing from deallocating enumeration source collection. </p>
+<p>This function allows to gather elements of collection to improve query performance, or to copy collection elements preventing from deallocating enumeration source collection. It is used to intentionally omit effects, advantages and disadvantages of deffered execution. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of gather expression. </dd></dl>
 
 </div>
@@ -353,10 +358,38 @@ template&lt;typename TSelector &gt; </div>
 </div><div class="memdoc">
 
 <p>Converts collection elements from one form to another. </p>
-<p>This function may be used to create collection of elements of one type from collection of emelents of another type. </p>
+<p>This function may be used to create collection of elements of one type from collection of emelents of another type. It is implemented using deffered execution so traversing of the source enumerable will wait until its next element will be requested. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">selector</td><td>Function used to convert elements of source collection to elements of result collection. It is common to used lambda expression as selector. </td></tr>
+    <tr><td class="paramname">selector</td><td>Function used to convert elements of source collection to elements of result collection. It is common to use lambda expression as selector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of select expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a439f2d6992edc6ceb1d4457168f7d7b7"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TPredicate &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">internal::_WhereBuilder&lt;TPredicate&gt; xlinq::where </td>
+          <td>(</td>
+          <td class="paramtype">TPredicate&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements of collection using predicate. </p>
+<p>This function may be used to filter collection elements using given condition. It is implemented using deffered execution. The traversing of collection in looking for next element passing given criteria stops until next element will be requested. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Function used to filter elements of source collection. It is common to use lambda expression as selector. </td></tr>
   </table>
   </dd>
 </dl>
@@ -367,7 +400,7 @@ template&lt;typename TSelector &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 21 2017 15:19:17 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 13 2017 10:00:24 for xLinq by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

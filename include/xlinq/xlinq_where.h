@@ -22,50 +22,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 /**
-*	@file xlinq_gather.h
-*	Gathering the collection elements.
+*	@file xlinq_where.h
+*	Filtering elements of collection using given predicate.
 *	@author TrolleY
 */
-#ifndef XLINQ_GATHER_H_
-#define XLINQ_GATHER_H_
+#ifndef XLINQ_WHERE_H_
+#define XLINQ_WHERE_H_
 
-#include "xlinq_base.h"
-#include "xlinq_from.h"
 #include <memory>
-#include <vector>
+#include "xlinq_base.h"
 
 namespace xlinq
 {
-	/*@cond INTERNAL*/
+	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
-		class _GatherBuilder
+		template<typename TPredicate>
+		class _WhereBuilder
 		{
+		private:
+			TPredicate _predicate;
 		public:
+			_WhereBuilder(TPredicate predicate) : _predicate(predicate) {}
+
 			template<typename TElem>
 			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				auto vec = std::shared_ptr<std::vector<TElem>>(new std::vector<TElem>());
-				for (auto it = enumerable->getEnumerator(); it->next();)
-				{
-					vec->push_back(it->current());
-				}
-				return from(vec);
+				return enumerable;
 			}
 		};
 	}
 	/*@endcond*/
 
 	/**
-	*	Gathers elements of collection.
-	*	This function allows to gather elements of collection to improve query performance,
-	*	or to copy collection elements preventing from deallocating enumeration source collection.
-	*	It is used to intentionally omit effects, advantages and disadvantages of deffered execution.
-	*	@return Builder of gather expression.
+	*	Filters elements of collection using predicate.
+	*	This function may be used to filter collection elements using given condition.
+	*	It is implemented using deffered execution. The traversing of collection
+	*	in looking for next element passing given criteria stops until next element
+	*	will be requested.
+	*	@param predicate Function used to filter elements of source collection.
+	*	It is common to use lambda expression as selector.
+	*	@return Builder of select expression.
 	*/
-	XLINQ_INLINE internal::_GatherBuilder gather()
+	template<typename TPredicate>
+	internal::_WhereBuilder<TPredicate> where(TPredicate predicate)
 	{
-		return internal::_GatherBuilder();
+		return internal::_WhereBuilder<TPredicate>(predicate);
 	}
 }
 

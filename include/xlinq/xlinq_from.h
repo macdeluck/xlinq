@@ -173,7 +173,9 @@ namespace xlinq
 	/**
 	*	Creates enumerable from fixed size array.
 	*	This function may be used to create enumerable from fixed size array.
-	*	Please note, that enumeration will fail if array will be deallocated.
+	*	It is implemented using deffered execution so traversing of the array
+	*	will wait until its next element will be requested. Please note, that
+	*	enumeration will fail if array will be deallocated.
 	*	@param array Source fixed size array.
 	*	@return Enumerable from array.
 	*/
@@ -186,6 +188,8 @@ namespace xlinq
 	/**
 	*	Creates enumerable from shared pointer to STL container.
 	*	This function may be used to create enumerable from pointer to STL container.
+	*	It is implemented using deffered execution so traversing of the collection
+	*	will wait until its next element will be requested.
 	*	@param container Source STL container.
 	*	@return Enumerable from container.
 	*/
@@ -210,7 +214,9 @@ namespace xlinq
 	/**
 	*	Creates enumerable from STL container.
 	*	This function may be used to create enumerable from STL container.
-	*	Please note, that enumeration will fail if container will be deallocated.
+	*	It is implemented using deffered execution so traversing of the container
+	*	will wait until its next element will be requested. Please note, that
+	*	enumeration will fail if container will be deallocated.
 	*	@param container Source container.
 	*	@return Enumerable from container.
 	*/

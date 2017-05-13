@@ -35,5 +35,6 @@ SOFTWARE.
 #include "xlinq_from.h"
 #include "xlinq_select.h"
 #include "xlinq_gather.h"
+#include "xlinq_where.h"
 
 #endif
