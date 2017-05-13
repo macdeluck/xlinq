@@ -2,7 +2,7 @@
 
 xLinq is header only library allowing to use LINQ like expressions in C++ code. It was inspired by [cpplinq](https://github.com/mrange/cpplinq) project. Xlinq uses similar syntax like cpplinq but it defines IEnumerable interface, thus it allows to grab enumerable object without need to gather elements.
 
-This library needs to have c++11 standard enabled during compilation. Library was tested on MS Visual C++ Compiler and C++.
+This library needs to have c++11 standard enabled during compilation. Library was tested on MS Visual C++ Compiler 19.10 and G++ 4.8.4.
 
 To start use xlinq u need only download code, add the include folder to your include path and voila!
 
