@@ -132,7 +132,8 @@ namespace xlinq
 						_started = true;
 						step--;
 					}
-					if (step < std::distance(_end, _current))
+					auto dist = std::distance(_current, _end);
+					if (step < dist)
 					{
 						_current += step;
 						return true;
@@ -147,12 +148,13 @@ namespace xlinq
 				{
 					if (_current == _begin && !_started)
 						return false;
-					if (step < std::distance(_begin, _current))
+					auto dist = std::distance(_current, _begin);
+					if (step > dist)
 					{
 						_current += step;
 						return true;
 					}
-					else if (step == std::distance(_begin, _current))
+					else if (step == dist)
 					{
 						_current = _begin;
 						return true;
