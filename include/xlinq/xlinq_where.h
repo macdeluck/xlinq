@@ -37,6 +37,48 @@ namespace xlinq
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
+		template<typename TElem, typename TPredicate>
+		class _WhereEnumerator : public IEnumerator<TElem>
+		{
+		private:
+			std::shared_ptr<IEnumerator<TElem>> _source;
+			TPredicate _predicate;
+		public:
+			_WhereEnumerator(std::shared_ptr<IEnumerator<TElem>> source, TPredicate predicate)
+				: _source(source), _predicate(predicate)
+			{}
+
+			bool next() override
+			{
+				while (_source->next())
+					if (_predicate(_source->current()))
+						return true;
+				return false;
+			}
+
+			TElem current() override
+			{
+				return _source->current();
+			}
+		};
+
+		template<typename TElem, typename TPredicate>
+		class _WhereEnumerable : public IEnumerable<TElem>
+		{
+		private:
+			std::shared_ptr<IEnumerable<TElem>> _source;
+			TPredicate _predicate;
+		public:
+			_WhereEnumerable(std::shared_ptr<IEnumerable<TElem>> source, TPredicate predicate)
+				: _source(source), _predicate(predicate)
+			{}
+
+			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _WhereEnumerator<TElem, TPredicate>(_source->getEnumerator(), _predicate));
+			}
+		};
+
 		template<typename TPredicate>
 		class _WhereBuilder
 		{
@@ -48,7 +90,7 @@ namespace xlinq
 			template<typename TElem>
 			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return enumerable;
+				return std::shared_ptr<IEnumerable<TElem>>(new internal::_WhereEnumerable<TElem, TPredicate>(enumerable, _predicate));
 			}
 		};
 	}
