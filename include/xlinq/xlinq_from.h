@@ -76,6 +76,104 @@ namespace xlinq
 			}
 		};
 
+		template<typename TIterator, typename TElem>
+		class _StlRandomAccessEnumerator : public IRandomAccessEnumerator<TElem>
+		{
+		private:
+			TIterator _begin, _end, _current;
+			bool _started;
+
+			void assert_finished()
+			{
+				if (_current == _end)
+					throw IterationFinishedException();
+			}
+
+			void assert_started()
+			{
+				if (!_started)
+					throw IterationNotStartedException();
+			}
+
+		public:
+			_StlRandomAccessEnumerator(TIterator begin, TIterator end) : _begin(begin), _end(end), _current(begin), _started(false) {}
+
+			bool next() override
+			{
+				assert_finished();
+				if (!_started)
+					_started = true;
+				else ++_current;
+				return _current != _end;
+			}
+
+			bool back() override
+			{
+				assert_started();
+				if (_current == _begin)
+				{
+					_started = false;
+					return false;
+				}
+				--_current;
+				return true;
+			}
+
+			bool advance(int step) override
+			{
+				if (!step) return true;
+				if (step > 0)
+				{
+					if (_current == _end)
+						return false;
+
+					if (!_started)
+					{
+						_started = true;
+						step--;
+					}
+					if (step < std::distance(_end, _current))
+					{
+						_current += step;
+						return true;
+					}
+					else
+					{
+						_current = _end;
+						return false;
+					}
+				}
+				else
+				{
+					if (_current == _begin && !_started)
+						return false;
+					if (step < std::distance(_begin, _current))
+					{
+						_current += step;
+						return true;
+					}
+					else if (step == std::distance(_begin, _current))
+					{
+						_current = _begin;
+						return true;
+					}
+					else
+					{
+						_started = false;
+						_current = _begin;
+						return false;
+					}
+				}
+			}
+
+			TElem current() override
+			{
+				assert_started();
+				assert_finished();
+				return *_current;
+			}
+		};
+
 		template<typename TContainer, typename TElem>
 		class _StlEnumerable : public IEnumerable<TElem>
 		{
@@ -89,6 +187,35 @@ namespace xlinq
 				typedef typename TContainer::iterator iterator;
 				return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container.begin(), _container.end()));
 			}
+		};
+
+		template<typename TContainer, typename TElem>
+		class _StlRandomAccessEnumerable : public IEnumerable<TElem>
+		{
+		private:
+			TContainer& _container;
+		public:
+			_StlRandomAccessEnumerable(TContainer& container) : _container(container) {}
+
+			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			{
+				typedef typename TContainer::iterator iterator;
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlRandomAccessEnumerator<iterator, TElem>(_container.begin(), _container.end()));
+			}
+		};
+
+		template<typename iterator_tag, typename TContainer, typename TElem>
+		struct stl_enumerable_selector
+		{
+		public:
+			typedef _StlEnumerable<TContainer, TElem> enumerable;
+		};
+		
+		template<typename TContainer, typename TElem>
+		struct stl_enumerable_selector<std::random_access_iterator_tag, TContainer, TElem>
+		{
+		public:
+			typedef _StlRandomAccessEnumerable<TContainer, TElem> enumerable;
 		};
 
 		template<typename TContainer, typename TIterator, typename TElem>
@@ -223,7 +350,9 @@ namespace xlinq
 	template<typename TContainer>
 	auto from(TContainer& container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
 	{
-		return std::shared_ptr<IEnumerable<typename TContainer::value_type>>(new internal::_StlEnumerable<TContainer, typename TContainer::value_type>(container));
+		typedef typename std::iterator_traits<typename TContainer::iterator> traits;
+		typedef typename internal::stl_enumerable_selector<typename traits::iterator_category, TContainer, typename TContainer::value_type> selector;
+		return std::shared_ptr<IEnumerable<typename TContainer::value_type>>(new typename selector::enumerable(container));
 	}
 }
 

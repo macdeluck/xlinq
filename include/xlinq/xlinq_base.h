@@ -29,6 +29,7 @@ SOFTWARE.
 #ifndef XLINQ_BASE_H_
 #define XLINQ_BASE_H_
 
+#include <cstddef>
 #include <memory>
 #include "xlinq_defs.h"
 #include "xlinq_exception.h"
@@ -83,6 +84,47 @@ namespace xlinq
 		*	@return current enumeration element.
 		*/
 		virtual TElem current() XLINQ_ABSTRACT;
+	};
+
+	/**
+	*	Interface for enumerator.
+	*	This enumerator interface allows to traverse collection
+	*	in two ways. When the iteration is finished (end guard has been met), it may
+	*	continue to go backward until the begin guard occurance. It should support
+	*	deffered execution whenever it is possible and return whenever
+	*	it is safe to return next collection element.
+	*/
+	template<typename TElem>
+	class IBidirectionalEnumerator : public IEnumerator<TElem>
+	{
+	public:
+		/**
+		*	Moves enumeration to previous element.
+		*	This method moves an enumeration to previous element. This method should return false
+		*	if collection does not have more elemends and begin enumeration guard
+		*	has been reached. It should support deffered execution whenever it is possible
+		*	and return whenever it is safe to return previous collection element.
+		*	@return true, if next element of enumeration has been found. Otherwise
+		*	false.
+		*/
+		virtual bool back() XLINQ_ABSTRACT;
+	};
+
+	template<typename TElem>
+	class IRandomAccessEnumerator : public IBidirectionalEnumerator<TElem>
+	{
+	public:
+		/**
+		*	Moves enumeration forward or backward by given number of steps.
+		*	This function allows to traverse collection ommiting elements in constant time.
+		*	To move forward step should be positive value, and to move backward step shoud
+		*	be negative value. If step is equal to 0 method should always return true and
+		*	exit immediately. If given step is greater than number of elements left,
+		*	then enumerator should point to begin or end guard respectively and return false.
+		*	@param step Number of steps to advance enumerator.
+		*	@return true, if new enumerator position is within collection. Otherwise false.
+		*/
+		virtual bool advance(int step) XLINQ_ABSTRACT;
 	};
 
 	/**
