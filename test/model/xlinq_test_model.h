@@ -63,7 +63,7 @@ namespace xlinq
 	public:
 		XLINQ_INLINE PersonEnumerable() : _source(getPersons()) {}
 
-		XLINQ_INLINE std::shared_ptr<IEnumerator<Person>> getEnumerator() override
+		XLINQ_INLINE std::shared_ptr<IEnumerator<Person>> createEnumerator() override
 		{
 			return std::shared_ptr<IEnumerator<Person>>(new PersonEnumerator(this));
 		}
