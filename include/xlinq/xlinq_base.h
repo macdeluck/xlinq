@@ -31,8 +31,30 @@ SOFTWARE.
 
 #include <cstddef>
 #include <memory>
+#include <type_traits>
 #include "xlinq_defs.h"
 #include "xlinq_exception.h"
+
+#define _XLINQ_GET_ENUMERATOR(TEnumerator) \
+	std::shared_ptr<TEnumerator> getEnumerator() \
+	{ \
+		std::shared_ptr<IEnumerator<TElem>> res = this->createEnumerator(); \
+		return std::static_pointer_cast<TEnumerator>(res); \
+	}
+
+#define _XLINQ_GET_END_ENUMERATOR(TEnumerator) \
+	std::shared_ptr<TEnumerator> getEndEnumerator() \
+	{ \
+		std::shared_ptr<IEnumerator<TElem>> res = this->createEndEnumerator(); \
+		return std::static_pointer_cast<TEnumerator>(res); \
+	}
+
+#define _XLINQ_GET_ENUMERATOR_AT(TEnumerator) \
+	std::shared_ptr<TEnumerator> getEnumeratorAt(int index) \
+	{ \
+		std::shared_ptr<IEnumerator<TElem>> res = this->createEnumeratorAt(index); \
+		return std::static_pointer_cast<TEnumerator>(res); \
+	}
 
 namespace xlinq
 {
@@ -57,16 +79,15 @@ namespace xlinq
 		
 		/**
 		*	Virtual destructor of object.
-		*	Destructor defined to avoid diamond inheritance problem.
 		*/
 		virtual ~IEnumerator() {}
 
 		/**
 		*	Moves enumeration to next element.
-		*	This method moves an enumeration to next element. Enumeration
-		*	should start at the begin enumeration guard so call of this method
-		*	is required to begin enumeration. This method should return false
-		*	if collection does not have more elemends and end enumeration guard
+		*	This method moves an enumeration to next element. After creation
+		*	enumerator should point at begin enumeration guard so call of this method
+		*	is required to start enumeration. This method should return false
+		*	if collection does not have more elements and end enumeration guard
 		*	has been reached. It should support deffered execution whenever it is possible
 		*	and return whenever it is safe to return next collection element.
 		*	@return true, if next element of enumeration has been found. Otherwise
@@ -91,7 +112,7 @@ namespace xlinq
 	*	This enumerator interface allows to traverse collection
 	*	in two ways. When the iteration is finished (end guard has been met), it may
 	*	continue to go backward until the begin guard occurance. It should support
-	*	deffered execution whenever it is possible and return whenever
+	*	deffered execution whenever it is possible and stop its execution whenever
 	*	it is safe to return next collection element.
 	*/
 	template<typename TElem>
@@ -101,9 +122,9 @@ namespace xlinq
 		/**
 		*	Moves enumeration to previous element.
 		*	This method moves an enumeration to previous element. This method should return false
-		*	if collection does not have more elemends and begin enumeration guard
+		*	if collection does not have more elements and begin enumeration guard
 		*	has been reached. It should support deffered execution whenever it is possible
-		*	and return whenever it is safe to return previous collection element.
+		*	and stop its execution whenever it is safe to return previous collection element.
 		*	@return true, if next element of enumeration has been found. Otherwise
 		*	false.
 		*/
@@ -135,6 +156,17 @@ namespace xlinq
 	template<typename TElem>
 	class IEnumerable
 	{
+	protected:
+		/**
+		*	@todo comments
+		*	Accesses enumerator.
+		*	This method allows to access pointer to enumerator, which may be used
+		*	to traverse collection. Each of enumerator instances created from single
+		*	collection should work separately (they should not have any impact on each other).
+		*	@return New IEnumerator instance.
+		*/
+		virtual std::shared_ptr<IEnumerator<TElem>> createEnumerator() XLINQ_ABSTRACT;
+
 	public:
 		/**
 		*	Type returned by enumerator.
@@ -142,48 +174,108 @@ namespace xlinq
 		*	It is designed to be not-constant and not-reference type.
 		*/
 		typedef TElem ElemType;
-		
+
+		_XLINQ_GET_ENUMERATOR(IEnumerator<TElem>)
+	};
+
+	/**
+	*	Interface for bidirectional enumerable.
+	*	This is basic enumerable interface which is used to obtain pointer to
+	*	IBidirectionalEnumerator instance.
+	*	@todo comments
+	*/
+	template<typename TElem>
+	class IBidirectionalEnumerable : public IEnumerable<TElem>
+	{
+	protected:
 		/**
-		*	Accesses enumerator.
+		*	Accesses enumerator pointing at the end of enumerable.
 		*	This method allows to access pointer to enumerator, which may be used
-		*	to traverse collection. Each of enumerator instances created from single
-		*	collection should work separately (they should not have any impact on each other).
-		*	@return New IEnumerator instance.
+		*	to traverse collection starting from last element. Since enumerator will point at the
+		*	end of collection the call of back method is required to traverse collection. Each of
+		*	enumerator instances created from single collection should work separately
+		*	(they should not have any impact on each other).
+		*	@return New IBidirectionalEnumerator instance.
 		*/
-		virtual std::shared_ptr<IEnumerator<TElem>> getEnumerator() XLINQ_ABSTRACT;
+		virtual std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() XLINQ_ABSTRACT;
+	public:
+		_XLINQ_GET_ENUMERATOR(IBidirectionalEnumerator<TElem>)
+
+		_XLINQ_GET_END_ENUMERATOR(IBidirectionalEnumerator<TElem>)
+	};
+
+	/**
+	*	Interface for random access enumerable.
+	*	This is basic enumerable interface which is used to obtain pointer to
+	*	IRandomAccessEnumerator instance.
+	*	@todo comments
+	*/
+	template<typename TElem>
+	class IRandomAccessEnumerable : public IBidirectionalEnumerable<TElem>
+	{
+	protected:
+		/**
+		*	Accesses enumerator pointing at the given element of enumerable.
+		*	This method allows to access pointer to enumerator, which may be used
+		*	to traverse collection starting from any element. Since enumerator will point at the
+		*	end of collection the call of back method is required to traverse collection. Each of
+		*	enumerator instances created from single collection should work separately
+		*	(they should not have any impact on each other).
+		*	@return New IRandomAccessEnumerator instance.
+		*/
+		virtual std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) XLINQ_ABSTRACT;
+	public:
+		_XLINQ_GET_ENUMERATOR(IRandomAccessEnumerator<TElem>)
+
+		_XLINQ_GET_END_ENUMERATOR(IRandomAccessEnumerator<TElem>)
+
+		_XLINQ_GET_ENUMERATOR_AT(IRandomAccessEnumerator<TElem>)
 	};
 
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
-		template<typename TEnumerable>
-		struct typeinfo
+		template<bool isRandomAccess, bool isBidirectional, bool isEnumerable, typename TElem> struct EnumerableTypeSelectorHelper {};
+		template<typename TElem> struct EnumerableTypeSelectorHelper<true, true, true, TElem> { typedef IRandomAccessEnumerable<TElem> type; };
+		template<typename TElem> struct EnumerableTypeSelectorHelper<false, true, true, TElem> { typedef IBidirectionalEnumerable<TElem> type; };
+		template<typename TElem> struct EnumerableTypeSelectorHelper<false, false, true, TElem> { typedef IEnumerable<TElem> type; };
+
+		template<typename Type>
+		struct EnumerableTypeSelector
 		{
-			typedef typename std::remove_const<
-				typename std::remove_reference<typename TEnumerable::ElemType>::type>::type ElemType;
-
-			typedef std::shared_ptr<IEnumerable<ElemType>> BaseType;
-
-			XLINQ_INLINE static BaseType cast(std::shared_ptr<TEnumerable> value)
-			{
-				return (BaseType)value;
-			}
+			typedef typename EnumerableTypeSelectorHelper<
+				std::is_base_of<IRandomAccessEnumerable<typename Type::ElemType>, Type>::value,
+				std::is_base_of<IBidirectionalEnumerable<typename Type::ElemType>, Type>::value,
+				std::is_base_of<IEnumerable<typename Type::ElemType>, Type>::value,
+				typename Type::ElemType>::type type;
 		};
 
 		class _GetEnumeratorBuilder
 		{
 		public:
 			template<typename TElem>
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEnumerator();
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEnumerator();
+			}
+
+			template<typename TElem>
 			std::shared_ptr<IEnumerator<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
 				return enumerable->getEnumerator();
 			}
 		};
-
+		
 		template<typename TValue, typename TBuilder>
-		auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(typeinfo<TValue>::cast(ptr)))
+		auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(std::declval<std::shared_ptr<typename EnumerableTypeSelector<TValue>::type>>()))
 		{
-			return builder.build(typeinfo<TValue>::cast(ptr));
+			return builder.build(ptr);
 		}
 	}
 	/*@endcond*/
