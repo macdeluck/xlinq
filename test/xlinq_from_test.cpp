@@ -110,7 +110,7 @@ TEST(XLinqFromTest, XLinqStlIteratorFromVectorCallNextWhenEnumerationWasFinished
 	FAIL();
 }
 
-/*
+
 TEST(XLinqFromTest, XLinqStlIterableFromVector)
 {
 	auto persons = getPersons();
@@ -147,8 +147,8 @@ TEST(XLinqFromTest, XLinqStlIterableFromVector)
 	ASSERT_EQ(71, enumerator->current().age);
 
 	ASSERT_FALSE(enumerator->next());
-}*/
-/*
+}
+
 TEST(XLinqFromTest, XLinqStlIterableFromPointerToVector)
 {
 	auto persons = make_shared<vector<Person>>(getPersons());
@@ -223,7 +223,7 @@ TEST(XLinqFromTest, XLinqEnumerableFromOtherEnumerable)
 	ASSERT_EQ(71, enumerator->current().age);
 
 	ASSERT_FALSE(enumerator->next());
-}*/
+}
 
 TEST(XLinqFromTest, XLinqArrayEnumerator)
 {

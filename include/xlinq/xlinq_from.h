@@ -376,6 +376,12 @@ namespace xlinq
 				return result;
 			}
 		};
+
+		template<typename TEnumerable, typename TElemType>
+		struct EnumerableOnlyFilterHelper
+		{
+			typedef typename EnumerableTypeSelector<TEnumerable>::type type;
+		};
 	}
 	/*@endcond*/
 
@@ -410,14 +416,14 @@ namespace xlinq
 
 	/**
 	*	Creates enumerable from shared pointer to enumerable.
-	*	This function just returns given enumerable.
+	*	This function returns cleaned type from given enumerable.
 	*	@param enumerable Source enumerable
 	*	@return Given pointer.
 	*/
 	template<typename TEnumerable>
-	auto from(std::shared_ptr<TEnumerable> enumerable) -> std::shared_ptr<IEnumerable<typename TEnumerable::ElemType>>
+	std::shared_ptr<typename internal::EnumerableOnlyFilterHelper<TEnumerable, typename TEnumerable::ElemType>::type> from(std::shared_ptr<TEnumerable> enumerable)
 	{
-		return (std::shared_ptr<IEnumerable<typename TEnumerable::ElemType>>)enumerable;
+		return (std::shared_ptr<typename internal::EnumerableOnlyFilterHelper<TEnumerable, typename TEnumerable::ElemType>::type>)enumerable;
 	}
 
 	/**
