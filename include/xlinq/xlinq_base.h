@@ -275,7 +275,7 @@ namespace xlinq
 		template<typename TValue, typename TBuilder>
 		auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(std::declval<std::shared_ptr<typename EnumerableTypeSelector<TValue>::type>>()))
 		{
-			return builder.build(ptr);
+			return builder.build((std::shared_ptr<typename EnumerableTypeSelector<TValue>::type>)ptr);
 		}
 	}
 	/*@endcond*/

@@ -363,3 +363,48 @@ TEST(XLinqFromTest, XlinqStlRandomAccessEnumerator)
 	ASSERT_TRUE(enumerator->advance(1));
 	ASSERT_EQ(1, enumerator->current());
 }
+
+TEST(XLinqFromTest, XlinqFromVectorRandomAccessEnumerator)
+{
+	vector<int> numbers = { 1, 2, 3, 4, 5 };
+	auto enumerator = from(numbers) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_FALSE(enumerator->back());
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(2));
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-3));
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(10));
+	ASSERT_TRUE(enumerator->advance(-1));
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(-10));
+	ASSERT_TRUE(enumerator->advance(1));
+	ASSERT_EQ(1, enumerator->current());
+}

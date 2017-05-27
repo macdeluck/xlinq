@@ -101,22 +101,13 @@ namespace xlinq
 			bool next() override
 			{
 				assert_finished();
-				if (!_started)
-					_started = true;
-				else ++_current;
-				return _current != _end;
+				return advance(1);
 			}
 
 			bool back() override
 			{
 				assert_started();
-				if (_current == _begin)
-				{
-					_started = false;
-					return false;
-				}
-				--_current;
-				return true;
+				return advance(-1);
 			}
 
 			bool advance(int step) override
@@ -184,7 +175,7 @@ namespace xlinq
 		public:
 			_StlEnumerable(TContainer& container) : _container(container) {}
 
-			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
 				return std::shared_ptr<IEnumerator<TElem>>(new _StlEnumerator<iterator, TElem>(_container.begin(), _container.end()));
@@ -192,32 +183,51 @@ namespace xlinq
 		};
 
 		template<typename TContainer, typename TElem>
-		class _StlRandomAccessEnumerable : public IEnumerable<TElem>
+		class _StlRandomAccessEnumerable : public IRandomAccessEnumerable<TElem>
 		{
 		private:
 			TContainer& _container;
 		public:
 			_StlRandomAccessEnumerable(TContainer& container) : _container(container) {}
 
-			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
 				return std::shared_ptr<IEnumerator<TElem>>(new _StlRandomAccessEnumerator<iterator, TElem>(_container.begin(), _container.end()));
 			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				auto result = this->getEnumerator();
+				result->advance(_container.size() + 1);
+				return result;
+			}
+
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) override
+			{
+				auto result = this->getEnumerator();
+				result->advance(elementIndex + 1);
+				return result;
+			}
 		};
 
 		template<typename iterator_tag, typename TContainer, typename TElem>
-		struct stl_enumerable_selector
+		struct stl_enumerable_selector_helper
 		{
-		public:
 			typedef _StlEnumerable<TContainer, TElem> enumerable;
 		};
 		
 		template<typename TContainer, typename TElem>
-		struct stl_enumerable_selector<std::random_access_iterator_tag, TContainer, TElem>
+		struct stl_enumerable_selector_helper<std::random_access_iterator_tag, TContainer, TElem>
 		{
-		public:
 			typedef _StlRandomAccessEnumerable<TContainer, TElem> enumerable;
+		};
+
+		template<typename TContainer, typename TElem>
+		struct stl_enumerable_selector
+		{
+			typedef typename std::iterator_traits<typename TContainer::iterator> traits;
+			typedef typename stl_enumerable_selector_helper<typename traits::iterator_category, TContainer, typename TContainer::value_type>::enumerable type;
 		};
 
 		template<typename TContainer, typename TIterator, typename TElem>
@@ -238,62 +248,132 @@ namespace xlinq
 		public:
 			_StlPointerEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
 
-			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
 				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
 			}
 		};
 
-		template<typename TElem, size_t SIZE>
-		class _ArrayEnumerator : public IEnumerator<TElem>
+		template<typename TElem>
+		class _ArrayEnumerator : public IRandomAccessEnumerator<TElem>
 		{
 		private:
 			TElem* _begin;
+			size_t _size;
 			size_t _index;
 			bool _started;
 
 			void assert_finished()
 			{
-				if (_index == SIZE)
+				if (_index == _size)
 					throw IterationFinishedException();
 			}
 
+			void assert_started()
+			{
+				if (!_started)
+					throw IterationNotStartedException();
+			}
+
 		public:
-			_ArrayEnumerator(TElem* begin) : _begin(begin), _index(0), _started(false) {}
+			_ArrayEnumerator(TElem* begin, size_t size) : _begin(begin), _size(size), _index(0), _started(false) {}
 
 			bool next() override
 			{
 				assert_finished();
-				if (!_started)
-					_started = true;
+				return advance(1);
+			}
+
+			bool back() override
+			{
+				assert_started();
+				return advance(-1);
+			}
+
+			bool advance(int step) override
+			{
+				if (!step) return true;
+				if (step > 0)
+				{
+					if (_index == _size)
+						return false;
+
+					if (!_started)
+					{
+						_started = true;
+						step--;
+					}
+					auto dist = _size - _index;
+					if ((size_t)step < dist)
+					{
+						_index += step;
+						return true;
+					}
+					else
+					{
+						_index = _size;
+						return false;
+					}
+				}
 				else
 				{
-					++_begin;
-					++_index;
+					if ((_index == 0) && !_started)
+						return false;
+					step = -step;
+					if ((size_t)step < _index)
+					{
+						_index -= step;
+						return true;
+					}
+					else if ((size_t)step == _index)
+					{
+						_index = 0;
+						return true;
+					}
+					else
+					{
+						_started = false;
+						_index = 0;
+						return false;
+					}
 				}
-				return _index != SIZE;
 			}
 
 			TElem current()
 			{
-				if (!_started) throw IterationNotStartedException();
+				assert_started();
 				assert_finished();
-				return *_begin;
+				return *(_begin + _index);
 			}
 		};
 
-		template<typename TElem, size_t SIZE>
-		class _ArrayEnumerable : public IEnumerable<TElem>
+		template<typename TElem>
+		class _ArrayEnumerable : public IRandomAccessEnumerable<TElem>
 		{
 		private:
-			TElem(&_array)[SIZE];
+			TElem* _array;
+			size_t _size;
 		public:
-			_ArrayEnumerable(TElem(&array)[SIZE]) : _array(array) {}
+			_ArrayEnumerable(TElem* array, size_t size) : _array(array), _size(size) {}
 
-			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
-				return std::shared_ptr<IEnumerator<TElem>>(new _ArrayEnumerator<TElem, SIZE>((TElem*)_array));
+				return std::shared_ptr<IEnumerator<TElem>>(new _ArrayEnumerator<TElem>(_array, _size));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				auto result = this->getEnumerator();
+				result->advance(_size + 1);
+				return result;
+			}
+
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) override
+			{
+				auto result = this->getEnumerator();
+				result->advance(elementIndex + 1);
+				return result;
 			}
 		};
 	}
@@ -309,9 +389,9 @@ namespace xlinq
 	*	@return Enumerable from array.
 	*/
 	template<typename TElem, size_t SIZE>
-	std::shared_ptr<IEnumerable<TElem>> from(TElem(&array)[SIZE])
+	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(TElem(&array)[SIZE])
 	{
-		return std::shared_ptr<IEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem, SIZE>(array));
+		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem>((TElem*)array, SIZE));
 	}
 
 	/**
@@ -350,11 +430,9 @@ namespace xlinq
 	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
-	auto from(TContainer& container) -> std::shared_ptr<IEnumerable<typename TContainer::value_type>>
+	auto from(TContainer& container) -> std::shared_ptr<typename internal::stl_enumerable_selector<TContainer, typename TContainer::value_type>::type>
 	{
-		typedef typename std::iterator_traits<typename TContainer::iterator> traits;
-		typedef typename internal::stl_enumerable_selector<typename traits::iterator_category, TContainer, typename TContainer::value_type> selector;
-		return std::shared_ptr<IEnumerable<typename TContainer::value_type>>(new typename selector::enumerable(container));
+		return std::shared_ptr<typename internal::stl_enumerable_selector<TContainer, typename TContainer::value_type>::type>(new typename internal::stl_enumerable_selector<TContainer, typename TContainer::value_type>::type(container));
 	}
 }
 
