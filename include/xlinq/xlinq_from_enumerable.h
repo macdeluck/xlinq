@@ -22,16 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 /**
-*	@file xlinq_from.h
-*	Creating enumerable object from containers and arrays.
+*	@file xlinq_from_enumerable.h
+*	Creating enumerable object from already enumerable object by abstracting its type.
 *	@author TrolleY
 */
-#ifndef XLINQ_FROM_H_
-#define XLINQ_FROM_H_
+#ifndef XLINQ_FROM_ENUMERABLE_H_
+#define XLINQ_FROM_ENUMERABLE_H_
 
-#include "xlinq_from_array.h"
-#include "xlinq_from_enumerable.h"
-#include "xlinq_from_container.h"
-#include "xlinq_from_container_ptr.h"
+#include <memory>
+#include "xlinq_base.h"
+
+namespace xlinq
+{
+	/*@cond XLINQ_INTERNAL*/
+	namespace internal
+	{
+		template<typename TEnumerable, typename TElemType>
+		struct EnumerableFilterHelper
+		{
+			typedef typename EnumerableTypeSelector<TEnumerable>::type type;
+		};
+	}
+	/*@endcond*/
+	
+	/**
+	*	Creates enumerable from shared pointer to enumerable.
+	*	This function returns cleaned type from given enumerable.
+	*	@param enumerable Source enumerable
+	*	@return Given pointer.
+	*/
+	template<typename TEnumerable>
+	std::shared_ptr<typename internal::EnumerableFilterHelper<TEnumerable, typename TEnumerable::ElemType>::type> from(std::shared_ptr<TEnumerable> enumerable)
+	{
+		return (std::shared_ptr<typename internal::EnumerableFilterHelper<TEnumerable, typename TEnumerable::ElemType>::type>)enumerable;
+	}
+}
 
 #endif
