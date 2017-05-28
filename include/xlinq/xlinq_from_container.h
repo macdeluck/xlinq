@@ -147,7 +147,7 @@ namespace xlinq
 
 		public:
 			_StlRandomAccessEnumerator(TIterator begin, TIterator end) : _begin(begin), _end(end), _current(begin), _started(false) {}
-			_StlRandomAccessEnumerator(TIterator begin, TIterator end, TIterator current) : _begin(begin), _end(end), _current(current), _started(false) {}
+			_StlRandomAccessEnumerator(TIterator begin, TIterator end, TIterator current) : _begin(begin), _end(end), _current(current), _started(true) {}
 
 			bool next() override
 			{
