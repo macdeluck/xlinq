@@ -9,6 +9,8 @@
 #include <forward_list>
 #include <set>
 #include <map>
+#include <unordered_set>
+#include <unordered_map>
 #include <utility>
 #include <memory>
 
@@ -24,6 +26,26 @@ namespace xlinq
 		bool operator<(const Person& other) const { return age < other.age; }
 
 		bool operator>(const Person& other) const { return age > other.age; }
+	};
+
+	struct PersonHasher
+	{
+		std::hash<int> hasher;
+
+	public:
+		size_t operator()(const Person& val) const
+		{
+			return hasher(val.age);
+		}
+	};
+
+	struct PersonEqualityComparer
+	{
+	public:
+		size_t operator()(const Person& first, const Person& second) const
+		{
+			return first.age == second.age && first.firstName == second.firstName && first.secondName == second.secondName;
+		}
 	};
 
 	inline std::vector<Person> getPersons()
@@ -76,6 +98,36 @@ namespace xlinq
 	{
 		auto prsns = getPersons();
 		auto result = std::multimap<int, Person>();
+		for (auto p : prsns)
+			result.insert(std::pair<int, Person>(p.age, p));
+		return result;
+	}
+
+	inline std::unordered_set<Person, PersonHasher, PersonEqualityComparer> getPersonsUnorderedSet()
+	{
+		auto result = getPersons();
+		return std::unordered_set<Person, PersonHasher, PersonEqualityComparer>(result.begin(), result.end());
+	}
+
+	inline std::unordered_multiset<Person, PersonHasher, PersonEqualityComparer> getPersonsUnorderedMultiSet()
+	{
+		auto result = getPersons();
+		return std::unordered_multiset<Person, PersonHasher, PersonEqualityComparer>(result.begin(), result.end());
+	}
+
+	inline std::unordered_map<int, Person> getPersonsUnorderedMap()
+	{
+		auto prsns = getPersons();
+		auto result = std::unordered_map<int, Person>();
+		for (auto p : prsns)
+			result.insert(std::pair<int, Person>(p.age, p));
+		return result;
+	}
+
+	inline std::unordered_multimap<int, Person, std::hash<int>> getPersonsUnorderedMultiMap()
+	{
+		auto prsns = getPersons();
+		auto result = std::unordered_multimap<int, Person>();
 		for (auto p : prsns)
 			result.insert(std::pair<int, Person>(p.age, p));
 		return result;
