@@ -901,3 +901,319 @@ TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromMultiSet_End)
 
 	occuredPersons.clear();
 }
+
+TEST(XLinqFromMapTest, CallCurrentBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMapTest, CallBackBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->back();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMapTest, CallCurrentWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMapTest, CallNextWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMapTest, BidirectionalEnumerableFromMap_Begin)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromMapTest, BidirectionalEnumerableFromMap_End)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEndEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+}
+
+TEST(XLinqFromMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->current().second;
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiMapTest, CallBackBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->back();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiMapTest, CallCurrentWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->current().second;
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiMapTest, CallNextWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiMapTest, BidirectionalEnumerableFromMap_Begin)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromMultiMapTest, BidirectionalEnumerableFromMap_End)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEndEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current().second);
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+}

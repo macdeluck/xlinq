@@ -8,6 +8,8 @@
 #include <list>
 #include <forward_list>
 #include <set>
+#include <map>
+#include <utility>
 #include <memory>
 
 namespace xlinq
@@ -59,6 +61,24 @@ namespace xlinq
 	{
 		auto result = getPersons();
 		return std::multiset<Person>(result.begin(), result.end());
+	}
+
+	inline std::map<int, Person> getPersonsMap()
+	{
+		auto prsns = getPersons();
+		auto result = std::map<int, Person>();
+		for (auto p : prsns)
+			result.insert(std::pair<int, Person>(p.age, p));
+		return result;
+	}
+
+	inline std::multimap<int, Person> getPersonsMultiMap()
+	{
+		auto prsns = getPersons();
+		auto result = std::multimap<int, Person>();
+		for (auto p : prsns)
+			result.insert(std::pair<int, Person>(p.age, p));
+		return result;
 	}
 
 	class PersonEnumerable : public IEnumerable<Person>
