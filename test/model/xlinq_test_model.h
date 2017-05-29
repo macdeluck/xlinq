@@ -5,6 +5,7 @@
 #include <xlinq/xlinq_base.h>
 #include <string>
 #include <vector>
+#include <list>
 #include <memory>
 
 namespace xlinq
@@ -28,6 +29,12 @@ namespace xlinq
 			Person { "Jan", "Lampus", 71 }
 		};
 		return result;
+	}
+
+	inline std::list<Person> getPersonsList()
+	{
+		auto result = getPersons();
+		return std::list<Person>(result.begin(), result.end());
 	}
 
 	class PersonEnumerable : public IEnumerable<Person>

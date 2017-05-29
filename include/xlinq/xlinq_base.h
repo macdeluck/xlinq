@@ -271,6 +271,35 @@ namespace xlinq
 				return enumerable->getEnumerator();
 			}
 		};
+
+		class _GetEndEnumeratorBuilder
+		{
+		public:
+			template<typename TElem>
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEndEnumerator();
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEndEnumerator();
+			}
+		};
+
+		class _GetEnumeratorAtBuilder
+		{
+			int _elementIndex;
+		public:
+			_GetEnumeratorAtBuilder(int elementIndex) : _elementIndex(elementIndex) {}
+
+			template<typename TElem>
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return enumerable->getEnumeratorAt(_elementIndex);
+			}
+		};
 		
 		template<typename TValue, typename TBuilder>
 		auto build(std::shared_ptr<TValue> ptr, TBuilder builder) -> decltype(builder.build(std::declval<std::shared_ptr<typename EnumerableTypeSelector<TValue>::type>>()))
@@ -300,6 +329,25 @@ namespace xlinq
 	XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()
 	{
 		return internal::_GetEnumeratorBuilder();
+	}
+
+	/**
+	*	Function extracting end enumerator from bidirectional enumerable.
+	*	@return Builder of getEndEnumerator expression.
+	*/
+	XLINQ_INLINE internal::_GetEndEnumeratorBuilder getEndEnumerator()
+	{
+		return internal::_GetEndEnumeratorBuilder();
+	}
+
+	/**
+	*	Function extracting enumerator at given position from random access enumerable.
+	*	@param elementIndex index of element to set enumerator pointing to
+	*	@return Builder of getEnumeratorAt expression.
+	*/
+	XLINQ_INLINE internal::_GetEnumeratorAtBuilder getEnumeratorAt(int elementIndex)
+	{
+		return internal::_GetEnumeratorAtBuilder(elementIndex);
 	}
 }
 

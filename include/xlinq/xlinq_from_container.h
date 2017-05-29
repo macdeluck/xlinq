@@ -78,6 +78,54 @@ namespace xlinq
 		};
 
 		template<typename TIterator, typename TElem>
+		class _StlBidirectionalEnumerator : public IBidirectionalEnumerator<TElem>
+		{
+		private:
+			TIterator _begin, _end, _current;
+			bool _started;
+
+			void assert_finished()
+			{
+				if (_current == _end)
+					throw IterationFinishedException();
+			}
+
+			void assert_started()
+			{
+				if (!_started)
+					throw IterationNotStartedException();
+			}
+
+		public:
+			_StlBidirectionalEnumerator(TIterator begin, TIterator end, bool atBegin = true) : _begin(begin), _end(end), _current(atBegin ? begin : end), _started(!atBegin) {}
+
+			bool next() override
+			{
+				assert_finished();
+				if (!_started)
+					_started = true;
+				else ++_current;
+				return _current != _end;
+			}
+
+			bool back() override
+			{
+				assert_started();
+				if (_current != _begin)
+					--_current;
+				else _started = false;
+				return _started;
+			}
+
+			TElem current() override
+			{
+				assert_started();
+				assert_finished();
+				return *_current;
+			}
+		};
+
+		template<typename TIterator, typename TElem>
 		class _StlRandomAccessEnumerator : public IRandomAccessEnumerator<TElem>
 		{
 		private:
@@ -191,6 +239,27 @@ namespace xlinq
 		};
 
 		template<typename TContainer, typename TElem>
+		class _StlBidirectionalEnumerable : public IBidirectionalEnumerable<TElem>
+		{
+		private:
+			TContainer& _container;
+		public:
+			_StlBidirectionalEnumerable(TContainer& container) : _container(container) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				typedef typename TContainer::iterator iterator;
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlBidirectionalEnumerator<iterator, TElem>(_container.begin(), _container.end()));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				typedef typename TContainer::iterator iterator;
+				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlBidirectionalEnumerator<iterator, TElem>(_container.begin(), _container.end(), false));
+			}
+		};
+
+		template<typename TContainer, typename TElem>
 		class _StlRandomAccessEnumerable : public IRandomAccessEnumerable<TElem>
 		{
 		private:
@@ -221,7 +290,18 @@ namespace xlinq
 		template<typename iterator_tag, typename TContainer, typename TElem>
 		struct StlEnumerableSelectorHelper
 		{
+		};
+
+		template<typename TContainer, typename TElem>
+		struct StlEnumerableSelectorHelper<std::forward_iterator_tag, TContainer, TElem>
+		{
 			typedef _StlEnumerable<TContainer, TElem> enumerable;
+		};
+
+		template<typename TContainer, typename TElem>
+		struct StlEnumerableSelectorHelper<std::bidirectional_iterator_tag, TContainer, TElem>
+		{
+			typedef _StlBidirectionalEnumerable<TContainer, TElem> enumerable;
 		};
 		
 		template<typename TContainer, typename TElem>
