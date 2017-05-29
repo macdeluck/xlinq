@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <forward_list>
+#include <set>
 #include <memory>
 
 namespace xlinq
@@ -17,6 +18,10 @@ namespace xlinq
 		std::string firstName;
 		std::string secondName;
 		int age;
+
+		bool operator<(const Person& other) const { return age < other.age; }
+
+		bool operator>(const Person& other) const { return age > other.age; }
 	};
 
 	inline std::vector<Person> getPersons()
@@ -42,6 +47,18 @@ namespace xlinq
 	{
 		auto result = getPersons();
 		return std::forward_list<Person>(result.begin(), result.end());
+	}
+
+	inline std::set<Person> getPersonsSet()
+	{
+		auto result = getPersons();
+		return std::set<Person>(result.begin(), result.end());
+	}
+
+	inline std::multiset<Person> getPersonsMultiSet()
+	{
+		auto result = getPersons();
+		return std::multiset<Person>(result.begin(), result.end());
 	}
 
 	class PersonEnumerable : public IEnumerable<Person>

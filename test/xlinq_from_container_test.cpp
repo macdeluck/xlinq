@@ -585,3 +585,319 @@ TEST(XLinqFromForwardListTest, EnumerableFromForwardList_Begin)
 
 	ASSERT_FALSE(enumerator->next());
 }
+
+TEST(XLinqFromSetTest, CallCurrentBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromSetTest, CallBackBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->back();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromSetTest, CallCurrentWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromSetTest, CallNextWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromSetTest, BidirectionalEnumerableFromSet_Begin)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromSetTest, BidirectionalEnumerableFromSet_End)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEndEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+}
+
+TEST(XLinqFromMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiSetTest, CallBackBeforeEnumerationWasStarted)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	try
+	{
+		enumerator->back();
+	}
+	catch (IterationNotStartedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiSetTest, CallCurrentWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->current();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiSetTest, CallNextWhenEnumerationWasFinished)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	while (enumerator->next());
+	try
+	{
+		enumerator->next();
+	}
+	catch (IterationFinishedException)
+	{
+		return;
+	}
+	catch (...)
+	{
+		FAIL();
+	}
+	FAIL();
+}
+
+TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromMultiSet_Begin)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->next());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromMultiSet_End)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEndEnumerator();
+	std::set<Person> occuredPersons;
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_TRUE(enumerator->back());
+	occuredPersons.insert(enumerator->current());
+
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_EQ(6, occuredPersons.size());
+
+	occuredPersons.clear();
+}
