@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <forward_list>
 #include <memory>
 
 namespace xlinq
@@ -35,6 +36,12 @@ namespace xlinq
 	{
 		auto result = getPersons();
 		return std::list<Person>(result.begin(), result.end());
+	}
+
+	inline std::forward_list<Person> getPersonsForwardList()
+	{
+		auto result = getPersons();
+		return std::forward_list<Person>(result.begin(), result.end());
 	}
 
 	class PersonEnumerable : public IEnumerable<Person>
