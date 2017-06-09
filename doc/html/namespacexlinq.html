@@ -94,8 +94,20 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for enumerator.  <a href="classxlinq_1_1IEnumerator.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IBidirectionalEnumerator.html">IBidirectionalEnumerator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for bidirectional enumerator.  <a href="classxlinq_1_1IBidirectionalEnumerator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for random access enumerator.  <a href="classxlinq_1_1IRandomAccessEnumerator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for enumerable.  <a href="classxlinq_1_1IEnumerable.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IBidirectionalEnumerable.html">IBidirectionalEnumerable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for bidirectional enumerable.  <a href="classxlinq_1_1IBidirectionalEnumerable.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for random access enumerable.  <a href="classxlinq_1_1IRandomAccessEnumerable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1Exception.html">Exception</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all exceptions.  <a href="classxlinq_1_1Exception.html#details">More...</a><br/></td></tr>
@@ -117,23 +129,39 @@ Functions</h2></td></tr>
 internal::_GetEnumeratorBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">getEnumerator</a> ()</td></tr>
 <tr class="memdesc:a29c51dfbb405e91dbf589ba4864d700c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting enumerator from enumerable.  <a href="#a29c51dfbb405e91dbf589ba4864d700c">More...</a><br/></td></tr>
 <tr class="separator:a29c51dfbb405e91dbf589ba4864d700c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad34419de7720a6cb04b210f1681ae9db"><td class="memTemplParams" colspan="2">template&lt;typename TElem , size_t SIZE&gt; </td></tr>
-<tr class="memitem:ad34419de7720a6cb04b210f1681ae9db"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a><br class="typebreak"/>
-&lt; TElem &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad34419de7720a6cb04b210f1681ae9db">from</a> (TElem(&amp;array)[SIZE])</td></tr>
-<tr class="memdesc:ad34419de7720a6cb04b210f1681ae9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from fixed size array.  <a href="#ad34419de7720a6cb04b210f1681ae9db">More...</a><br/></td></tr>
-<tr class="separator:ad34419de7720a6cb04b210f1681ae9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace159b237fbafd4ecb9b00c053389da2"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
-<tr class="memitem:ace159b237fbafd4ecb9b00c053389da2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ace159b237fbafd4ecb9b00c053389da2">from</a> (std::shared_ptr&lt; TContainer &gt; container) -&gt; std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a>&lt; typename TContainer::value_type &gt;&gt;</td></tr>
-<tr class="memdesc:ace159b237fbafd4ecb9b00c053389da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from shared pointer to STL container.  <a href="#ace159b237fbafd4ecb9b00c053389da2">More...</a><br/></td></tr>
-<tr class="separator:ace159b237fbafd4ecb9b00c053389da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2da1f78a03b2d08516ba942cf30658"><td class="memTemplParams" colspan="2">template&lt;typename TEnumerable &gt; </td></tr>
-<tr class="memitem:aae2da1f78a03b2d08516ba942cf30658"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aae2da1f78a03b2d08516ba942cf30658">from</a> (std::shared_ptr&lt; TEnumerable &gt; enumerable) -&gt; std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a>&lt; typename TEnumerable::ElemType &gt;&gt;</td></tr>
-<tr class="memdesc:aae2da1f78a03b2d08516ba942cf30658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from shared pointer to enumerable.  <a href="#aae2da1f78a03b2d08516ba942cf30658">More...</a><br/></td></tr>
-<tr class="separator:aae2da1f78a03b2d08516ba942cf30658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54a976342befd0a967eee63b7d40961e"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
-<tr class="memitem:a54a976342befd0a967eee63b7d40961e"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a54a976342befd0a967eee63b7d40961e">from</a> (TContainer &amp;container) -&gt; std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a>&lt; typename TContainer::value_type &gt;&gt;</td></tr>
-<tr class="memdesc:a54a976342befd0a967eee63b7d40961e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from STL container.  <a href="#a54a976342befd0a967eee63b7d40961e">More...</a><br/></td></tr>
-<tr class="separator:a54a976342befd0a967eee63b7d40961e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584dee55e0e1bb36c76f963eadddd910"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GetEndEnumeratorBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">getEndEnumerator</a> ()</td></tr>
+<tr class="memdesc:a584dee55e0e1bb36c76f963eadddd910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting end enumerator from bidirectional enumerable.  <a href="#a584dee55e0e1bb36c76f963eadddd910">More...</a><br/></td></tr>
+<tr class="separator:a584dee55e0e1bb36c76f963eadddd910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff22f546b38f9e0a88fd478b8710b6c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">getEnumeratorAt</a> (int elementIndex)</td></tr>
+<tr class="memdesc:aff22f546b38f9e0a88fd478b8710b6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting enumerator at given position from random access enumerable.  <a href="#aff22f546b38f9e0a88fd478b8710b6c0">More...</a><br/></td></tr>
+<tr class="separator:aff22f546b38f9e0a88fd478b8710b6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplParams" colspan="2">template&lt;typename TElem , size_t SIZE&gt; </td></tr>
+<tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a><br class="typebreak"/>
+&lt; TElem &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa014597a96853a8eb464f63a8e2560db">from</a> (TElem(&amp;array)[SIZE])</td></tr>
+<tr class="memdesc:aa014597a96853a8eb464f63a8e2560db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from fixed size array.  <a href="#aa014597a96853a8eb464f63a8e2560db">More...</a><br/></td></tr>
+<tr class="separator:aa014597a96853a8eb464f63a8e2560db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a842c1b32bee249983fb243e737909be0"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:a842c1b32bee249983fb243e737909be0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a842c1b32bee249983fb243e737909be0">from</a> (TContainer &amp;container) -&gt; std::shared_ptr&lt; typename internal::StlEnumerableSelector&lt; TContainer, typename TContainer::value_type &gt;::type &gt;</td></tr>
+<tr class="memdesc:a842c1b32bee249983fb243e737909be0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from STL container.  <a href="#a842c1b32bee249983fb243e737909be0">More...</a><br/></td></tr>
+<tr class="separator:a842c1b32bee249983fb243e737909be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36a727e2cdf09355fd29fdb674381c19"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:a36a727e2cdf09355fd29fdb674381c19"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a36a727e2cdf09355fd29fdb674381c19">from</a> (TContainer *container) -&gt; std::shared_ptr&lt; typename internal::StlEnumerableSelector&lt; TContainer, typename TContainer::value_type &gt;::type &gt;</td></tr>
+<tr class="memdesc:a36a727e2cdf09355fd29fdb674381c19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from pointer to STL container.  <a href="#a36a727e2cdf09355fd29fdb674381c19">More...</a><br/></td></tr>
+<tr class="separator:a36a727e2cdf09355fd29fdb674381c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78e1c2ad6ef4b48caf6c3a12899ebb7a"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:a78e1c2ad6ef4b48caf6c3a12899ebb7a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a78e1c2ad6ef4b48caf6c3a12899ebb7a">from</a> (std::shared_ptr&lt; TContainer &gt; container) -&gt; std::shared_ptr&lt; typename internal::StlSharedPointerEnumerableSelector&lt; TContainer, typename TContainer::value_type &gt;::type &gt;</td></tr>
+<tr class="memdesc:a78e1c2ad6ef4b48caf6c3a12899ebb7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from shared pointer to STL container.  <a href="#a78e1c2ad6ef4b48caf6c3a12899ebb7a">More...</a><br/></td></tr>
+<tr class="separator:a78e1c2ad6ef4b48caf6c3a12899ebb7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543625f413c5d16601cc251b78eac562"><td class="memTemplParams" colspan="2">template&lt;typename TEnumerable &gt; </td></tr>
+<tr class="memitem:a543625f413c5d16601cc251b78eac562"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; typename <br class="typebreak"/>
+internal::EnumerableFilterHelper<br class="typebreak"/>
+&lt; TEnumerable, typename <br class="typebreak"/>
+TEnumerable::ElemType &gt;::type &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a543625f413c5d16601cc251b78eac562">from</a> (std::shared_ptr&lt; TEnumerable &gt; enumerable)</td></tr>
+<tr class="memdesc:a543625f413c5d16601cc251b78eac562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from shared pointer to enumerable.  <a href="#a543625f413c5d16601cc251b78eac562">More...</a><br/></td></tr>
+<tr class="separator:a543625f413c5d16601cc251b78eac562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8c906f78dfc6d4f875df1328acc010b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">gather</a> ()</td></tr>
 <tr class="memdesc:ad8c906f78dfc6d4f875df1328acc010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection.  <a href="#ad8c906f78dfc6d4f875df1328acc010b">More...</a><br/></td></tr>
@@ -150,14 +178,100 @@ internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a c
 <tr class="separator:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ad34419de7720a6cb04b210f1681ae9db"></a>
+<a class="anchor" id="a36a727e2cdf09355fd29fdb674381c19"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto xlinq::from </td>
+          <td>(</td>
+          <td class="paramtype">TContainer *&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td> -&gt; std::shared_ptr&lt;typename internal::StlEnumerableSelector&lt;TContainer, typename TContainer::value_type&gt;::type&gt;
+	</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates enumerable from pointer to STL container. </p>
+<p>This function may be used to create enumerable from pointer to STL container. It is implemented using deffered execution so traversing of the collection will wait until its next element will be requested. Please note, that enumeration will fail if container will be deallocated. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Source STL container. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a543625f413c5d16601cc251b78eac562"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnumerable &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;typename internal::EnumerableFilterHelper&lt;TEnumerable, typename TEnumerable::ElemType&gt;::type&gt; xlinq::from </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; TEnumerable &gt;&#160;</td>
+          <td class="paramname"><em>enumerable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates enumerable from shared pointer to enumerable. </p>
+<p>This function returns cleaned type from given enumerable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enumerable</td><td>Source enumerable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Given pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a78e1c2ad6ef4b48caf6c3a12899ebb7a"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto xlinq::from </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; TContainer &gt;&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td> -&gt; std::shared_ptr&lt;typename internal::StlSharedPointerEnumerableSelector&lt;TContainer, typename TContainer::value_type&gt;::type&gt;
+	</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates enumerable from shared pointer to STL container. </p>
+<p>This function may be used to create enumerable from shared pointer to STL container. It is implemented using deffered execution so traversing of the collection will wait until its next element will be requested. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Source STL container. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa014597a96853a8eb464f63a8e2560db"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename TElem , size_t SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classxlinq_1_1IEnumerable.html">IEnumerable</a>&lt;TElem&gt; &gt; xlinq::from </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a>&lt;TElem&gt; &gt; xlinq::from </td>
           <td>(</td>
           <td class="paramtype">TElem(&amp;)&#160;</td>
           <td class="paramname"><em>array</em>[SIZE]</td><td>)</td>
@@ -178,65 +292,7 @@ template&lt;typename TElem , size_t SIZE&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ace159b237fbafd4ecb9b00c053389da2"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TContainer &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">auto xlinq::from </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; TContainer &gt;&#160;</td>
-          <td class="paramname"><em>container</em></td><td>)</td>
-          <td> -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;
-	</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates enumerable from shared pointer to STL container. </p>
-<p>This function may be used to create enumerable from pointer to STL container. It is implemented using deffered execution so traversing of the collection will wait until its next element will be requested. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">container</td><td>Source STL container. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aae2da1f78a03b2d08516ba942cf30658"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TEnumerable &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">auto xlinq::from </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; TEnumerable &gt;&#160;</td>
-          <td class="paramname"><em>enumerable</em></td><td>)</td>
-          <td> -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TEnumerable::ElemType&gt;&gt;
-	</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates enumerable from shared pointer to enumerable. </p>
-<p>This function just returns given enumerable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Source enumerable </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Given pointer. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a54a976342befd0a967eee63b7d40961e"></a>
+<a class="anchor" id="a842c1b32bee249983fb243e737909be0"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -247,7 +303,7 @@ template&lt;typename TContainer &gt; </div>
           <td>(</td>
           <td class="paramtype">TContainer &amp;&#160;</td>
           <td class="paramname"><em>container</em></td><td>)</td>
-          <td> -&gt; std::shared_ptr&lt;IEnumerable&lt;typename TContainer::value_type&gt;&gt;
+          <td> -&gt; std::shared_ptr&lt;typename internal::StlEnumerableSelector&lt;TContainer, typename TContainer::value_type&gt;::type&gt;
 	</td>
         </tr>
       </table>
@@ -284,6 +340,24 @@ template&lt;typename TContainer &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a584dee55e0e1bb36c76f963eadddd910"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GetEndEnumeratorBuilder xlinq::getEndEnumerator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function extracting end enumerator from bidirectional enumerable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of getEndEnumerator expression. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a29c51dfbb405e91dbf589ba4864d700c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -299,6 +373,31 @@ template&lt;typename TContainer &gt; </div>
 
 <p>Function extracting enumerator from enumerable. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of getEnumerator expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aff22f546b38f9e0a88fd478b8710b6c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GetEnumeratorAtBuilder xlinq::getEnumeratorAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>elementIndex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function extracting enumerator at given position from random access enumerable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elementIndex</td><td>index of element to set enumerator pointing to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of getEnumeratorAt expression. </dd></dl>
 
 </div>
 </div>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['next',['next',['../classxlinq_1_1IEnumerator.html#a9001ab9dbb8efb087461c9d7b70f22b6',1,'xlinq::IEnumerator']]]
+  ['license_2emd',['LICENSE.md',['../LICENSE_8md.html',1,'']]],
+  ['license',['LICENSE',['../md_LICENSE.html',1,'']]]
 ];

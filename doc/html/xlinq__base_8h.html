@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">xlinq_base.h File Reference</div>  </div>
@@ -96,7 +97,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Base xlinq definitions and expressions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;memory&gt;</code><br/>
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
+<code>#include &lt;type_traits&gt;</code><br/>
 <code>#include &quot;<a class="el" href="xlinq__defs_8h_source.html">xlinq_defs.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="xlinq__exception_8h_source.html">xlinq_exception.h</a>&quot;</code><br/>
 </div>
@@ -107,14 +110,35 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html">xlinq::IEnumerator&lt; TElem &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for enumerator.  <a href="classxlinq_1_1IEnumerator.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IBidirectionalEnumerator.html">xlinq::IBidirectionalEnumerator&lt; TElem &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for bidirectional enumerator.  <a href="classxlinq_1_1IBidirectionalEnumerator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">xlinq::IRandomAccessEnumerator&lt; TElem &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for random access enumerator.  <a href="classxlinq_1_1IRandomAccessEnumerator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerable.html">xlinq::IEnumerable&lt; TElem &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for enumerable.  <a href="classxlinq_1_1IEnumerable.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IBidirectionalEnumerable.html">xlinq::IBidirectionalEnumerable&lt; TElem &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for bidirectional enumerable.  <a href="classxlinq_1_1IBidirectionalEnumerable.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">xlinq::IRandomAccessEnumerable&lt; TElem &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for random access enumerable.  <a href="classxlinq_1_1IRandomAccessEnumerable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacexlinq"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html">xlinq</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a2c09826ed90a275b79d0338f6ca1823a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlinq__base_8h.html#a2c09826ed90a275b79d0338f6ca1823a">_XLINQ_GET_ENUMERATOR</a>(TEnumerator)</td></tr>
+<tr class="separator:a2c09826ed90a275b79d0338f6ca1823a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72d978e8cc3726843a89373504117de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlinq__base_8h.html#ab72d978e8cc3726843a89373504117de">_XLINQ_GET_END_ENUMERATOR</a>(TEnumerator)</td></tr>
+<tr class="separator:ab72d978e8cc3726843a89373504117de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0782e153c1ac257d8561f07abc9626"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlinq__base_8h.html#a3f0782e153c1ac257d8561f07abc9626">_XLINQ_GET_ENUMERATOR_AT</a>(TEnumerator)</td></tr>
+<tr class="separator:a3f0782e153c1ac257d8561f07abc9626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -126,11 +150,86 @@ Functions</h2></td></tr>
 internal::_GetEnumeratorBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a> ()</td></tr>
 <tr class="memdesc:a29c51dfbb405e91dbf589ba4864d700c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting enumerator from enumerable.  <a href="#a29c51dfbb405e91dbf589ba4864d700c">More...</a><br/></td></tr>
 <tr class="separator:a29c51dfbb405e91dbf589ba4864d700c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584dee55e0e1bb36c76f963eadddd910"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GetEndEnumeratorBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">xlinq::getEndEnumerator</a> ()</td></tr>
+<tr class="memdesc:a584dee55e0e1bb36c76f963eadddd910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting end enumerator from bidirectional enumerable.  <a href="#a584dee55e0e1bb36c76f963eadddd910">More...</a><br/></td></tr>
+<tr class="separator:a584dee55e0e1bb36c76f963eadddd910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff22f546b38f9e0a88fd478b8710b6c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">xlinq::getEnumeratorAt</a> (int elementIndex)</td></tr>
+<tr class="memdesc:aff22f546b38f9e0a88fd478b8710b6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting enumerator at given position from random access enumerable.  <a href="#aff22f546b38f9e0a88fd478b8710b6c0">More...</a><br/></td></tr>
+<tr class="separator:aff22f546b38f9e0a88fd478b8710b6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base xlinq definitions and expressions. </p>
 <dl class="section author"><dt>Author</dt><dd>TrolleY </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ab72d978e8cc3726843a89373504117de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _XLINQ_GET_END_ENUMERATOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TEnumerator</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">std::shared_ptr&lt;TEnumerator&gt; <a class="code" href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">getEndEnumerator</a>() \</div>
+<div class="line">    { \</div>
+<div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEndEnumerator(); \</div>
+<div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
+<div class="line">    }</div>
+<div class="ttc" id="namespacexlinq_html_a584dee55e0e1bb36c76f963eadddd910"><div class="ttname"><a href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">xlinq::getEndEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEndEnumeratorBuilder getEndEnumerator()</div><div class="ttdoc">Function extracting end enumerator from bidirectional enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:341</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a2c09826ed90a275b79d0338f6ca1823a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _XLINQ_GET_ENUMERATOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TEnumerator</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">std::shared_ptr&lt;TEnumerator&gt; <a class="code" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">getEnumerator</a>() \</div>
+<div class="line">    { \</div>
+<div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEnumerator(); \</div>
+<div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
+<div class="line">    }</div>
+<div class="ttc" id="namespacexlinq_html_a29c51dfbb405e91dbf589ba4864d700c"><div class="ttname"><a href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()</div><div class="ttdoc">Function extracting enumerator from enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:332</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a3f0782e153c1ac257d8561f07abc9626"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _XLINQ_GET_ENUMERATOR_AT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TEnumerator</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">std::shared_ptr&lt;TEnumerator&gt; <a class="code" href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">getEnumeratorAt</a>(<span class="keywordtype">int</span> index) \</div>
+<div class="line">    { \</div>
+<div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEnumeratorAt(index); \</div>
+<div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
+<div class="line">    }</div>
+<div class="ttc" id="namespacexlinq_html_aff22f546b38f9e0a88fd478b8710b6c0"><div class="ttname"><a href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">xlinq::getEnumeratorAt</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorAtBuilder getEnumeratorAt(int elementIndex)</div><div class="ttdoc">Function extracting enumerator at given position from random access enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:351</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

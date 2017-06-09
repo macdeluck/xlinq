@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['current',['current',['../classxlinq_1_1IEnumerator.html#a4850bf89f2815648e3eb1fa3053fa908',1,'xlinq::IEnumerator']]]
+  ['advance',['advance',['../classxlinq_1_1IRandomAccessEnumerator.html#a9ac21f328a8907188895140ca8ea9d2a',1,'xlinq::IRandomAccessEnumerator']]]
 ];

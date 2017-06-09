@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['xlinq_5fabstract',['XLINQ_ABSTRACT',['../xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb',1,'xlinq_defs.h']]],
-  ['xlinq_5finline',['XLINQ_INLINE',['../xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7',1,'xlinq_defs.h']]]
+  ['_5fxlinq_5fget_5fend_5fenumerator',['_XLINQ_GET_END_ENUMERATOR',['../xlinq__base_8h.html#ab72d978e8cc3726843a89373504117de',1,'xlinq_base.h']]],
+  ['_5fxlinq_5fget_5fenumerator',['_XLINQ_GET_ENUMERATOR',['../xlinq__base_8h.html#a2c09826ed90a275b79d0338f6ca1823a',1,'xlinq_base.h']]],
+  ['_5fxlinq_5fget_5fenumerator_5fat',['_XLINQ_GET_ENUMERATOR_AT',['../xlinq__base_8h.html#a3f0782e153c1ac257d8561f07abc9626',1,'xlinq_base.h']]]
 ];

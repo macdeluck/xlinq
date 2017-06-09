@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['gather',['gather',['../namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b',1,'xlinq']]],
-  ['getenumerator',['getEnumerator',['../classxlinq_1_1IEnumerable.html#a21bdf784d028b6a34ebb084c58a28bbe',1,'xlinq::IEnumerable::getEnumerator()'],['../namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c',1,'xlinq::getEnumerator()']]]
+  ['elemtype',['ElemType',['../classxlinq_1_1IEnumerator.html#a1cc80ca90b9dc4616482808b5dc22a67',1,'xlinq::IEnumerator::ElemType()'],['../classxlinq_1_1IEnumerable.html#a0ca39305bf18005dedb5bed61b528bb2',1,'xlinq::IEnumerable::ElemType()']]],
+  ['exception',['Exception',['../classxlinq_1_1Exception.html#a5c32e2a1f93bd628bc4bff2537678307',1,'xlinq::Exception::Exception(const char *message)'],['../classxlinq_1_1Exception.html#ad8cb711248f41030522a50fab69f4c48',1,'xlinq::Exception::Exception(const std::string &amp;message)']]],
+  ['exception',['Exception',['../classxlinq_1_1Exception.html',1,'xlinq']]]
 ];

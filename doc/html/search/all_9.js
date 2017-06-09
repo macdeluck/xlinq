@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3e_3e',['operator&gt;&gt;',['../namespacexlinq.html#a4f2c6ff34dff175b89b7b0779e131b91',1,'xlinq']]]
+  ['mainpage_2emd',['MAINPAGE.md',['../MAINPAGE_8md.html',1,'']]],
+  ['msg_5f',['msg_',['../classxlinq_1_1Exception.html#a79b9ec76aba6a5f8339faec21bcb2b36',1,'xlinq::Exception']]]
 ];
