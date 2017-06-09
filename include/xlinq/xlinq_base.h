@@ -108,7 +108,7 @@ namespace xlinq
 	};
 
 	/**
-	*	Interface for enumerator.
+	*	Interface for bidirectional enumerator.
 	*	This enumerator interface allows to traverse collection
 	*	in two ways. When the iteration is finished (end guard has been met), it may
 	*	continue to go backward until the begin guard occurance. It should support
@@ -131,6 +131,12 @@ namespace xlinq
 		virtual bool back() XLINQ_ABSTRACT;
 	};
 
+	/**
+	*	Interface for random access enumerator.
+	*	This enumerator interface allows to traverse collection
+	*	in two ways by any number of steps. When it exceeds begin or end guard
+	*	it stops and points to the closes one.
+	*/
 	template<typename TElem>
 	class IRandomAccessEnumerator : public IBidirectionalEnumerator<TElem>
 	{
@@ -158,7 +164,6 @@ namespace xlinq
 	{
 	protected:
 		/**
-		*	@todo comments
 		*	Accesses enumerator.
 		*	This method allows to access pointer to enumerator, which may be used
 		*	to traverse collection. Each of enumerator instances created from single
@@ -182,7 +187,6 @@ namespace xlinq
 	*	Interface for bidirectional enumerable.
 	*	This is basic enumerable interface which is used to obtain pointer to
 	*	IBidirectionalEnumerator instance.
-	*	@todo comments
 	*/
 	template<typename TElem>
 	class IBidirectionalEnumerable : public IEnumerable<TElem>
@@ -208,7 +212,6 @@ namespace xlinq
 	*	Interface for random access enumerable.
 	*	This is basic enumerable interface which is used to obtain pointer to
 	*	IRandomAccessEnumerator instance.
-	*	@todo comments
 	*/
 	template<typename TElem>
 	class IRandomAccessEnumerable : public IBidirectionalEnumerable<TElem>
@@ -217,8 +220,8 @@ namespace xlinq
 		/**
 		*	Accesses enumerator pointing at the given element of enumerable.
 		*	This method allows to access pointer to enumerator, which may be used
-		*	to traverse collection starting from any element. Since enumerator will point at the
-		*	end of collection the call of back method is required to traverse collection. Each of
+		*	to traverse collection starting from any element. If given index will exceed number
+		*	of collection elements then enumerator will point at the end of collection. Each of
 		*	enumerator instances created from single collection should work separately
 		*	(they should not have any impact on each other).
 		*	@return New IRandomAccessEnumerator instance.
