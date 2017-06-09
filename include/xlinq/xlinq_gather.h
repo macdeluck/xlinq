@@ -43,7 +43,7 @@ namespace xlinq
 		{
 		public:
 			template<typename TElem>
-			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IRandomAccessEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
 				auto vec = std::shared_ptr<std::vector<TElem>>(new std::vector<TElem>());
 				for (auto it = enumerable->getEnumerator(); it->next();)
