@@ -24,4 +24,16 @@ TEST(XLinqWhereTest, XlinqFiltersEvenNumbersTest)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(9, enumerator->current());
 	ASSERT_FALSE(enumerator->next());
+
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_FALSE(enumerator->back());
 }

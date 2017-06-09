@@ -63,6 +63,39 @@ namespace xlinq
 		};
 
 		template<typename TElem, typename TPredicate>
+		class _WhereBidirectionalEnumerator : public IBidirectionalEnumerator<TElem>
+		{
+		private:
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> _source;
+			TPredicate _predicate;
+		public:
+			_WhereBidirectionalEnumerator(std::shared_ptr<IBidirectionalEnumerator<TElem>> source, TPredicate predicate)
+				: _source(source), _predicate(predicate)
+			{}
+
+			bool next() override
+			{
+				while (_source->next())
+					if (_predicate(_source->current()))
+						return true;
+				return false;
+			}
+
+			bool back() override
+			{
+				while (_source->back())
+					if (_predicate(_source->current()))
+						return true;
+				return false;
+			}
+
+			TElem current() override
+			{
+				return _source->current();
+			}
+		};
+
+		template<typename TElem, typename TPredicate>
 		class _WhereEnumerable : public IEnumerable<TElem>
 		{
 		private:
@@ -73,9 +106,31 @@ namespace xlinq
 				: _source(source), _predicate(predicate)
 			{}
 
-			std::shared_ptr<IEnumerator<TElem>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				return std::shared_ptr<IEnumerator<TElem>>(new _WhereEnumerator<TElem, TPredicate>(_source->getEnumerator(), _predicate));
+			}
+		};
+
+		template<typename TElem, typename TPredicate>
+		class _WhereBidirectionalEnumerable : public IBidirectionalEnumerable<TElem>
+		{
+		private:
+			std::shared_ptr<IBidirectionalEnumerable<TElem>> _source;
+			TPredicate _predicate;
+		public:
+			_WhereBidirectionalEnumerable(std::shared_ptr<IBidirectionalEnumerable<TElem>> source, TPredicate predicate)
+				: _source(source), _predicate(predicate)
+			{}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _WhereBidirectionalEnumerator<TElem, TPredicate>(_source->getEnumerator(), _predicate));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _WhereBidirectionalEnumerator<TElem, TPredicate>(_source->getEndEnumerator(), _predicate));
 			}
 		};
 
@@ -91,6 +146,18 @@ namespace xlinq
 			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
 				return std::shared_ptr<IEnumerable<TElem>>(new internal::_WhereEnumerable<TElem, TPredicate>(enumerable, _predicate));
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				return std::shared_ptr<IBidirectionalEnumerable<TElem>>(new internal::_WhereBidirectionalEnumerable<TElem, TPredicate>(enumerable, _predicate));
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return std::shared_ptr<IBidirectionalEnumerable<TElem>>(new internal::_WhereBidirectionalEnumerable<TElem, TPredicate>(enumerable, _predicate));
 			}
 		};
 	}
