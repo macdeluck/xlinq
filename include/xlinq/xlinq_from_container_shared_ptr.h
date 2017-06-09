@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 /**
-*	@file xlinq_from_container_ptr.h
+*	@file xlinq_from_container_shared_ptr.h
 *	Creating enumerable object from containers passed by shared ptr.
 *	@author TrolleY
 */
-#ifndef XLINQ_FROM_CONTAINER_PTR_H_
-#define XLINQ_FROM_CONTAINER_PTR_H_
+#ifndef XLINQ_FROM_CONTAINER_SHARED_PTR_H_
+#define XLINQ_FROM_CONTAINER_SHARED_PTR_H_
 
 #include <cstdlib>
 #include <memory>
@@ -50,8 +50,17 @@ namespace xlinq
 			_StlPointerEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
 				: _StlEnumerator<TIterator, TElem>(begin, end), _container(container) {}
 		};
-
-
+		
+		template<typename TContainer, typename TIterator, typename TElem>
+		class _StlPointerBidirectionalEnumerator : public _StlBidirectionalEnumerator<TIterator, TElem>
+		{
+		private:
+			std::shared_ptr<TContainer> _container;
+		public:
+			_StlPointerBidirectionalEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, bool atBegin = true)
+				: _StlBidirectionalEnumerator<TIterator, TElem>(begin, end, atBegin), _container(container) {}
+		};
+		
 		template<typename TContainer, typename TIterator, typename TElem>
 		class _StlPointerRandomAccessEnumerator : public _StlRandomAccessEnumerator<TIterator, TElem>
 		{
@@ -77,6 +86,27 @@ namespace xlinq
 			{
 				typedef typename TContainer::iterator iterator;
 				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
+			}
+		};
+
+		template<typename TContainer, typename TElem>
+		class _StlPointerBidirectionalEnumerable : public IBidirectionalEnumerable<TElem>
+		{
+		private:
+			std::shared_ptr<TContainer> _container;
+		public:
+			_StlPointerBidirectionalEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				typedef typename TContainer::iterator iterator;
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), true));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				typedef typename TContainer::iterator iterator;
+				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), false));
 			}
 		};
 
@@ -111,7 +141,18 @@ namespace xlinq
 		template<typename iterator_tag, typename TContainer, typename TElem>
 		struct StlPointerEnumerableSelectorHelper
 		{
+		};
+
+		template<typename TContainer, typename TElem>
+		struct StlPointerEnumerableSelectorHelper<std::forward_iterator_tag, TContainer, TElem>
+		{
 			typedef _StlPointerEnumerable<TContainer, TElem> enumerable;
+		};
+
+		template<typename TContainer, typename TElem>
+		struct StlPointerEnumerableSelectorHelper<std::bidirectional_iterator_tag, TContainer, TElem>
+		{
+			typedef _StlPointerBidirectionalEnumerable<TContainer, TElem> enumerable;
 		};
 
 		template<typename TContainer, typename TElem>

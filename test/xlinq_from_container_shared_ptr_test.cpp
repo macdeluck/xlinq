@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "model/xlinq_test_model.h"
-#include <xlinq/xlinq_from_container.h>
+#include <xlinq/xlinq_from_container_shared_ptr.h>
 #include <memory>
 #include <vector>
 #include <iterator>
@@ -8,9 +8,9 @@
 using namespace std;
 using namespace xlinq;
 
-TEST(XLinqFromVectorTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromVectorSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -27,9 +27,9 @@ TEST(XLinqFromVectorTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromVectorTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromVectorSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -46,9 +46,9 @@ TEST(XLinqFromVectorTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromVectorTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromVectorSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -66,9 +66,9 @@ TEST(XLinqFromVectorTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromVectorTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromVectorSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -86,9 +86,9 @@ TEST(XLinqFromVectorTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromVectorTest, RandomAccessEnumerableBegin)
+TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableBegin)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 
 	ASSERT_TRUE(enumerator->next());
@@ -185,9 +185,9 @@ TEST(XLinqFromVectorTest, RandomAccessEnumerableBegin)
 	ASSERT_EQ(71, enumerator->current().age);
 }
 
-TEST(XLinqFromVectorTest, RandomAccessEnumerableEnd)
+TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableEnd)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 
 	ASSERT_TRUE(enumerator->back());
@@ -252,9 +252,9 @@ TEST(XLinqFromVectorTest, RandomAccessEnumerableEnd)
 	ASSERT_EQ(71, enumerator->current().age);
 }
 
-TEST(XLinqFromVectorTest, RandomAccessEnumerableAt)
+TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableAt)
 {
-	auto persons = getPersons();
+	auto persons = getPersonsSharedPtr();
 	auto enumerator = from(persons) >> getEnumeratorAt(2);
 
 	ASSERT_EQ("Anna", enumerator->current().firstName);
@@ -303,9 +303,9 @@ TEST(XLinqFromVectorTest, RandomAccessEnumerableAt)
 	ASSERT_EQ(71, enumerator->current().age);
 }
 
-TEST(XLinqFromListTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -322,9 +322,9 @@ TEST(XLinqFromListTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromListTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromListSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -341,9 +341,9 @@ TEST(XLinqFromListTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromListTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromListSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -361,9 +361,9 @@ TEST(XLinqFromListTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromListTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromListSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -381,9 +381,9 @@ TEST(XLinqFromListTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromListTest, BidirectionalEnumerableBegin)
+TEST(XLinqFromListSharedPtrTest, BidirectionalEnumerableBegin)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 
 	ASSERT_TRUE(enumerator->next());
@@ -451,9 +451,9 @@ TEST(XLinqFromListTest, BidirectionalEnumerableBegin)
 	ASSERT_FALSE(enumerator->back());
 }
 
-TEST(XLinqFromListTest, BidirectionalEnumerableEnd)
+TEST(XLinqFromListSharedPtrTest, BidirectionalEnumerableEnd)
 {
-	auto persons = getPersonsList();
+	auto persons = getPersonsListSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 
 	ASSERT_TRUE(enumerator->back());
@@ -489,9 +489,9 @@ TEST(XLinqFromListTest, BidirectionalEnumerableEnd)
 	ASSERT_FALSE(enumerator->back());
 }
 
-TEST(XLinqFromForwardListTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromForwardListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsForwardList();
+	auto persons = getPersonsForwardListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -508,9 +508,9 @@ TEST(XLinqFromForwardListTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromForwardListTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromForwardListSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsForwardList();
+	auto persons = getPersonsForwardListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -528,9 +528,9 @@ TEST(XLinqFromForwardListTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromForwardListTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromForwardListSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsForwardList();
+	auto persons = getPersonsForwardListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -548,9 +548,9 @@ TEST(XLinqFromForwardListTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromForwardListTest, EnumerableBegin)
+TEST(XLinqFromForwardListSharedPtrTest, EnumerableBegin)
 {
-	auto persons = getPersonsForwardList();
+	auto persons = getPersonsForwardListSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 
 	ASSERT_TRUE(enumerator->next());
@@ -586,9 +586,9 @@ TEST(XLinqFromForwardListTest, EnumerableBegin)
 	ASSERT_FALSE(enumerator->next());
 }
 
-TEST(XLinqFromSetTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -605,9 +605,9 @@ TEST(XLinqFromSetTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromSetTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromSetSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -624,9 +624,9 @@ TEST(XLinqFromSetTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromSetTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromSetSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -644,9 +644,9 @@ TEST(XLinqFromSetTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromSetTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromSetSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -664,9 +664,9 @@ TEST(XLinqFromSetTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromSetTest, BidirectionalEnumerableBegin)
+TEST(XLinqFromSetSharedPtrTest, BidirectionalEnumerableBegin)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -714,9 +714,9 @@ TEST(XLinqFromSetTest, BidirectionalEnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromSetTest, BidirectionalEnumerableEnd)
+TEST(XLinqFromSetSharedPtrTest, BidirectionalEnumerableEnd)
 {
-	auto persons = getPersonsSet();
+	auto persons = getPersonsSetSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -744,9 +744,9 @@ TEST(XLinqFromSetTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
-TEST(XLinqFromMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -763,9 +763,9 @@ TEST(XLinqFromMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMultiSetTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromMultiSetSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -782,9 +782,9 @@ TEST(XLinqFromMultiSetTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMultiSetTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromMultiSetSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -802,9 +802,9 @@ TEST(XLinqFromMultiSetTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMultiSetTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromMultiSetSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -822,9 +822,9 @@ TEST(XLinqFromMultiSetTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromBegin)
+TEST(XLinqFromMultiSetSharedPtrTest, BidirectionalEnumerableFromBegin)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -872,9 +872,9 @@ TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromEnd)
+TEST(XLinqFromMultiSetSharedPtrTest, BidirectionalEnumerableFromEnd)
 {
-	auto persons = getPersonsMultiSet();
+	auto persons = getPersonsMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -902,9 +902,9 @@ TEST(XLinqFromMultiSetTest, BidirectionalEnumerableFromEnd)
 	occuredPersons.clear();
 }
 
-TEST(XLinqFromMapTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -921,9 +921,9 @@ TEST(XLinqFromMapTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMapTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromMapSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -940,9 +940,9 @@ TEST(XLinqFromMapTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMapTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromMapSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -960,9 +960,9 @@ TEST(XLinqFromMapTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMapTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromMapSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -980,9 +980,9 @@ TEST(XLinqFromMapTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMapTest, BidirectionalEnumerableBegin)
+TEST(XLinqFromMapSharedPtrTest, BidirectionalEnumerableBegin)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1030,9 +1030,9 @@ TEST(XLinqFromMapTest, BidirectionalEnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromMapTest, BidirectionalEnumerableEnd)
+TEST(XLinqFromMapSharedPtrTest, BidirectionalEnumerableEnd)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsMapSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1060,9 +1060,9 @@ TEST(XLinqFromMapTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
-TEST(XLinqFromMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1079,9 +1079,9 @@ TEST(XLinqFromMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMultiMapTest, CallBackBeforeEnumerationWasStarted)
+TEST(XLinqFromMultiMapSharedPtrTest, CallBackBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1098,9 +1098,9 @@ TEST(XLinqFromMultiMapTest, CallBackBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromMultiMapTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromMultiMapSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1118,9 +1118,9 @@ TEST(XLinqFromMultiMapTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMultiMapTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromMultiMapSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1138,9 +1138,9 @@ TEST(XLinqFromMultiMapTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromMultiMapTest, BidirectionalEnumerableBegin)
+TEST(XLinqFromMultiMapSharedPtrTest, BidirectionalEnumerableBegin)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1188,9 +1188,9 @@ TEST(XLinqFromMultiMapTest, BidirectionalEnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromMultiMapTest, BidirectionalEnumerableEnd)
+TEST(XLinqFromMultiMapSharedPtrTest, BidirectionalEnumerableEnd)
 {
-	auto persons = getPersonsMultiMap();
+	auto persons = getPersonsMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEndEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1218,9 +1218,9 @@ TEST(XLinqFromMultiMapTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
-TEST(XLinqFromUnorderedSetTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromUnorderedSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsUnorderedSet();
+	auto persons = getPersonsUnorderedSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1237,9 +1237,9 @@ TEST(XLinqFromUnorderedSetTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedSetTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedSetSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedSet();
+	auto persons = getPersonsUnorderedSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1257,9 +1257,9 @@ TEST(XLinqFromUnorderedSetTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedSetTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedSetSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedSet();
+	auto persons = getPersonsUnorderedSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1277,9 +1277,9 @@ TEST(XLinqFromUnorderedSetTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedSetTest, EnumerableBegin)
+TEST(XLinqFromUnorderedSetSharedPtrTest, EnumerableBegin)
 {
-	auto persons = getPersonsUnorderedSet();
+	auto persons = getPersonsUnorderedSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1305,9 +1305,9 @@ TEST(XLinqFromUnorderedSetTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromUnorderedMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsUnorderedMultiSet();
+	auto persons = getPersonsUnorderedMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1324,9 +1324,9 @@ TEST(XLinqFromUnorderedMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiSetTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMultiSet();
+	auto persons = getPersonsUnorderedMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1344,9 +1344,9 @@ TEST(XLinqFromUnorderedMultiSetTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiSetTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMultiSet();
+	auto persons = getPersonsUnorderedMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1364,9 +1364,9 @@ TEST(XLinqFromUnorderedMultiSetTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiSetTest, EnumerableBegin)
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, EnumerableBegin)
 {
-	auto persons = getPersonsUnorderedMultiSet();
+	auto persons = getPersonsUnorderedMultiSetSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1392,9 +1392,9 @@ TEST(XLinqFromUnorderedMultiSetTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromUnorderedMapTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromUnorderedMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsMap();
+	auto persons = getPersonsUnorderedMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1411,9 +1411,9 @@ TEST(XLinqFromUnorderedMapTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMapTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMapSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMap();
+	auto persons = getPersonsUnorderedMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1431,9 +1431,9 @@ TEST(XLinqFromUnorderedMapTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMapTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMapSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMap();
+	auto persons = getPersonsUnorderedMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1451,9 +1451,9 @@ TEST(XLinqFromUnorderedMapTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMapTest, EnumerableBegin)
+TEST(XLinqFromUnorderedMapSharedPtrTest, EnumerableBegin)
 {
-	auto persons = getPersonsUnorderedMap();
+	auto persons = getPersonsUnorderedMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
@@ -1479,9 +1479,9 @@ TEST(XLinqFromUnorderedMapTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
-TEST(XLinqFromUnorderedMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
-	auto persons = getPersonsUnorderedMultiMap();
+	auto persons = getPersonsUnorderedMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	try
 	{
@@ -1498,9 +1498,9 @@ TEST(XLinqFromUnorderedMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiMapTest, CallCurrentWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CallCurrentWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMultiMap();
+	auto persons = getPersonsUnorderedMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1518,9 +1518,9 @@ TEST(XLinqFromUnorderedMultiMapTest, CallCurrentWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiMapTest, CallNextWhenEnumerationWasFinished)
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CallNextWhenEnumerationWasFinished)
 {
-	auto persons = getPersonsUnorderedMultiMap();
+	auto persons = getPersonsUnorderedMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	while (enumerator->next());
 	try
@@ -1538,9 +1538,9 @@ TEST(XLinqFromUnorderedMultiMapTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
-TEST(XLinqFromUnorderedMultiMapTest, EnumerableBegin)
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, EnumerableBegin)
 {
-	auto persons = getPersonsUnorderedMultiMap();
+	auto persons = getPersonsUnorderedMultiMapSharedPtr();
 	auto enumerator = from(persons) >> getEnumerator();
 	std::set<Person> occuredPersons;
 
