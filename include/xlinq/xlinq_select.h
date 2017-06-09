@@ -60,6 +60,65 @@ namespace xlinq
 		};
 
 		template<typename TSelector, typename TElem, typename TSelect>
+		class _SelectBidirectionalEnumerator : public IBidirectionalEnumerator<TSelect>
+		{
+		private:
+			TSelector _selector;
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> _source;
+
+		public:
+			_SelectBidirectionalEnumerator(TSelector selector, std::shared_ptr<IBidirectionalEnumerator<TElem>> source)
+				: _selector(selector), _source(source) {}
+
+			bool next() override
+			{
+				return _source->next();
+			}
+
+			bool back() override
+			{
+				return _source->back();
+			}
+
+			TSelect current() override
+			{
+				return _selector(_source->current());
+			}
+		};
+
+		template<typename TSelector, typename TElem, typename TSelect>
+		class _SelectRandomAccessEnumerator : public IRandomAccessEnumerator<TSelect>
+		{
+		private:
+			TSelector _selector;
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> _source;
+
+		public:
+			_SelectRandomAccessEnumerator(TSelector selector, std::shared_ptr<IRandomAccessEnumerator<TElem>> source)
+				: _selector(selector), _source(source) {}
+
+			bool next() override
+			{
+				return _source->next();
+			}
+
+			bool back() override
+			{
+				return _source->back();
+			}
+
+			bool advance(int step) override
+			{
+				return _source->advance(step);
+			}
+
+			TSelect current() override
+			{
+				return _selector(_source->current());
+			}
+		};
+
+		template<typename TSelector, typename TElem, typename TSelect>
 		class _SelectEnumerable : public IEnumerable<TSelect>
 		{
 		private:
@@ -70,9 +129,58 @@ namespace xlinq
 			_SelectEnumerable(TSelector selector, std::shared_ptr<IEnumerable<TElem>> source)
 				: _selector(selector), _source(source) {}
 
-			std::shared_ptr<IEnumerator<TSelect>> getEnumerator() override
+			std::shared_ptr<IEnumerator<TSelect>> createEnumerator() override
 			{
 				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEnumerator()));
+			}
+		};
+
+		template<typename TSelector, typename TElem, typename TSelect>
+		class _SelectBidirectionalEnumerable : public IBidirectionalEnumerable<TSelect>
+		{
+		private:
+			TSelector _selector;
+			std::shared_ptr<IBidirectionalEnumerable<TElem>> _source;
+
+		public:
+			_SelectBidirectionalEnumerable(TSelector selector, std::shared_ptr<IBidirectionalEnumerable<TElem>> source)
+				: _selector(selector), _source(source) {}
+
+			std::shared_ptr<IEnumerator<TSelect>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectBidirectionalEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEnumerator()));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TSelect>> createEndEnumerator() override
+			{
+				return std::shared_ptr<IBidirectionalEnumerator<TSelect>>(new _SelectBidirectionalEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEndEnumerator()));
+			}
+		};
+
+		template<typename TSelector, typename TElem, typename TSelect>
+		class _SelectRandomAccessEnumerable : public IRandomAccessEnumerable<TSelect>
+		{
+		private:
+			TSelector _selector;
+			std::shared_ptr<IRandomAccessEnumerable<TElem>> _source;
+
+		public:
+			_SelectRandomAccessEnumerable(TSelector selector, std::shared_ptr<IRandomAccessEnumerable<TElem>> source)
+				: _selector(selector), _source(source) {}
+
+			std::shared_ptr<IEnumerator<TSelect>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectRandomAccessEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEnumerator()));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TSelect>> createEndEnumerator() override
+			{
+				return std::shared_ptr<IBidirectionalEnumerator<TSelect>>(new _SelectRandomAccessEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEndEnumerator()));
+			}
+
+			std::shared_ptr<IRandomAccessEnumerator<TSelect>> createEnumeratorAt(int elementIndex) override
+			{
+				return std::shared_ptr<IRandomAccessEnumerator<TSelect>>(new _SelectRandomAccessEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEnumeratorAt(elementIndex)));
 			}
 		};
 
@@ -80,7 +188,6 @@ namespace xlinq
 		struct selecttypeinfo
 		{
 			typedef decltype(std::declval<TSelector>()((std::declval<TElem>()))) TSelect;
-			typedef std::shared_ptr<IEnumerable<TSelect>> TSelectEnumerable;
 		};
 
 		template<typename TSelector>
@@ -93,11 +200,24 @@ namespace xlinq
 			_SelectBuilder(TSelector selector) : _selector(selector) {}
 
 			template<typename TElem>
-			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> typename selecttypeinfo<TSelector, TElem>::TSelectEnumerable
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
 			{
 				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
-				typedef typename selecttypeinfo<TSelector, TElem>::TSelectEnumerable TSelectEnumerable;
-				return TSelectEnumerable(new _SelectEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
+				return std::shared_ptr<IEnumerable<TSelect>>(new _SelectEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::shared_ptr<IBidirectionalEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
+			{
+				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
+				return std::shared_ptr<IBidirectionalEnumerable<TSelect>>(new _SelectBidirectionalEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::shared_ptr<IRandomAccessEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
+			{
+				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
+				return std::shared_ptr<IRandomAccessEnumerable<TSelect>>(new _SelectRandomAccessEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
 			}
 		};
 	}
