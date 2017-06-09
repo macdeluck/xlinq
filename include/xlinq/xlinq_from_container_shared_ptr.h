@@ -42,92 +42,92 @@ namespace xlinq
 	namespace internal
 	{
 		template<typename TContainer, typename TIterator, typename TElem>
-		class _StlPointerEnumerator : public _StlEnumerator<TIterator, TElem>
+		class _StlSharedPointerEnumerator : public _StlEnumerator<TIterator, TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
+			_StlSharedPointerEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
 				: _StlEnumerator<TIterator, TElem>(begin, end), _container(container) {}
 		};
 		
 		template<typename TContainer, typename TIterator, typename TElem>
-		class _StlPointerBidirectionalEnumerator : public _StlBidirectionalEnumerator<TIterator, TElem>
+		class _StlSharedPointerBidirectionalEnumerator : public _StlBidirectionalEnumerator<TIterator, TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerBidirectionalEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, bool atBegin = true)
+			_StlSharedPointerBidirectionalEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, bool atBegin = true)
 				: _StlBidirectionalEnumerator<TIterator, TElem>(begin, end, atBegin), _container(container) {}
 		};
 		
 		template<typename TContainer, typename TIterator, typename TElem>
-		class _StlPointerRandomAccessEnumerator : public _StlRandomAccessEnumerator<TIterator, TElem>
+		class _StlSharedPointerRandomAccessEnumerator : public _StlRandomAccessEnumerator<TIterator, TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
+			_StlSharedPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
 				: _StlRandomAccessEnumerator<TIterator, TElem>(begin, end), _container(container) {}
 
-			_StlPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, TIterator current)
+			_StlSharedPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, TIterator current)
 				: _StlRandomAccessEnumerator<TIterator, TElem>(begin, end, current), _container(container) {}
 		};
 
 		template<typename TContainer, typename TElem>
-		class _StlPointerEnumerable : public IEnumerable<TElem>
+		class _StlSharedPointerEnumerable : public IEnumerable<TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
+			_StlSharedPointerEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
 
 			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlSharedPointerEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
 			}
 		};
 
 		template<typename TContainer, typename TElem>
-		class _StlPointerBidirectionalEnumerable : public IBidirectionalEnumerable<TElem>
+		class _StlSharedPointerBidirectionalEnumerable : public IBidirectionalEnumerable<TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerBidirectionalEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
+			_StlSharedPointerBidirectionalEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
 
 			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), true));
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlSharedPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), true));
 			}
 
 			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), false));
+				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlSharedPointerBidirectionalEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), false));
 			}
 		};
 
 		template<typename TContainer, typename TElem>
-		class _StlPointerRandomAccessEnumerable : public IRandomAccessEnumerable<TElem>
+		class _StlSharedPointerRandomAccessEnumerable : public IRandomAccessEnumerable<TElem>
 		{
 		private:
 			std::shared_ptr<TContainer> _container;
 		public:
-			_StlPointerRandomAccessEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
+			_StlSharedPointerRandomAccessEnumerable(std::shared_ptr<TContainer> container) : _container(container) {}
 
 			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IEnumerator<TElem>>(new _StlPointerRandomAccessEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
+				return std::shared_ptr<IEnumerator<TElem>>(new _StlSharedPointerRandomAccessEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end()));
 			}
 
 			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
 			{
 				typedef typename TContainer::iterator iterator;
-				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlPointerRandomAccessEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), _container->end()));
+				return std::shared_ptr<IBidirectionalEnumerator<TElem>>(new _StlSharedPointerRandomAccessEnumerator<TContainer, iterator, TElem>(_container, _container->begin(), _container->end(), _container->end()));
 			}
 
 			std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) override
@@ -139,49 +139,49 @@ namespace xlinq
 		};
 
 		template<typename iterator_tag, typename TContainer, typename TElem>
-		struct StlPointerEnumerableSelectorHelper
+		struct StlSharedPointerEnumerableSelectorHelper
 		{
 		};
 
 		template<typename TContainer, typename TElem>
-		struct StlPointerEnumerableSelectorHelper<std::forward_iterator_tag, TContainer, TElem>
+		struct StlSharedPointerEnumerableSelectorHelper<std::forward_iterator_tag, TContainer, TElem>
 		{
-			typedef _StlPointerEnumerable<TContainer, TElem> enumerable;
+			typedef _StlSharedPointerEnumerable<TContainer, TElem> enumerable;
 		};
 
 		template<typename TContainer, typename TElem>
-		struct StlPointerEnumerableSelectorHelper<std::bidirectional_iterator_tag, TContainer, TElem>
+		struct StlSharedPointerEnumerableSelectorHelper<std::bidirectional_iterator_tag, TContainer, TElem>
 		{
-			typedef _StlPointerBidirectionalEnumerable<TContainer, TElem> enumerable;
+			typedef _StlSharedPointerBidirectionalEnumerable<TContainer, TElem> enumerable;
 		};
 
 		template<typename TContainer, typename TElem>
-		struct StlPointerEnumerableSelectorHelper<std::random_access_iterator_tag, TContainer, TElem>
+		struct StlSharedPointerEnumerableSelectorHelper<std::random_access_iterator_tag, TContainer, TElem>
 		{
-			typedef _StlPointerRandomAccessEnumerable<TContainer, TElem> enumerable;
+			typedef _StlSharedPointerRandomAccessEnumerable<TContainer, TElem> enumerable;
 		};
 
 		template<typename TContainer, typename TElem>
-		struct StlPointerEnumerableSelector
+		struct StlSharedPointerEnumerableSelector
 		{
 			typedef typename std::iterator_traits<typename TContainer::iterator> traits;
-			typedef typename StlPointerEnumerableSelectorHelper<typename traits::iterator_category, TContainer, typename TContainer::value_type>::enumerable type;
+			typedef typename StlSharedPointerEnumerableSelectorHelper<typename traits::iterator_category, TContainer, typename TContainer::value_type>::enumerable type;
 		};
 	}
 	/*@endcond*/
 
 	/**
 	*	Creates enumerable from shared pointer to STL container.
-	*	This function may be used to create enumerable from pointer to STL container.
+	*	This function may be used to create enumerable from shared pointer to STL container.
 	*	It is implemented using deffered execution so traversing of the collection
 	*	will wait until its next element will be requested.
 	*	@param container Source STL container.
 	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
-	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<typename internal::StlPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>
+	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>
 	{
-		return std::shared_ptr<typename internal::StlPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>(new typename internal::StlPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
+		return std::shared_ptr<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>(new typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
 	}
 }
 

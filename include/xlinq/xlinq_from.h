@@ -32,6 +32,7 @@ SOFTWARE.
 #include "xlinq_from_array.h"
 #include "xlinq_from_enumerable.h"
 #include "xlinq_from_container.h"
+#include "xlinq_from_container_ptr.h"
 #include "xlinq_from_container_shared_ptr.h"
 
 #endif
