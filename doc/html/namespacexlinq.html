@@ -137,6 +137,10 @@ internal::_GetEndEnumeratorBuilder&#160;</td><td class="memItemRight" valign="bo
 internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">getEnumeratorAt</a> (int elementIndex)</td></tr>
 <tr class="memdesc:aff22f546b38f9e0a88fd478b8710b6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function extracting enumerator at given position from random access enumerable.  <a href="#aff22f546b38f9e0a88fd478b8710b6c0">More...</a><br/></td></tr>
 <tr class="separator:aff22f546b38f9e0a88fd478b8710b6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a921234e8bf3e9579a5aa0a81700c5660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">first</a> ()</td></tr>
+<tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
+<tr class="separator:a921234e8bf3e9579a5aa0a81700c5660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplParams" colspan="2">template&lt;typename TElem , size_t SIZE&gt; </td></tr>
 <tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a><br class="typebreak"/>
@@ -178,6 +182,25 @@ internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a c
 <tr class="separator:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a921234e8bf3e9579a5aa0a81700c5660"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_FirstBuilder xlinq::first </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extracts first element of collection. </p>
+<p>This function may be used to extract first element of collection. It will throw <a class="el" href="classxlinq_1_1IterationFinishedException.html" title="Error indicating, that iteration has been already finished. ">IterationFinishedException</a> if collection contains no elements. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of first expression. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a36a727e2cdf09355fd29fdb674381c19"></a>
 <div class="memitem">
 <div class="memproto">
