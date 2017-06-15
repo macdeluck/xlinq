@@ -981,3 +981,115 @@ TEST(XLinqConcatRandomAccessOnlyTest, Size)
 
 	ASSERT_EQ(9, (from(first) >> concat(second))->size());
 }
+
+TEST(XLinqConcatArray, Enumeration)
+{
+	std::vector<int> first = { 1, 2, 3, 4, 5 };
+	int second[] = { 6, 7, 8, 9 };
+
+	auto enumerator = from(first) >> concat(second) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqConcatVectorPtr, Enumeration)
+{
+	std::vector<int> first = { 1, 2, 3, 4, 5 };
+	std::vector<int> second { 6, 7, 8, 9 };
+
+	auto enumerator = from(first) >> concat(&second) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqConcatVectorSharedPtr, Enumeration)
+{
+	std::vector<int> first = { 1, 2, 3, 4, 5 };
+	std::shared_ptr<std::vector<int>> second(new std::vector<int>({ 6, 7, 8, 9 }));
+
+	auto enumerator = from(first) >> concat(second) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqConcatEnumerable, Enumeration)
+{
+	std::vector<int> first = { 1, 2, 3, 4, 5 };
+	std::vector<int> second = { 6, 7, 8, 9 };
+
+	auto enumerator = from(first) >> concat(from(second)) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
