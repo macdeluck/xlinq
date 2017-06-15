@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classxlinq_1_1IRandomAccessEnumerable-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -110,6 +111,12 @@ Inheritance diagram for xlinq::IRandomAccessEnumerable&lt; TElem &gt;:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ab7fca624021486d780445aba53bef951"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html#ab7fca624021486d780445aba53bef951">size</a> () <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:ab7fca624021486d780445aba53bef951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of elements in collection.  <a href="#ab7fca624021486d780445aba53bef951">More...</a><br/></td></tr>
+<tr class="separator:ab7fca624021486d780445aba53bef951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aca548ec5eeaca05f4c4809111ad27d40"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr<br class="typebreak"/>
@@ -170,6 +177,34 @@ template&lt;typename TElem &gt; </div>
 <p>Accesses enumerator pointing at the given element of enumerable. </p>
 <p>This method allows to access pointer to enumerator, which may be used to traverse collection starting from any element. If given index will exceed number of collection elements then enumerator will point at the end of collection. Each of enumerator instances created from single collection should work separately (they should not have any impact on each other). </p>
 <dl class="section return"><dt>Returns</dt><dd>New <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html" title="Interface for random access enumerator. ">IRandomAccessEnumerator</a> instance. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab7fca624021486d780445aba53bef951"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">xlinq::IRandomAccessEnumerable</a>&lt; TElem &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns number of elements in collection. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of elements in collection. </dd></dl>
 
 </div>
 </div>
