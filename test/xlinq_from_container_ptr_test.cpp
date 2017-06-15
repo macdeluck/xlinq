@@ -303,6 +303,21 @@ TEST(XLinqFromVectorPtrTest, RandomAccessEnumerableAt)
 	ASSERT_EQ(71, enumerator->current().age);
 }
 
+TEST(XLinqFromVectorPtrTest, RandomAccessEnumerableEmpty)
+{
+	std::vector<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
+	ASSERT_FALSE((from(&container) >> getEnumerator())->advance(1));
+	ASSERT_FALSE((from(&container) >> getEnumerator())->advance(-1));
+}
+
+TEST(XLinqFromVectorPtrTest, RandomAccessEnumerableSize)
+{
+	auto persons = getPersons();
+	ASSERT_EQ(6, from(&persons)->size());
+}
+
 TEST(XLinqFromListPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsList();
@@ -489,6 +504,13 @@ TEST(XLinqFromListPtrTest, BidirectionalEnumerableEnd)
 	ASSERT_FALSE(enumerator->back());
 }
 
+TEST(XLinqFromListPtrTest, BidirectionalEnumerableEmpty)
+{
+	std::list<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromForwardListPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsForwardList();
@@ -584,6 +606,12 @@ TEST(XLinqFromForwardListPtrTest, EnumerableBegin)
 	ASSERT_EQ(71, enumerator->current().age);
 
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromForwardListPtrTest, EnumerableEmpty)
+{
+	std::forward_list<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
 }
 
 TEST(XLinqFromSetPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -744,6 +772,13 @@ TEST(XLinqFromSetPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromSetPtrTest, BidirectionalEnumerableEmpty)
+{
+	std::set<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromMultiSetPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiSet();
@@ -900,6 +935,13 @@ TEST(XLinqFromMultiSetPtrTest, BidirectionalEnumerableFromEnd)
 	ASSERT_EQ(6, occuredPersons.size());
 
 	occuredPersons.clear();
+}
+
+TEST(XLinqFromMultiSetPtrTest, BidirectionalEnumerableEmpty)
+{
+	std::multiset<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
 }
 
 TEST(XLinqFromMapPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1060,6 +1102,13 @@ TEST(XLinqFromMapPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromMapPtrTest, BidirectionalEnumerableEmpty)
+{
+	std::map<int, int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromMultiMapPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiMap();
@@ -1218,6 +1267,13 @@ TEST(XLinqFromMultiMapPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromMultiMapPtrTest, BidirectionalEnumerableEmpty)
+{
+	std::multimap<int, int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(&container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromUnorderedSetPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedSet();
@@ -1303,6 +1359,12 @@ TEST(XLinqFromUnorderedSetPtrTest, EnumerableBegin)
 
 	ASSERT_FALSE(enumerator->next());
 	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromUnorderedSetPtrTest, EnumerableEmpty)
+{
+	std::unordered_set<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
 }
 
 TEST(XLinqFromUnorderedMultiSetPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1392,6 +1454,12 @@ TEST(XLinqFromUnorderedMultiSetPtrTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
+TEST(XLinqFromUnorderedMultiSetPtrTest, EnumerableEmpty)
+{
+	std::unordered_multiset<int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+}
+
 TEST(XLinqFromUnorderedMapPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMap();
@@ -1479,6 +1547,12 @@ TEST(XLinqFromUnorderedMapPtrTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
+TEST(XLinqFromUnorderedMapPtrTest, EnumerableEmpty)
+{
+	std::unordered_map<int, int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
+}
+
 TEST(XLinqFromUnorderedMultiMapPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMultiMap();
@@ -1564,4 +1638,10 @@ TEST(XLinqFromUnorderedMultiMapPtrTest, EnumerableBegin)
 
 	ASSERT_FALSE(enumerator->next());
 	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromUnorderedMultiMapPtrTest, EnumerableEmpty)
+{
+	std::unordered_multimap<int, int> container;
+	ASSERT_FALSE((from(&container) >> getEnumerator())->next());
 }

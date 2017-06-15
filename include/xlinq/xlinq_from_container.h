@@ -50,7 +50,7 @@ namespace xlinq
 
 			void assert_finished()
 			{
-				if (_begin == _end)
+				if (_started && _begin == _end)
 					throw IterationFinishedException();
 			}
 
@@ -86,7 +86,7 @@ namespace xlinq
 
 			void assert_finished()
 			{
-				if (_current == _end)
+				if (_started && _current == _end)
 					throw IterationFinishedException();
 			}
 
@@ -134,7 +134,7 @@ namespace xlinq
 
 			void assert_finished()
 			{
-				if (_current == _end)
+				if (_started && _current == _end)
 					throw IterationFinishedException();
 			}
 
@@ -147,7 +147,7 @@ namespace xlinq
 			bool advance_forward(int step)
 			{
 				assert(step > 0);
-				if (_current == _end)
+				if (_current == _end && _started)
 					return false;
 
 				if (!_started)
@@ -285,6 +285,11 @@ namespace xlinq
 				result->advance(elementIndex + 1);
 				return result;
 			}
+
+			int size() override
+			{
+				return (int)_container.size();
+			}
 		};
 
 		template<typename iterator_tag, typename TContainer, typename TElem>
@@ -329,9 +334,9 @@ namespace xlinq
 	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
-	auto from(TContainer& container) -> std::shared_ptr<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>
+	auto from(TContainer& container) -> std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>
 	{
-		return std::shared_ptr<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>(new typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
+		return std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>(new typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
 	}
 }
 

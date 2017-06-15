@@ -182,6 +182,11 @@ namespace xlinq
 			{
 				return std::shared_ptr<IRandomAccessEnumerator<TSelect>>(new _SelectRandomAccessEnumerator<TSelector, TElem, TSelect>(_selector, _source->getEnumeratorAt(elementIndex)));
 			}
+
+			int size() override
+			{
+				return _source->size();
+			}
 		};
 
 		template<typename TSelector, typename TElem>

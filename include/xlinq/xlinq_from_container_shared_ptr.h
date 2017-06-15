@@ -136,6 +136,11 @@ namespace xlinq
 				result->advance(elementIndex + 1);
 				return result;
 			}
+
+			int size() override
+			{
+				return (int)_container->size();
+			}
 		};
 
 		template<typename iterator_tag, typename TContainer, typename TElem>
@@ -179,9 +184,9 @@ namespace xlinq
 	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
-	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>
+	auto from(std::shared_ptr<TContainer> container) -> std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>
 	{
-		return std::shared_ptr<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>(new typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
+		return std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>(new typename internal::StlSharedPointerEnumerableSelector<TContainer, typename TContainer::value_type>::type(container));
 	}
 }
 

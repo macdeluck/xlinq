@@ -228,6 +228,12 @@ namespace xlinq
 		*/
 		virtual std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) XLINQ_ABSTRACT;
 	public:
+		/**
+		*	Returns number of elements in collection.
+		*	@return Number of elements in collection.
+		*/
+		virtual int size() XLINQ_ABSTRACT;
+
 		_XLINQ_GET_ENUMERATOR(IRandomAccessEnumerator<TElem>)
 
 		_XLINQ_GET_END_ENUMERATOR(IRandomAccessEnumerator<TElem>)

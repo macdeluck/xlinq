@@ -48,9 +48,9 @@ namespace xlinq
 	*	@return Enumerable from container.
 	*/
 	template<typename TContainer>
-	auto from(TContainer* container) -> std::shared_ptr<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>
+	auto from(TContainer* container) -> std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>
 	{
-		return std::shared_ptr<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>(new typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type(*container));
+		return std::shared_ptr<typename internal::EnumerableTypeSelector<typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type>::type>(new typename internal::StlEnumerableSelector<TContainer, typename TContainer::value_type>::type(*container));
 	}
 }
 

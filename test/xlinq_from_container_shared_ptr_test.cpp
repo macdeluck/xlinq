@@ -303,6 +303,22 @@ TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableAt)
 	ASSERT_EQ(71, enumerator->current().age);
 }
 
+TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableEmpty)
+{
+	typedef std::vector<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+	ASSERT_FALSE((from(container) >> getEnumerator())->advance(1));
+	ASSERT_FALSE((from(container) >> getEnumerator())->advance(-1));
+}
+
+TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableSize)
+{
+	auto persons = getPersonsSharedPtr();
+	ASSERT_EQ(6, from(persons)->size());
+}
+
 TEST(XLinqFromListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsListSharedPtr();
@@ -489,6 +505,14 @@ TEST(XLinqFromListSharedPtrTest, BidirectionalEnumerableEnd)
 	ASSERT_FALSE(enumerator->back());
 }
 
+TEST(XLinqFromListSharedPtrTest, BidirectionalEnumerableEmpty)
+{
+	typedef std::list<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromForwardListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsForwardListSharedPtr();
@@ -584,6 +608,13 @@ TEST(XLinqFromForwardListSharedPtrTest, EnumerableBegin)
 	ASSERT_EQ(71, enumerator->current().age);
 
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromForwardListSharedPtrTest, EnumerableEmpty)
+{
+	typedef std::forward_list<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
 TEST(XLinqFromSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -744,6 +775,14 @@ TEST(XLinqFromSetSharedPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromSetSharedPtrTest, BidirectionalEnumerableEmpty)
+{
+	typedef std::set<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiSetSharedPtr();
@@ -900,6 +939,14 @@ TEST(XLinqFromMultiSetSharedPtrTest, BidirectionalEnumerableFromEnd)
 	ASSERT_EQ(6, occuredPersons.size());
 
 	occuredPersons.clear();
+}
+
+TEST(XLinqFromMultiSetSharedPtrTest, BidirectionalEnumerableEmpty)
+{
+	typedef std::multiset<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
 TEST(XLinqFromMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1060,6 +1107,14 @@ TEST(XLinqFromMapSharedPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromMapSharedPtrTest, BidirectionalEnumerableEmpty)
+{
+	typedef std::map<int, int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiMapSharedPtr();
@@ -1218,6 +1273,14 @@ TEST(XLinqFromMultiMapSharedPtrTest, BidirectionalEnumerableEnd)
 	occuredPersons.clear();
 }
 
+TEST(XLinqFromMultiMapSharedPtrTest, BidirectionalEnumerableEmpty)
+{
+	typedef std::multimap<int, int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
 TEST(XLinqFromUnorderedSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedSetSharedPtr();
@@ -1303,6 +1366,13 @@ TEST(XLinqFromUnorderedSetSharedPtrTest, EnumerableBegin)
 
 	ASSERT_FALSE(enumerator->next());
 	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromUnorderedSetSharedPtrTest, EnumerableEmpty)
+{
+	typedef std::unordered_set<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
 TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1392,6 +1462,13 @@ TEST(XLinqFromUnorderedMultiSetSharedPtrTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, EnumerableEmpty)
+{
+	typedef std::unordered_multiset<int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
 TEST(XLinqFromUnorderedMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMapSharedPtr();
@@ -1479,6 +1556,13 @@ TEST(XLinqFromUnorderedMapSharedPtrTest, EnumerableBegin)
 	ASSERT_EQ(6, occuredPersons.size());
 }
 
+TEST(XLinqFromUnorderedMapSharedPtrTest, EnumerableEmpty)
+{
+	typedef std::unordered_map<int, int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
 TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMultiMapSharedPtr();
@@ -1564,4 +1648,11 @@ TEST(XLinqFromUnorderedMultiMapSharedPtrTest, EnumerableBegin)
 
 	ASSERT_FALSE(enumerator->next());
 	ASSERT_EQ(6, occuredPersons.size());
+}
+
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, EnumerableEmpty)
+{
+	typedef std::unordered_multimap<int, int> tcontainer;
+	std::shared_ptr<tcontainer> container(new tcontainer());
+	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }

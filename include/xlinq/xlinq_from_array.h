@@ -45,13 +45,13 @@ namespace xlinq
 		{
 		private:
 			TElem* _begin;
-			size_t _size;
-			size_t _index;
+			int _size;
+			int _index;
 			bool _started;
 
 			void assert_finished()
 			{
-				if (_index == _size)
+				if (_started && _index == _size)
 					throw IterationFinishedException();
 			}
 
@@ -64,7 +64,7 @@ namespace xlinq
 			bool advance_forward(int step)
 			{
 				assert(step > 0);
-				if (_index == _size)
+				if (_index == _size && _started)
 					return false;
 
 				if (!_started)
@@ -73,7 +73,7 @@ namespace xlinq
 					step--;
 				}
 				auto dist = _size - _index;
-				if ((size_t)step < dist)
+				if (step < dist)
 				{
 					_index += step;
 					return true;
@@ -92,12 +92,12 @@ namespace xlinq
 					return false;
 
 				step = -step;
-				if ((size_t)step < _index)
+				if (step < _index)
 				{
 					_index -= step;
 					return true;
 				}
-				else if ((size_t)step == _index)
+				else if (step == _index)
 				{
 					_index = 0;
 					return true;
@@ -111,7 +111,7 @@ namespace xlinq
 			}
 
 		public:
-			_ArrayEnumerator(TElem* begin, size_t size) : _begin(begin), _size(size), _index(0), _started(false) {}
+			_ArrayEnumerator(TElem* begin, int size) : _begin(begin), _size(size), _index(0), _started(false) {}
 
 			bool next() override
 			{
@@ -144,9 +144,9 @@ namespace xlinq
 		{
 		private:
 			TElem* _array;
-			size_t _size;
+			int _size;
 		public:
-			_ArrayEnumerable(TElem* array, size_t size) : _array(array), _size(size) {}
+			_ArrayEnumerable(TElem* array, int size) : _array(array), _size(size) {}
 
 			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
@@ -166,6 +166,11 @@ namespace xlinq
 				result->advance(elementIndex + 1);
 				return result;
 			}
+
+			int size() override
+			{
+				return _size;
+			}
 		};
 	}
 	/*@endcond*/
@@ -179,7 +184,7 @@ namespace xlinq
 	*	@param array Source fixed size array.
 	*	@return Enumerable from array.
 	*/
-	template<typename TElem, size_t SIZE>
+	template<typename TElem, int SIZE>
 	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(TElem(&array)[SIZE])
 	{
 		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem>((TElem*)array, SIZE));
