@@ -32,9 +32,17 @@ SOFTWARE.
 #include "xlinq_defs.h"
 #include "xlinq_exception.h"
 #include "xlinq_base.h"
+#include "xlinq_concat.h"
+#include "xlinq_first.h"
+#include "xlinq_from_array.h"
+#include "xlinq_from_container.h"
+#include "xlinq_from_container_ptr.h"
+#include "xlinq_from_container_shared_ptr.h"
+#include "xlinq_from_enumerable.h"
 #include "xlinq_from.h"
-#include "xlinq_select.h"
 #include "xlinq_gather.h"
+#include "xlinq_last.h"
+#include "xlinq_select.h"
 #include "xlinq_where.h"
 
 #endif
