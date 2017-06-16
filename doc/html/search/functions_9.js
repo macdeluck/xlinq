@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['select',['select',['../namespacexlinq.html#ab738e44970df0cc013b01175278396ff',1,'xlinq']]],
-  ['size',['size',['../classxlinq_1_1IRandomAccessEnumerable.html#ab7fca624021486d780445aba53bef951',1,'xlinq::IRandomAccessEnumerable']]]
+  ['operator_3e_3e',['operator&gt;&gt;',['../namespacexlinq.html#a4f2c6ff34dff175b89b7b0779e131b91',1,'xlinq']]]
 ];

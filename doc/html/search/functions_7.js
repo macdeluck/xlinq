@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next',['next',['../classxlinq_1_1IEnumerator.html#a9001ab9dbb8efb087461c9d7b70f22b6',1,'xlinq::IEnumerator']]]
+  ['last',['last',['../namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590',1,'xlinq']]]
 ];
