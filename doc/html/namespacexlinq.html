@@ -164,6 +164,10 @@ TContainer::value_type &gt;::type&#160;</td><td class="memTemplItemRight" valign
 <tr class="memitem:afff0586eed8fd9d546950818aa40fb11"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#afff0586eed8fd9d546950818aa40fb11">concat</a> (std::shared_ptr&lt; TEnumerable &gt; enumerable) -&gt; typename internal::ConcatBuilderSelectorHelper&lt; decltype(<a class="el" href="namespacexlinq.html#aa014597a96853a8eb464f63a8e2560db">from</a>(enumerable)), typename TEnumerable::ElemType &gt;::builder</td></tr>
 <tr class="memdesc:afff0586eed8fd9d546950818aa40fb11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function concatenating two enumerables into single collection.  <a href="#afff0586eed8fd9d546950818aa40fb11">More...</a><br/></td></tr>
 <tr class="separator:afff0586eed8fd9d546950818aa40fb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_CountBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9ec31d8cf9c65eb9f1b5065f7f28bd68">count</a> ()</td></tr>
+<tr class="memdesc:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of elements in collection.  <a href="#a9ec31d8cf9c65eb9f1b5065f7f28bd68">More...</a><br/></td></tr>
+<tr class="separator:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921234e8bf3e9579a5aa0a81700c5660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">first</a> ()</td></tr>
 <tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
@@ -345,6 +349,25 @@ template&lt;typename TEnumerable &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of concat expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9ec31d8cf9c65eb9f1b5065f7f28bd68"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_CountBuilder xlinq::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns number of elements in collection. </p>
+<p>This function may be used to count number of elements in collection. It does not count elements if the collection implements <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html" title="Interface for random access enumerable. ">IRandomAccessEnumerable</a> interface. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of first expression. </dd></dl>
 
 </div>
 </div>

@@ -4,6 +4,7 @@ var searchData=
   ['xlinq_5fabstract',['XLINQ_ABSTRACT',['../xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb',1,'xlinq_defs.h']]],
   ['xlinq_5fbase_2eh',['xlinq_base.h',['../xlinq__base_8h.html',1,'']]],
   ['xlinq_5fconcat_2eh',['xlinq_concat.h',['../xlinq__concat_8h.html',1,'']]],
+  ['xlinq_5fcount_2eh',['xlinq_count.h',['../xlinq__count_8h.html',1,'']]],
   ['xlinq_5fdefs_2eh',['xlinq_defs.h',['../xlinq__defs_8h.html',1,'']]],
   ['xlinq_5fexception_2eh',['xlinq_exception.h',['../xlinq__exception_8h.html',1,'']]],
   ['xlinq_5ffirst_2eh',['xlinq_first.h',['../xlinq__first_8h.html',1,'']]],
