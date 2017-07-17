@@ -23,9 +23,20 @@ namespace xlinq
 		std::string secondName;
 		int age;
 
+		Person(std::string firstName, std::string secondName, int age)
+			: firstName(firstName), secondName(secondName), age(age) {}
+
 		XLINQ_INLINE bool operator<(const Person& other) const { return age < other.age; }
 
 		XLINQ_INLINE bool operator>(const Person& other) const { return age > other.age; }
+	};
+
+	class Company
+	{
+	public:
+		Person leader;
+
+		std::vector<Person> employees;
 	};
 
 	struct PersonHasher
@@ -47,6 +58,27 @@ namespace xlinq
 			return first.age == second.age && first.firstName == second.firstName && first.secondName == second.secondName;
 		}
 	};
+
+	XLINQ_INLINE std::vector<Company> getCompanies()
+	{
+		std::vector<Company> result = {
+			Company { 
+				Person { "Jan", "Krzywy", 72 },
+				{
+					Person { "Anna", "Walczak", 19 },
+					Person { "Micha³", "Lend", 33 }
+				}
+			},
+			Company{
+				Person { "Damian", "Kopeæ", 42 },
+				{
+					Person { "Janusz", "Grzyb", 27 },
+					Person { "Marian", "Halbut", 31 }
+				}
+			}
+		};
+		return result;
+	}
 
 	XLINQ_INLINE std::vector<Person> getPersons()
 	{

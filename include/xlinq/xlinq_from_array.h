@@ -189,6 +189,21 @@ namespace xlinq
 	{
 		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem>((TElem*)array, SIZE));
 	}
+
+	/**
+	*	Creates enumerable from new standard fixed size array.
+	*	This function may be used to create enumerable from fixed size array.
+	*	It is implemented using deffered execution so traversing of the array
+	*	will wait until its next element will be requested. Please note, that
+	*	enumeration will fail if array will be deallocated.
+	*	@param array Source fixed size array.
+	*	@return Enumerable from array.
+	*/
+	template<typename TElem, int SIZE>
+	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(std::array<TElem, SIZE> array)
+	{
+		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem>((TElem*)array, SIZE));
+	}
 }
 
 #endif

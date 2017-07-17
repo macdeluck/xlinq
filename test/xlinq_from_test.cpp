@@ -5,6 +5,7 @@
 #include <xlinq/xlinq_exception.h>
 #include <memory>
 #include <vector>
+#include <array>
 #include <iterator>
 
 using namespace std;
@@ -109,7 +110,6 @@ TEST(XLinqFromTest, XLinqStlIteratorFromVectorCallNextWhenEnumerationWasFinished
 	}
 	FAIL();
 }
-
 
 TEST(XLinqFromTest, XLinqStlIterableFromVector)
 {
@@ -266,6 +266,23 @@ TEST(XLinqFromTest, XLinqArrayEnumeratorCallNextWhenEnumerationWasFinished)
 TEST(XLinqFromTest, XLinqEnumerableFromArray)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
+	auto enumerator = from(values) >> getEnumerator();
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromTest, XLinqEnumerableFromStdArray)
+{
+	array<int, 5> values = { 1, 2, 3, 4, 5 };
 	auto enumerator = from(values) >> getEnumerator();
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(1, enumerator->current());
