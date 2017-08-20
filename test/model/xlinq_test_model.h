@@ -34,6 +34,7 @@ namespace xlinq
 	class Company
 	{
 	public:
+		std::string name;
 		Person leader;
 
 		std::vector<Person> employees;
@@ -62,7 +63,8 @@ namespace xlinq
 	XLINQ_INLINE std::vector<Company> getCompanies()
 	{
 		std::vector<Company> result = {
-			Company { 
+			Company {
+				"Fakebook",
 				Person { "Jan", "Krzywy", 72 },
 				{
 					Person { "Anna", "Walczak", 19 },
@@ -70,6 +72,7 @@ namespace xlinq
 				}
 			},
 			Company{
+				"Macrohard",
 				Person { "Damian", "Kopeæ", 42 },
 				{
 					Person { "Janusz", "Grzyb", 27 },
@@ -77,6 +80,14 @@ namespace xlinq
 				}
 			}
 		};
+		return result;
+	}
+
+	XLINQ_INLINE std::unordered_map<std::string, Company> getCompaniesUnorderedMap()
+	{
+		std::unordered_map<std::string, Company> result;
+		for (auto c : getCompanies())
+			result.insert(std::pair<std::string, Company>(c.name, c));
 		return result;
 	}
 

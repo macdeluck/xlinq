@@ -30,3 +30,15 @@ TEST(XLinqSelectManyTest, FlatteningCollectionContainingVectors)
 	ASSERT_EQ(31, enumerator->current().age);
 	ASSERT_FALSE(enumerator->next());
 }
+
+TEST(XLinqSelectManyTest, SelectingFromDictionary)
+{
+	auto companies = getCompaniesUnorderedMap();
+	auto allEmployees = from(companies) >> select_many([](std::pair<std::string, Company> c) { return c.second.employees; });
+	auto enumerator = allEmployees >> getEnumerator();
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->next());
+}
