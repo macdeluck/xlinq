@@ -42,3 +42,33 @@ TEST(XLinqSelectManyTest, SelectingFromDictionary)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_FALSE(enumerator->next());
 }
+
+TEST(XLinqSelectManyTest, SelectingFrom2DArray)
+{
+	std::array<std::array<int, 5>, 2> array = {
+		std::array<int, 5>({ 1, 2, 3, 4, 5}),
+		std::array<int, 5>({ 6, 7, 8, 9, 10})
+	};
+	auto enumerator = from(array) >> select_many([](std::array<int, 5> a) { return a; }) >> getEnumerator();
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(10, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+}
