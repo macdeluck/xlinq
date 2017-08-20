@@ -178,6 +178,12 @@ internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a cl
 &lt; TElem &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa014597a96853a8eb464f63a8e2560db">from</a> (TElem(&amp;array)[SIZE])</td></tr>
 <tr class="memdesc:aa014597a96853a8eb464f63a8e2560db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from fixed size array.  <a href="#aa014597a96853a8eb464f63a8e2560db">More...</a><br/></td></tr>
 <tr class="separator:aa014597a96853a8eb464f63a8e2560db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad09854bf591e82bd4a0a1b09e4b5ff6e"><td class="memTemplParams" colspan="2">template&lt;typename TElem , int SIZE&gt; </td></tr>
+<tr class="memitem:ad09854bf591e82bd4a0a1b09e4b5ff6e"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a><br class="typebreak"/>
+&lt; TElem &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad09854bf591e82bd4a0a1b09e4b5ff6e">from</a> (std::array&lt; TElem, SIZE &gt; &amp;array)</td></tr>
+<tr class="memdesc:ad09854bf591e82bd4a0a1b09e4b5ff6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from new standard fixed size array.  <a href="#ad09854bf591e82bd4a0a1b09e4b5ff6e">More...</a><br/></td></tr>
+<tr class="separator:ad09854bf591e82bd4a0a1b09e4b5ff6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9338e7aee5cc2f78c4caf9109b4b6a08"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
 <tr class="memitem:a9338e7aee5cc2f78c4caf9109b4b6a08"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9338e7aee5cc2f78c4caf9109b4b6a08">from</a> (TContainer &amp;container) -&gt; std::shared_ptr&lt; typename internal::EnumerableTypeSelector&lt; typename internal::StlEnumerableSelector&lt; TContainer, typename TContainer::value_type &gt;::type &gt;::type &gt;</td></tr>
 <tr class="memdesc:a9338e7aee5cc2f78c4caf9109b4b6a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerable from STL container.  <a href="#a9338e7aee5cc2f78c4caf9109b4b6a08">More...</a><br/></td></tr>
@@ -209,6 +215,11 @@ internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a c
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ab738e44970df0cc013b01175278396ff">select</a> (TSelector selector)</td></tr>
 <tr class="memdesc:ab738e44970df0cc013b01175278396ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts collection elements from one form to another.  <a href="#ab738e44970df0cc013b01175278396ff">More...</a><br/></td></tr>
 <tr class="separator:ab738e44970df0cc013b01175278396ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56fb6711f909024ee9f1b37f006858ad"><td class="memTemplParams" colspan="2">template&lt;typename TSelector &gt; </td></tr>
+<tr class="memitem:a56fb6711f909024ee9f1b37f006858ad"><td class="memTemplItemLeft" align="right" valign="top">internal::_SelectManyBuilder<br class="typebreak"/>
+&lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad">select_many</a> (TSelector selector)</td></tr>
+<tr class="memdesc:a56fb6711f909024ee9f1b37f006858ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flattens collection by concatenating subelements of original collection.  <a href="#a56fb6711f909024ee9f1b37f006858ad">More...</a><br/></td></tr>
+<tr class="separator:a56fb6711f909024ee9f1b37f006858ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplItemLeft" align="right" valign="top">internal::_WhereBuilder<br class="typebreak"/>
 &lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7">where</a> (TPredicate predicate)</td></tr>
@@ -504,6 +515,34 @@ template&lt;typename TElem , int SIZE&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad09854bf591e82bd4a0a1b09e4b5ff6e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem , int SIZE&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a>&lt;TElem&gt; &gt; xlinq::from </td>
+          <td>(</td>
+          <td class="paramtype">std::array&lt; TElem, SIZE &gt; &amp;&#160;</td>
+          <td class="paramname"><em>array</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates enumerable from new standard fixed size array. </p>
+<p>This function may be used to create enumerable from fixed size array. It is implemented using deffered execution so traversing of the array will wait until its next element will be requested. Please note, that enumeration will fail if array will be deallocated. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">array</td><td>Source fixed size array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable from array. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a9338e7aee5cc2f78c4caf9109b4b6a08"></a>
 <div class="memitem">
 <div class="memproto">
@@ -696,6 +735,34 @@ template&lt;typename TSelector &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of select expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a56fb6711f909024ee9f1b37f006858ad"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSelector &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">internal::_SelectManyBuilder&lt;TSelector&gt; xlinq::select_many </td>
+          <td>(</td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flattens collection by concatenating subelements of original collection. </p>
+<p>This function may be used to create collection from collection of collections by concatenating results of each original collection subelements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selector</td><td>Function used to convert each element of source collection to collection which will be selected into result collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of select_many expression. </dd></dl>
 
 </div>
 </div>

@@ -18,5 +18,6 @@ var searchData=
   ['xlinq_5finline',['XLINQ_INLINE',['../xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7',1,'xlinq_defs.h']]],
   ['xlinq_5flast_2eh',['xlinq_last.h',['../xlinq__last_8h.html',1,'']]],
   ['xlinq_5fselect_2eh',['xlinq_select.h',['../xlinq__select_8h.html',1,'']]],
+  ['xlinq_5fselect_5fmany_2eh',['xlinq_select_many.h',['../xlinq__select__many_8h.html',1,'']]],
   ['xlinq_5fwhere_2eh',['xlinq_where.h',['../xlinq__where_8h.html',1,'']]]
 ];

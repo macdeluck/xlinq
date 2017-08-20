@@ -15,5 +15,6 @@ var searchData=
   ['xlinq_5fgather_2eh',['xlinq_gather.h',['../xlinq__gather_8h.html',1,'']]],
   ['xlinq_5flast_2eh',['xlinq_last.h',['../xlinq__last_8h.html',1,'']]],
   ['xlinq_5fselect_2eh',['xlinq_select.h',['../xlinq__select_8h.html',1,'']]],
+  ['xlinq_5fselect_5fmany_2eh',['xlinq_select_many.h',['../xlinq__select__many_8h.html',1,'']]],
   ['xlinq_5fwhere_2eh',['xlinq_where.h',['../xlinq__where_8h.html',1,'']]]
 ];
