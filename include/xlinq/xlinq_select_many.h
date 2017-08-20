@@ -44,9 +44,8 @@ namespace xlinq
 		{
 		private:
 			TSelector _selector;
+			TSelectCollection _currentCollection;
 			std::shared_ptr<IEnumerator<TElem>> _source;
-			XLINQ_OPTIONAL(TElem) _currentElement;
-			XLINQ_OPTIONAL(TSelectCollection) _currentCollection;
 			std::shared_ptr<IEnumerator<TSelect>> _current;
 
 		public:
@@ -59,9 +58,8 @@ namespace xlinq
 				{
 					if (!_source->next())
 						return false;
-					_currentElement = _source->current();
-					_currentCollection = _selector(*_currentElement);
-					_current = from(*_currentCollection)->getEnumerator();
+					_currentCollection = _selector(_source->current());
+					_current = from(_currentCollection)->getEnumerator();
 				}
 				return true;
 			}
@@ -89,79 +87,13 @@ namespace xlinq
 			}
 		};
 
-		template<typename TSelector, typename TElem, typename TSelectCollection, typename TSelect>
-		class _SelectManyFromReferenceEnumerator : public IEnumerator<TSelect>
-		{
-		private:
-			TSelector _selector;
-			std::shared_ptr<IEnumerator<TElem>> _source;
-			XLINQ_OPTIONAL(TElem) _currentElement;
-			std::shared_ptr<IEnumerator<TSelect>> _current;
-
-		public:
-			_SelectManyFromReferenceEnumerator(TSelector selector, std::shared_ptr<IEnumerator<TElem>> source)
-				: _selector(selector), _source(source) {}
-
-			bool next() override
-			{
-				while (!_current || !_current->next())
-				{
-					if (!_source->next())
-						return false;
-					_currentElement = _source->current();
-					_current = from(_selector(*_currentElement))->getEnumerator();
-				}
-				return true;
-			}
-
-			TSelect current() override
-			{
-				return _current->current();
-			}
-		};
-
-		template<typename TSelector, typename TElem, typename TSelectCollection, typename TSelect>
-		class _SelectManyFromReferenceEnumerable : public IEnumerable<TSelect>
-		{
-		private:
-			TSelector _selector;
-			std::shared_ptr<IEnumerable<TElem>> _source;
-
-		public:
-			_SelectManyFromReferenceEnumerable(TSelector selector, std::shared_ptr<IEnumerable<TElem>> source)
-				: _selector(selector), _source(source) {}
-
-			std::shared_ptr<IEnumerator<TSelect>> createEnumerator() override
-			{
-				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectManyFromReferenceEnumerator<TSelector, TElem, TSelectCollection, TSelect>(_selector, _source->getEnumerator()));
-			}
-		};
-
-		template<typename TSelector, typename TElem, typename TSelectCollection, bool isSelectCollectionReferenceType>
-		struct SelectManyCollectionTypeInfo
-		{
-		public:
-			typedef decltype(from(std::declval<typename std::add_lvalue_reference<TSelectCollection>::type>())) TSelectEnumerable;
-			typedef typename TSelectEnumerable::element_type::ElemType TSelect;
-			typedef _SelectManyEnumerable<TSelector, TElem, TSelectCollection, TSelect> TEnumerable;
-		};
-
-		template<typename TSelector, typename TElem, typename TSelectCollection>
-		struct SelectManyCollectionTypeInfo<TSelector, TElem, TSelectCollection, true>
-		{
-		public:
-			typedef decltype(from(std::declval<TSelectCollection>())) TSelectEnumerable;
-			typedef typename TSelectEnumerable::element_type::ElemType TSelect;
-			typedef _SelectManyFromReferenceEnumerable<TSelector, TElem, TSelectCollection, TSelect> TEnumerable;
-		};
-
 		template<typename TSelector, typename TElem>
 		struct selectmanytypeinfo
 		{
 			typedef decltype(std::declval<TSelector>()((std::declval<typename std::add_lvalue_reference<TElem>::type>()))) TSelectCollection;
-			typedef typename SelectManyCollectionTypeInfo<TSelector, TElem, TSelectCollection, std::is_reference<TSelectCollection>::value>::TSelectEnumerable TSelectEnumerable;
-			typedef typename SelectManyCollectionTypeInfo<TSelector, TElem, TSelectCollection, std::is_reference<TSelectCollection>::value>::TSelect TSelect;
-			typedef typename SelectManyCollectionTypeInfo<TSelector, TElem, TSelectCollection, std::is_reference<TSelectCollection>::value>::TEnumerable TEnumerable;
+			typedef decltype(from(std::declval<typename std::add_lvalue_reference<TSelectCollection>::type>())) TSelectEnumerable;
+			typedef typename TSelectEnumerable::element_type::ElemType TSelect;
+			typedef _SelectManyEnumerable<TSelector, TElem, TSelectCollection, TSelect> TEnumerable;
 		};
 
 		template<typename TSelector>

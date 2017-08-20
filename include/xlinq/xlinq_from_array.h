@@ -172,6 +172,137 @@ namespace xlinq
 				return _size;
 			}
 		};
+
+		template<typename TElem, int SIZE>
+		class _StdArrayEnumerator : public IRandomAccessEnumerator<TElem>
+		{
+		private:
+			std::array<TElem, SIZE>& _array;
+			int _index;
+			bool _started;
+
+			void assert_finished()
+			{
+				if (_started && _index == SIZE)
+					throw IterationFinishedException();
+			}
+
+			void assert_started()
+			{
+				if (!_started)
+					throw IterationNotStartedException();
+			}
+
+			bool advance_forward(int step)
+			{
+				assert(step > 0);
+				if (_index == SIZE && _started)
+					return false;
+
+				if (!_started)
+				{
+					_started = true;
+					step--;
+				}
+				auto dist = SIZE - _index;
+				if (step < dist)
+				{
+					_index += step;
+					return true;
+				}
+				else
+				{
+					_index = SIZE;
+					return false;
+				}
+			}
+
+			bool advance_backward(int step)
+			{
+				assert(step < 0);
+				if ((_index == 0) && !_started)
+					return false;
+
+				step = -step;
+				if (step < _index)
+				{
+					_index -= step;
+					return true;
+				}
+				else if (step == _index)
+				{
+					_index = 0;
+					return true;
+				}
+				else
+				{
+					_started = false;
+					_index = 0;
+					return false;
+				}
+			}
+
+		public:
+			_StdArrayEnumerator(std::array<TElem, SIZE>& array) : _array(array), _index(0), _started(false) {}
+
+			bool next() override
+			{
+				assert_finished();
+				return advance(1);
+			}
+
+			bool back() override
+			{
+				assert_started();
+				return advance(-1);
+			}
+
+			bool advance(int step) override
+			{
+				if (!step) return true;
+				return step > 0 ? advance_forward(step) : advance_backward(step);
+			}
+
+			TElem current()
+			{
+				assert_started();
+				assert_finished();
+				return _array[_index];
+			}
+		};
+
+		template<typename TElem, int SIZE>
+		class _StdArrayEnumerable : public IRandomAccessEnumerable<TElem>
+		{
+		private:
+			std::array<TElem, SIZE>& _array;
+		public:
+			_StdArrayEnumerable(std::array<TElem, SIZE>& array) : _array(array) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _StdArrayEnumerator<TElem, SIZE>(_array));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				auto result = this->getEnumerator();
+				result->advance(SIZE + 1);
+				return result;
+			}
+
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) override
+			{
+				auto result = this->getEnumerator();
+				result->advance(elementIndex + 1);
+				return result;
+			}
+
+			int size() override
+			{
+				return SIZE;
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -200,9 +331,9 @@ namespace xlinq
 	*	@return Enumerable from array.
 	*/
 	template<typename TElem, int SIZE>
-	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(std::array<TElem, SIZE> array)
+	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(std::array<TElem, SIZE>& array)
 	{
-		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_ArrayEnumerable<TElem>((TElem*)array, SIZE));
+		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_StdArrayEnumerable<TElem, SIZE>(array));
 	}
 }
 

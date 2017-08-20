@@ -40,16 +40,4 @@ SOFTWARE.
 */
 #define XLINQ_ABSTRACT = 0
 
-#if (defined __cplusplus) && (__cplusplus >= 201700L)
-#include <optional>
-#else
-#include "optional.hpp"
-#endif
-
-#if (defined __cplusplus) && (__cplusplus >= 201700L)
-	#define XLINQ_OPTIONAL(type) std::optional<type>
-#else
-	#define XLINQ_OPTIONAL(type) std::experimental::optional<type>
-#endif
-
 #endif
