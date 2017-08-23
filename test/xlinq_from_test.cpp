@@ -280,6 +280,104 @@ TEST(XLinqFromTest, XLinqEnumerableFromArray)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray)
+{
+	int values[2][2][3] = {
+		{
+			{ 1, 2, 3 },
+			{ 4, 5, 6 }
+		},
+		{
+			{ 7, 8, 9 },
+			{ 10, 11, 12 },
+		}
+	};
+	auto enumerator = from_array(values) >> getEnumerator();
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(10, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(11, enumerator->current());
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_EQ(12, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(12, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(11, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(10, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(8, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_FALSE(enumerator->back());
+	ASSERT_TRUE(enumerator->advance(3));
+	ASSERT_EQ(3, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(3));
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(7));
+	ASSERT_TRUE(enumerator->advance(-7));
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-2));
+	ASSERT_EQ(4, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(10));
+	ASSERT_TRUE(enumerator->advance(-2));
+	ASSERT_EQ(11, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(-11));
+	ASSERT_TRUE(enumerator->advance(5));
+	ASSERT_EQ(5, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(7));
+	ASSERT_EQ(12, enumerator->current());
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_TRUE(enumerator->advance(-3));
+	ASSERT_EQ(10, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-3));
+	ASSERT_EQ(7, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-6));
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_FALSE(enumerator->advance(12));
+	ASSERT_TRUE(enumerator->advance(-4));
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-3));
+	ASSERT_EQ(6, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(3));
+	ASSERT_EQ(9, enumerator->current());
+	ASSERT_TRUE(enumerator->advance(-6));
+	ASSERT_EQ(3, enumerator->current());
+}
+
 TEST(XLinqFromTest, XLinqEnumerableFromStdArray)
 {
 	array<int, 5> values = { 1, 2, 3, 4, 5 };
