@@ -32,11 +32,15 @@ SOFTWARE.
 #include <cstdlib>
 #include <memory>
 #include <cassert>
+#include <type_traits>
 #include "xlinq_base.h"
 #include "xlinq_exception.h"
 
 namespace xlinq
 {
+	template<typename TElem, int SIZE>
+	auto from_array(TElem(&array)[SIZE])->std::shared_ptr<IRandomAccessEnumerable<typename std::remove_all_extents<typename std::remove_reference<decltype(array)>::type>::type>>;
+
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
@@ -303,6 +307,192 @@ namespace xlinq
 				return SIZE;
 			}
 		};
+
+		template<typename T>
+		struct array_size : public std::integral_constant<int, 1> {};
+
+		template<typename T, std::size_t S>
+		struct array_size<T[S]> : public std::integral_constant<int, S * array_size<T>::value> {};
+
+		template<typename TArray, typename TElem>
+		class _ArrayOverArrayEnumerator : public IRandomAccessEnumerator<TElem>
+		{
+			TArray* _begin;
+			int _size;
+			int _index;
+			bool _started;
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> _currentEnumerator;
+
+			void assert_finished()
+			{
+				if (_started && _index == size())
+					throw IterationFinishedException();
+			}
+
+			void assert_started()
+			{
+				if (!_started)
+					throw IterationNotStartedException();
+			}
+
+			inline int arrIndex(int index) const
+			{
+				return index / array_size<TArray>::value;
+			}
+
+			bool advance_forward(int step)
+			{
+				assert(step > 0);
+				if (_index == size() && _started)
+					return false;
+				
+				auto cstep = step;
+				if (!_started)
+				{
+					_started = true;
+					step--;
+				}
+
+				auto dist = size() - _index;
+				if (step < dist)
+				{
+					if (!_currentEnumerator || (arrIndex(_index) != arrIndex(_index + step)))
+					{
+						_currentEnumerator = std::shared_ptr<IRandomAccessEnumerator<TElem>>(from_array(_begin[arrIndex(_index + step)]) >> getEnumerator());
+						if (arrIndex(_index) != arrIndex(_index + step))
+						{
+							auto localIndex = _index % array_size<TArray>::value;
+							auto localLeftSteps = array_size<TArray>::value - (cstep == step ? 1 : 0) - localIndex;
+							cstep = (cstep - localLeftSteps) % (array_size<TArray>::value + 1);
+						}
+					}
+					assert(cstep > 0);
+					_currentEnumerator->advance(cstep);
+					_index += step;
+					return true;
+				}
+				else
+				{
+					_index = size();
+					_currentEnumerator = nullptr;
+					return false;
+				}
+			}
+
+			bool advance_backward(int step)
+			{
+				assert(step < 0);
+				if ((_index == 0) && !_started)
+					return false;
+
+				step = -step;
+				auto cstep = step;
+				if (_index == size())
+				{
+					_index--;
+					step--;
+				}
+
+				if (step <= _index)
+				{
+					if (!_currentEnumerator || (arrIndex(_index) != arrIndex(_index - step)))
+					{
+						_currentEnumerator = std::shared_ptr<IRandomAccessEnumerator<TElem>>(from_array(_begin[arrIndex(_index - step)]) >> getEndEnumerator());
+						if (arrIndex(_index) != arrIndex(_index - step))
+						{
+							auto localIndex = _index % array_size<TArray>::value;
+							cstep = (step - localIndex) % (array_size<TArray>::value + 1);
+						}
+					}
+					assert(cstep > 0);
+					_currentEnumerator->advance(-cstep);
+					_index -= step;
+					return true;
+				}
+				else
+				{
+					_started = false;
+					_currentEnumerator = nullptr;
+					_index = 0;
+					return false;
+				}
+			}
+
+			inline int size() const { return _size * array_size<TArray>::value; }
+
+		public:
+			_ArrayOverArrayEnumerator(TArray* begin, int size) : _begin(begin), _size(size), _index(0), _started(false) {}
+
+			bool next() override
+			{
+				assert_finished();
+				return advance(1);
+			}
+
+			bool back() override
+			{
+				assert_started();
+				return advance(-1);
+			}
+
+			bool advance(int step) override
+			{
+				if (!step) return true;
+				return step > 0 ? advance_forward(step) : advance_backward(step);
+			}
+
+			TElem current()
+			{
+				assert_started();
+				assert_finished();
+				return _currentEnumerator->current();
+			}
+		};
+
+		template<typename TArray, int SIZE, typename TElem>
+		class _ArrayOverArrayEnumerable : public IRandomAccessEnumerable<TElem>
+		{
+			TArray* _array;
+			int _size;
+		public:
+			_ArrayOverArrayEnumerable(TArray* array, int size) : _array(array), _size(size) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _ArrayOverArrayEnumerator<TArray, TElem>(_array, _size));
+			}
+
+			std::shared_ptr<IBidirectionalEnumerator<TElem>> createEndEnumerator() override
+			{
+				auto result = this->getEnumerator();
+				result->advance(size() + 1);
+				return result;
+			}
+
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> createEnumeratorAt(int elementIndex) override
+			{
+				auto result = this->getEnumerator();
+				result->advance(elementIndex + 1);
+				return result;
+			}
+
+			int size() override
+			{
+				return _size * array_size<TArray>::value;
+			}
+		};
+
+		template<typename TArray, int SIZE, bool elemIsArray, typename TElem>
+		struct MultidimArrayEnumerableSelector
+		{
+			typedef _ArrayEnumerable<TElem> type;
+		};
+
+		template<typename TArray, int SIZE, typename TElem>
+		struct MultidimArrayEnumerableSelector<TArray, SIZE, true, TElem>
+		{
+			typedef _ArrayOverArrayEnumerable<TArray, SIZE, TElem> type;
+		};
 	}
 	/*@endcond*/
 
@@ -334,6 +524,17 @@ namespace xlinq
 	std::shared_ptr<IRandomAccessEnumerable<TElem>> from(std::array<TElem, SIZE>& array)
 	{
 		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_StdArrayEnumerable<TElem, SIZE>(array));
+	}
+
+	template<typename TElem, int SIZE>
+	auto from_array(TElem(&array)[SIZE]) -> std::shared_ptr<IRandomAccessEnumerable<typename std::remove_all_extents<typename std::remove_reference<decltype(array)>::type>::type>>
+	{
+		typedef typename internal::MultidimArrayEnumerableSelector<
+			TElem,
+			SIZE,
+			std::is_array<TElem>::value,
+			typename std::remove_all_extents<typename std::remove_reference<decltype(array)>::type>::type>::type TEnumerable;
+		return std::shared_ptr<IRandomAccessEnumerable<typename std::remove_all_extents<typename std::remove_reference<decltype(array)>::type>::type>>(new TEnumerable(array, SIZE));
 	}
 }
 
