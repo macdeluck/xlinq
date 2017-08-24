@@ -172,6 +172,9 @@ internal::_CountBuilder&#160;</td><td class="memItemRight" valign="bottom"><a cl
 internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">first</a> ()</td></tr>
 <tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
 <tr class="separator:a921234e8bf3e9579a5aa0a81700c5660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96961d816001f1a21a3de8483297b6b4"><td class="memTemplParams" colspan="2">template&lt;typename TElem , int SIZE&gt; </td></tr>
+<tr class="memitem:a96961d816001f1a21a3de8483297b6b4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a96961d816001f1a21a3de8483297b6b4">from_array</a> (TElem(&amp;array)[SIZE]) -&gt; std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a>&lt; typename std::remove_all_extents&lt; typename std::remove_reference&lt; decltype(array)&gt;::type &gt;::type &gt;&gt;</td></tr>
+<tr class="separator:a96961d816001f1a21a3de8483297b6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplParams" colspan="2">template&lt;typename TElem , int SIZE&gt; </td></tr>
 <tr class="memitem:aa014597a96853a8eb464f63a8e2560db"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a><br class="typebreak"/>
@@ -487,6 +490,35 @@ template&lt;typename TContainer &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a9338e7aee5cc2f78c4caf9109b4b6a08"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto xlinq::from </td>
+          <td>(</td>
+          <td class="paramtype">TContainer &amp;&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td> -&gt; std::shared_ptr&lt;typename internal::EnumerableTypeSelector&lt;typename internal::StlEnumerableSelector&lt;TContainer, typename TContainer::value_type&gt;::type&gt;::type&gt;
+	</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates enumerable from STL container. </p>
+<p>This function may be used to create enumerable from STL container. It is implemented using deffered execution so traversing of the container will wait until its next element will be requested. Please note, that enumeration will fail if container will be deallocated. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Source container. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aa014597a96853a8eb464f63a8e2560db"></a>
 <div class="memitem">
 <div class="memproto">
@@ -543,32 +575,21 @@ template&lt;typename TElem , int SIZE&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a9338e7aee5cc2f78c4caf9109b4b6a08"></a>
+<a class="anchor" id="a96961d816001f1a21a3de8483297b6b4"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename TContainer &gt; </div>
+template&lt;typename TElem , int SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">auto xlinq::from </td>
+          <td class="memname">auto xlinq::from_array </td>
           <td>(</td>
-          <td class="paramtype">TContainer &amp;&#160;</td>
-          <td class="paramname"><em>container</em></td><td>)</td>
-          <td> -&gt; std::shared_ptr&lt;typename internal::EnumerableTypeSelector&lt;typename internal::StlEnumerableSelector&lt;TContainer, typename TContainer::value_type&gt;::type&gt;::type&gt;
-	</td>
+          <td class="paramtype">TElem(&amp;)&#160;</td>
+          <td class="paramname"><em>array</em>[SIZE]</td><td>)</td>
+          <td> -&gt; std::shared_ptr&lt;IRandomAccessEnumerable&lt;typename std::remove_all_extents&lt;typename std::remove_reference&lt;decltype(array)&gt;::type&gt;::type&gt;&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates enumerable from STL container. </p>
-<p>This function may be used to create enumerable from STL container. It is implemented using deffered execution so traversing of the container will wait until its next element will be requested. Please note, that enumeration will fail if container will be deallocated. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">container</td><td>Source container. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
 
 </div>
 </div>
