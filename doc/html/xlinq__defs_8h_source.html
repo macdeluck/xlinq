@@ -120,7 +120,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">   41</a></span>&#160;<span class="preprocessor">#define XLINQ_ABSTRACT = 0</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">namespace </span>xlinq</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structxlinq_1_1array__size.html">   50</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structxlinq_1_1array__size.html">array_size</a> : <span class="keyword">public</span> std::integral_constant&lt;int, 1&gt; {};</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> S&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structxlinq_1_1array__size_3_01T[S]_4.html">   57</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structxlinq_1_1array__size.html">array_size</a>&lt;T[S]&gt; : <span class="keyword">public</span> std::integral_constant&lt;int, S * array_size&lt;T&gt;::value&gt; {};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="structxlinq_1_1array__size_html"><div class="ttname"><a href="structxlinq_1_1array__size.html">xlinq::array_size</a></div><div class="ttdoc">Calculates total size of any dimension array. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:50</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->

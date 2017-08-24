@@ -40,4 +40,21 @@ SOFTWARE.
 */
 #define XLINQ_ABSTRACT = 0
 
+namespace xlinq
+{
+	/**
+	*	Calculates total size of any dimension array.
+	*	This spetialization generates constant 1 for non array type.
+	*/
+	template<typename T>
+	struct array_size : public std::integral_constant<int, 1> {};
+
+
+	/**
+	*	Calculates total size of any dimension array.
+	*/
+	template<typename T, std::size_t S>
+	struct array_size<T[S]> : public std::integral_constant<int, S * array_size<T>::value> {};
+}
+
 #endif

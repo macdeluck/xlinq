@@ -308,12 +308,6 @@ namespace xlinq
 			}
 		};
 
-		template<typename T>
-		struct array_size : public std::integral_constant<int, 1> {};
-
-		template<typename T, std::size_t S>
-		struct array_size<T[S]> : public std::integral_constant<int, S * array_size<T>::value> {};
-
 		template<typename TArray, typename TElem>
 		class _ArrayOverArrayEnumerator : public IRandomAccessEnumerator<TElem>
 		{
@@ -526,6 +520,16 @@ namespace xlinq
 		return std::shared_ptr<IRandomAccessEnumerable<TElem>>(new internal::_StdArrayEnumerable<TElem, SIZE>(array));
 	}
 
+	/**
+	*	Creates enumerable from any dimension fixed size array.
+	*	This function may be used to create enumerable from fixed size array.
+	*	It is implemented using deffered execution so traversing of the array
+	*	will wait until its next element will be requested. Please note, that
+	*	enumeration will fail if array will be deallocated. Enumeration flattens
+	*	array contents to single one.
+	*	@param array Source multidimensional fixed size array.
+	*	@return Enumerable from array.
+	*/
 	template<typename TElem, int SIZE>
 	auto from_array(TElem(&array)[SIZE]) -> std::shared_ptr<IRandomAccessEnumerable<typename std::remove_all_extents<typename std::remove_reference<decltype(array)>::type>::type>>
 	{
