@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3e_3e',['operator&gt;&gt;',['../namespacexlinq.html#a4f2c6ff34dff175b89b7b0779e131b91',1,'xlinq']]]
+  ['next',['next',['../classxlinq_1_1IEnumerator.html#a9001ab9dbb8efb087461c9d7b70f22b6',1,'xlinq::IEnumerator']]]
 ];

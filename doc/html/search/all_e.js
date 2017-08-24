@@ -2,6 +2,7 @@ var searchData=
 [
   ['xlinq',['xlinq',['../namespacexlinq.html',1,'']]],
   ['xlinq_5fabstract',['XLINQ_ABSTRACT',['../xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb',1,'xlinq_defs.h']]],
+  ['xlinq_5favg_2eh',['xlinq_avg.h',['../xlinq__avg_8h.html',1,'']]],
   ['xlinq_5fbase_2eh',['xlinq_base.h',['../xlinq__base_8h.html',1,'']]],
   ['xlinq_5fconcat_2eh',['xlinq_concat.h',['../xlinq__concat_8h.html',1,'']]],
   ['xlinq_5fcount_2eh',['xlinq_count.h',['../xlinq__count_8h.html',1,'']]],
@@ -17,7 +18,10 @@ var searchData=
   ['xlinq_5fgather_2eh',['xlinq_gather.h',['../xlinq__gather_8h.html',1,'']]],
   ['xlinq_5finline',['XLINQ_INLINE',['../xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7',1,'xlinq_defs.h']]],
   ['xlinq_5flast_2eh',['xlinq_last.h',['../xlinq__last_8h.html',1,'']]],
+  ['xlinq_5fmax_2eh',['xlinq_max.h',['../xlinq__max_8h.html',1,'']]],
+  ['xlinq_5fmin_2eh',['xlinq_min.h',['../xlinq__min_8h.html',1,'']]],
   ['xlinq_5fselect_2eh',['xlinq_select.h',['../xlinq__select_8h.html',1,'']]],
   ['xlinq_5fselect_5fmany_2eh',['xlinq_select_many.h',['../xlinq__select__many_8h.html',1,'']]],
+  ['xlinq_5fsum_2eh',['xlinq_sum.h',['../xlinq__sum_8h.html',1,'']]],
   ['xlinq_5fwhere_2eh',['xlinq_where.h',['../xlinq__where_8h.html',1,'']]]
 ];
