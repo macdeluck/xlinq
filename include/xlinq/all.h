@@ -29,10 +29,11 @@ SOFTWARE.
 #ifndef XLINQ_ALL_H_
 #define XLINQ_ALL_H_
 
-#include "xlinq_defs.h"
-#include "xlinq_exception.h"
 #include "xlinq_base.h"
 #include "xlinq_concat.h"
+#include "xlinq_count.h"
+#include "xlinq_defs.h"
+#include "xlinq_exception.h"
 #include "xlinq_first.h"
 #include "xlinq_from_array.h"
 #include "xlinq_from_container.h"
@@ -43,6 +44,7 @@ SOFTWARE.
 #include "xlinq_gather.h"
 #include "xlinq_last.h"
 #include "xlinq_select.h"
+#include "xlinq_select_many.h"
 #include "xlinq_where.h"
 
 #endif
