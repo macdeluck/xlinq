@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "model/xlinq_test_model.h"
 #include <xlinq/xlinq_from.h>
-#include <xlinq/xlinq_groupby.h>
+#include <xlinq/xlinq_group_by.h>
 #include <xlinq/xlinq_first.h>
 #include <memory>
 #include <vector>
@@ -12,7 +12,7 @@ using namespace xlinq;
 TEST(XlinqGroupByTest, TestGrouping)
 {
 	auto numbers = { 1, 2, 3, 4, 5, 6 };
-	auto enumerator = from(numbers) >> groupby([](int num) { return num % 2 + 1; }) >> getEnumerator();
+	auto enumerator = from(numbers) >> group_by([](int num) { return num % 2 + 1; }) >> getEnumerator();
 	ASSERT_TRUE(enumerator->next());
 	auto grouping = enumerator->current();
 	ASSERT_EQ(2, grouping->getKey());
@@ -37,7 +37,7 @@ TEST(XlinqGroupByTest, TestGrouping)
 	ASSERT_EQ(6, groupingEnumerator->current());
 	ASSERT_FALSE(groupingEnumerator->next());
 
-	groupingEnumerator = from(numbers) >> groupby([](int num) { return (num % 3) != 0; }) >> first() >> getEnumerator();
+	groupingEnumerator = from(numbers) >> group_by([](int num) { return (num % 3) != 0; }) >> first() >> getEnumerator();
 	ASSERT_TRUE(groupingEnumerator->next());
 	ASSERT_EQ(1, groupingEnumerator->current());
 	ASSERT_TRUE(groupingEnumerator->next());
@@ -74,7 +74,7 @@ struct MyEq
 TEST(XlinqGroupByTest, TestGroupingOwnHasherAndEqComp)
 {
 	auto numbers = { 1, 2, 3, 4, 5, 6 };
-	auto enumerator = from(numbers) >> groupby([](int num) { return num % 2 + 1; }, MyHash(), MyEq()) >> getEnumerator();
+	auto enumerator = from(numbers) >> group_by([](int num) { return num % 2 + 1; }, MyHash(), MyEq()) >> getEnumerator();
 	ASSERT_TRUE(enumerator->next());
 	auto grouping = enumerator->current();
 	ASSERT_EQ(2, grouping->getKey());
@@ -99,7 +99,7 @@ TEST(XlinqGroupByTest, TestGroupingOwnHasherAndEqComp)
 	ASSERT_EQ(6, groupingEnumerator->current());
 	ASSERT_FALSE(groupingEnumerator->next());
 
-	groupingEnumerator = from(numbers) >> groupby([](int num) { return (num % 3) != 0; }, MyHash(), MyEq()) >> first() >> getEnumerator();
+	groupingEnumerator = from(numbers) >> group_by([](int num) { return (num % 3) != 0; }, MyHash(), MyEq()) >> first() >> getEnumerator();
 	ASSERT_TRUE(groupingEnumerator->next());
 	ASSERT_EQ(1, groupingEnumerator->current());
 	ASSERT_TRUE(groupingEnumerator->next());

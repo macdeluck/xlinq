@@ -5,5 +5,5 @@ var searchData=
   ['getenumerator',['getEnumerator',['../namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c',1,'xlinq']]],
   ['getenumeratorat',['getEnumeratorAt',['../namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0',1,'xlinq']]],
   ['getkey',['getKey',['../classxlinq_1_1IGrouping.html#ab48bd612ee71aa7bf7f5800b09a19d7b',1,'xlinq::IGrouping']]],
-  ['groupby',['groupby',['../namespacexlinq.html#a4f05c6af7f840e4187f6189d961a7c44',1,'xlinq::groupby(TKeySelector keySelector)'],['../namespacexlinq.html#a12194201ca016613d75c76bd1b029586',1,'xlinq::groupby(TKeySelector keySelector, THasher hasher, TEqComp eqComp)']]]
+  ['group_5fby',['group_by',['../namespacexlinq.html#a45a4531c6d8f5ed93d81082d2318f9b9',1,'xlinq::group_by(TKeySelector keySelector)'],['../namespacexlinq.html#a503af29ed05b682ec78ecfba5ebefff5',1,'xlinq::group_by(TKeySelector keySelector, THasher hasher, TEqComp eqComp)']]]
 ];

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 /**
-*	@file xlinq_groupby.h
+*	@file xlinq_group_by.h
 *	Grouping collection ellements.
 *	@author TrolleY
 */
@@ -241,10 +241,10 @@ namespace xlinq
 	*	This function may be used to group elements by common key which
 	*	is extracted from them by keySelector provided by user.
 	*	Key must have defined std::hash and std::equal_to type spetialization.
-	*	@return Builder of groupby expression.
+	*	@return Builder of group_by expression.
 	*/
 	template<typename TKeySelector>
-	XLINQ_INLINE internal::_GroupByBuilder<TKeySelector> groupby(TKeySelector keySelector)
+	XLINQ_INLINE internal::_GroupByBuilder<TKeySelector> group_by(TKeySelector keySelector)
 	{
 		return internal::_GroupByBuilder<TKeySelector>(keySelector);
 	}
@@ -255,10 +255,10 @@ namespace xlinq
 	*	is extracted from them by keySelector provided by user.
 	*	Key must be hashable by specified hash function and comparable with specified
 	*	equality comparer. See std::hash and std::equal_to for details.
-	*	@return Builder of groupby expression.
+	*	@return Builder of group_by expression.
 	*/
 	template<typename TKeySelector, typename THasher, typename TEqComp>
-	XLINQ_INLINE internal::_GroupByBuilderWithHashAndEqComp<TKeySelector, THasher, TEqComp> groupby(TKeySelector keySelector, THasher hasher, TEqComp eqComp)
+	XLINQ_INLINE internal::_GroupByBuilderWithHashAndEqComp<TKeySelector, THasher, TEqComp> group_by(TKeySelector keySelector, THasher hasher, TEqComp eqComp)
 	{
 		return internal::_GroupByBuilderWithHashAndEqComp<TKeySelector, THasher, TEqComp>(keySelector, hasher, eqComp);
 	}
