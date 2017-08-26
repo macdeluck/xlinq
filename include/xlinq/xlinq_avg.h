@@ -44,7 +44,7 @@ namespace xlinq
 			{
 				auto en = enumerable->getEnumerator();
 				en->next();
-				TAvgElem avgVal = en->current();
+				TAvgElem avgVal = (TAvgElem)en->current();
 				TAvgElem items = 1;
 				while(en->next())
 				{

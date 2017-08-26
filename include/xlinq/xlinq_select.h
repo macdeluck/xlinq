@@ -189,12 +189,6 @@ namespace xlinq
 			}
 		};
 
-		template<typename TSelector, typename TElem>
-		struct selecttypeinfo
-		{
-			typedef decltype(std::declval<TSelector>()((std::declval<TElem>()))) TSelect;
-		};
-
 		template<typename TSelector>
 		class _SelectBuilder
 		{
@@ -205,23 +199,23 @@ namespace xlinq
 			_SelectBuilder(TSelector selector) : _selector(selector) {}
 
 			template<typename TElem>
-			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, TElem>::type>>
 			{
-				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
 				return std::shared_ptr<IEnumerable<TSelect>>(new _SelectEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
 			}
 
 			template<typename TElem>
-			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::shared_ptr<IBidirectionalEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::shared_ptr<IBidirectionalEnumerable<typename unaryreturntype<TSelector, TElem>::type>>
 			{
-				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
 				return std::shared_ptr<IBidirectionalEnumerable<TSelect>>(new _SelectBidirectionalEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
 			}
 
 			template<typename TElem>
-			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::shared_ptr<IRandomAccessEnumerable<typename selecttypeinfo<TSelector, TElem>::TSelect>>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::shared_ptr<IRandomAccessEnumerable<typename unaryreturntype<TSelector, TElem>::type>>
 			{
-				typedef typename selecttypeinfo<TSelector, TElem>::TSelect TSelect;
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
 				return std::shared_ptr<IRandomAccessEnumerable<TSelect>>(new _SelectRandomAccessEnumerable<TSelector, TElem, TSelect>(_selector, enumerable));
 			}
 		};

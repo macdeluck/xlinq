@@ -156,7 +156,7 @@ namespace xlinq
 
 	/**
 	*	Interface for enumerable.
-	*	This is basic enumerable interface which is used to obtain pointer to IEnumerator
+	*	This is basic enumerable interface which is used to obtain pointer to IEnumerator.
 	*	instance.
 	*/
 	template<typename TElem>
@@ -185,7 +185,7 @@ namespace xlinq
 
 	/**
 	*	Interface for bidirectional enumerable.
-	*	This is basic enumerable interface which is used to obtain pointer to
+	*	This is basic enumerable interface which is used to obtain pointer to.
 	*	IBidirectionalEnumerator instance.
 	*/
 	template<typename TElem>
@@ -210,7 +210,7 @@ namespace xlinq
 
 	/**
 	*	Interface for random access enumerable.
-	*	This is basic enumerable interface which is used to obtain pointer to
+	*	This is basic enumerable interface which is used to obtain pointer to.
 	*	IRandomAccessEnumerator instance.
 	*/
 	template<typename TElem>
@@ -239,6 +239,21 @@ namespace xlinq
 		_XLINQ_GET_END_ENUMERATOR(IRandomAccessEnumerator<TElem>)
 
 		_XLINQ_GET_ENUMERATOR_AT(IRandomAccessEnumerator<TElem>)
+	};
+
+	/**
+	*	Interface representing grouping which is collection gathered by key.
+	*	This interface represents collection of elements which have common key.
+	*/
+	template<typename TKey, typename TElem>
+	class IGrouping : public IEnumerable<TElem>
+	{
+	public:
+		/**
+		*	Returns common key of collection elements.
+		*	@return Common key of collection elements.
+		*/
+		virtual TKey getKey() const XLINQ_ABSTRACT;
 	};
 
 	/*@cond XLINQ_INTERNAL*/

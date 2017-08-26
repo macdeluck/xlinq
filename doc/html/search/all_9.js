@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['mainpage_2emd',['MAINPAGE.md',['../MAINPAGE_8md.html',1,'']]],
-  ['max',['max',['../namespacexlinq.html#aca02e5a16b47e079ee3df711e037da43',1,'xlinq']]],
-  ['min',['min',['../namespacexlinq.html#a8e27897b54000004b14067939caae6e7',1,'xlinq']]],
-  ['msg_5f',['msg_',['../classxlinq_1_1Exception.html#a79b9ec76aba6a5f8339faec21bcb2b36',1,'xlinq::Exception']]]
+  ['last',['last',['../namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590',1,'xlinq']]],
+  ['license_2emd',['LICENSE.md',['../LICENSE_8md.html',1,'']]],
+  ['license',['LICENSE',['../md_LICENSE.html',1,'']]]
 ];

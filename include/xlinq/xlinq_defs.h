@@ -55,6 +55,19 @@ namespace xlinq
 	*/
 	template<typename T, std::size_t S>
 	struct array_size<T[S]> : public std::integral_constant<int, S * array_size<T>::value> {};
+
+	/**
+	*	Resolves return type of unary function of given type.
+	*	This function may be used to resolve return type of unary function.
+	*/
+	template<typename TFunction, typename TArgument>
+	struct unaryreturntype
+	{
+		/**
+		*	Return type of unary function.
+		*/
+		typedef decltype(std::declval<TFunction>()((std::declval<TArgument>()))) type;
+	};
 }
 
 #endif

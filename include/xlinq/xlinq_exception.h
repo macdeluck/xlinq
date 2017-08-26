@@ -114,6 +114,21 @@ namespace xlinq
 		*/
 		XLINQ_INLINE IterationFinishedException() : Exception("Iteration has been finished.") {}
 	};
+
+	/**
+	*	Error indicating that required key was not found in given source.
+	*	This error is thrown when user instructed to look for key in collection which
+	*	was not there.
+	*/
+	class KeyNotFoundException : public Exception
+	{
+	public:
+		/**
+		*	Constructor.
+		*	Creates new instance of KeyNotFoundException with default error message.
+		*/
+		KeyNotFoundException() : Exception("The specified key was not found") {}
+	};
 }
 
 #endif

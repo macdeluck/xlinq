@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['max',['max',['../namespacexlinq.html#aca02e5a16b47e079ee3df711e037da43',1,'xlinq']]],
-  ['min',['min',['../namespacexlinq.html#a8e27897b54000004b14067939caae6e7',1,'xlinq']]]
+  ['last',['last',['../namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590',1,'xlinq']]]
 ];

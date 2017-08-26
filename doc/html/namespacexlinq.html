@@ -109,11 +109,17 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for random access enumerable.  <a href="classxlinq_1_1IRandomAccessEnumerable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IGrouping.html">IGrouping</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface representing grouping which is collection gathered by key.  <a href="classxlinq_1_1IGrouping.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1array__size.html">array_size</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates total size of any dimension array.  <a href="structxlinq_1_1array__size.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1array__size_3_01T[S]_4.html">array_size&lt; T[S]&gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates total size of any dimension array.  <a href="structxlinq_1_1array__size_3_01T[S]_4.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1unaryreturntype.html">unaryreturntype</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves return type of unary function of given type.  <a href="structxlinq_1_1unaryreturntype.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1Exception.html">Exception</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all exceptions.  <a href="classxlinq_1_1Exception.html#details">More...</a><br/></td></tr>
@@ -123,6 +129,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IterationFinishedException.html">IterationFinishedException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error indicating, that iteration has been already finished.  <a href="classxlinq_1_1IterationFinishedException.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1KeyNotFoundException.html">KeyNotFoundException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error indicating that required key was not found in given source.  <a href="classxlinq_1_1KeyNotFoundException.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -235,6 +244,19 @@ TEnumerable::ElemType &gt;::type &gt;&#160;</td><td class="memTemplItemRight" va
 internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">gather</a> ()</td></tr>
 <tr class="memdesc:ad8c906f78dfc6d4f875df1328acc010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection.  <a href="#ad8c906f78dfc6d4f875df1328acc010b">More...</a><br/></td></tr>
 <tr class="separator:ad8c906f78dfc6d4f875df1328acc010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f05c6af7f840e4187f6189d961a7c44"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector &gt; </td></tr>
+<tr class="memitem:a4f05c6af7f840e4187f6189d961a7c44"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByBuilder<br class="typebreak"/>
+&lt; TKeySelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a4f05c6af7f840e4187f6189d961a7c44">groupby</a> (TKeySelector keySelector)</td></tr>
+<tr class="memdesc:a4f05c6af7f840e4187f6189d961a7c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key.  <a href="#a4f05c6af7f840e4187f6189d961a7c44">More...</a><br/></td></tr>
+<tr class="separator:a4f05c6af7f840e4187f6189d961a7c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12194201ca016613d75c76bd1b029586"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector , typename THasher , typename TEqComp &gt; </td></tr>
+<tr class="memitem:a12194201ca016613d75c76bd1b029586"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByBuilderWithHashAndEqComp<br class="typebreak"/>
+&lt; TKeySelector, THasher, <br class="typebreak"/>
+TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a12194201ca016613d75c76bd1b029586">groupby</a> (TKeySelector keySelector, THasher hasher, TEqComp eqComp)</td></tr>
+<tr class="memdesc:a12194201ca016613d75c76bd1b029586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#a12194201ca016613d75c76bd1b029586">More...</a><br/></td></tr>
+<tr class="separator:a12194201ca016613d75c76bd1b029586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c0c48c2ddd55173be4d492f7b72590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_LastBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590">last</a> ()</td></tr>
 <tr class="memdesc:a73c0c48c2ddd55173be4d492f7b72590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts last element of collection.  <a href="#a73c0c48c2ddd55173be4d492f7b72590">More...</a><br/></td></tr>
 <tr class="separator:a73c0c48c2ddd55173be4d492f7b72590"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -789,6 +811,66 @@ template&lt;typename TElem , int SIZE&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of getEnumeratorAt expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4f05c6af7f840e4187f6189d961a7c44"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TKeySelector &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GroupByBuilder&lt;TKeySelector&gt; xlinq::groupby </td>
+          <td>(</td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Groups elements by common key. </p>
+<p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must have defined std::hash and std::equal_to type spetialization. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of groupby expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a12194201ca016613d75c76bd1b029586"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TKeySelector , typename THasher , typename TEqComp &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GroupByBuilderWithHashAndEqComp&lt;TKeySelector, THasher, TEqComp&gt; xlinq::groupby </td>
+          <td>(</td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TEqComp&#160;</td>
+          <td class="paramname"><em>eqComp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Groups elements by common key with specified key hasher and equality comparer. </p>
+<p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must be hashable by specified hash function and comparable with specified equality comparer. See std::hash and std::equal_to for details. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of groupby expression. </dd></dl>
 
 </div>
 </div>
