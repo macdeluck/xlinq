@@ -117,7 +117,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="xlinq__base_8h.html">xlinq_base.h</a>&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="namespacexlinq.html">   34</a></span>&#160;<span class="keyword">namespace </span>xlinq</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span>xlinq</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">/*@cond XLINQ_INTERNAL*/</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">namespace </span>internal</div>
@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">class </span>_AvgBuilder</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem&gt;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            TAvgElem int_avg(std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;TElem&gt;</a>&gt; enumerable)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            TAvgElem int_avg(std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; enumerable)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <span class="keyword">auto</span> en = enumerable-&gt;getEnumerator();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                en-&gt;next();</div>
@@ -141,21 +141,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem&gt;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            TAvgElem build(std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;TElem&gt;</a>&gt; enumerable)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            TAvgElem build(std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt; enumerable)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordflow">return</span> int_avg(enumerable);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem&gt;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            TAvgElem build(std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IBidirectionalEnumerable.html">IBidirectionalEnumerable&lt;TElem&gt;</a>&gt; enumerable)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            TAvgElem build(std::shared_ptr&lt;IBidirectionalEnumerable&lt;TElem&gt;&gt; enumerable)</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">return</span> int_avg((std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;TElem&gt;</a>&gt;)enumerable);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">return</span> int_avg((std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt;)enumerable);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TElem&gt;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            TAvgElem build(std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IRandomAccessEnumerable.html">IRandomAccessEnumerable&lt;TElem&gt;</a>&gt; enumerable)</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            TAvgElem build(std::shared_ptr&lt;IRandomAccessEnumerable&lt;TElem&gt;&gt; enumerable)</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">return</span> int_avg((std::shared_ptr&lt;<a class="code" href="classxlinq_1_1IEnumerable.html">IEnumerable&lt;TElem&gt;</a>&gt;)enumerable);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">return</span> int_avg((std::shared_ptr&lt;IEnumerable&lt;TElem&gt;&gt;)enumerable);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        };</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
@@ -174,10 +174,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classxlinq_1_1IEnumerable_html"><div class="ttname"><a href="classxlinq_1_1IEnumerable.html">xlinq::IEnumerable</a></div><div class="ttdoc">Interface for enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:163</div></div>
-<div class="ttc" id="classxlinq_1_1IBidirectionalEnumerable_html"><div class="ttname"><a href="classxlinq_1_1IBidirectionalEnumerable.html">xlinq::IBidirectionalEnumerable</a></div><div class="ttdoc">Interface for bidirectional enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:192</div></div>
 <div class="ttc" id="xlinq__base_8h_html"><div class="ttname"><a href="xlinq__base_8h.html">xlinq_base.h</a></div><div class="ttdoc">Base xlinq definitions and expressions. </div></div>
-<div class="ttc" id="classxlinq_1_1IRandomAccessEnumerable_html"><div class="ttname"><a href="classxlinq_1_1IRandomAccessEnumerable.html">xlinq::IRandomAccessEnumerable</a></div><div class="ttdoc">Interface for random access enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:217</div></div>
 <div class="ttc" id="xlinq__defs_8h_html_a6318da9f1c33143464070eb48ed158b7"><div class="ttname"><a href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a></div><div class="ttdeci">#define XLINQ_INLINE</div><div class="ttdoc">Defines xlinq inline function. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:35</div></div>
 <div class="ttc" id="namespacexlinq_html_af95766c1fee43377ae641827f6453584"><div class="ttname"><a href="namespacexlinq.html#af95766c1fee43377ae641827f6453584">xlinq::avg</a></div><div class="ttdeci">XLINQ_INLINE internal::_AvgBuilder&lt; TAvgElem &gt; avg()</div><div class="ttdoc">Calculates average value of collection elements. </div><div class="ttdef"><b>Definition:</b> xlinq_avg.h:85</div></div>
 </div><!-- fragment --></div><!-- contents -->
