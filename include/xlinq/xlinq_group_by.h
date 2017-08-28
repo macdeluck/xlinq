@@ -32,6 +32,7 @@ SOFTWARE.
 #include "xlinq_base.h"
 #include "xlinq_lookup.h"
 #include "xlinq_exception.h"
+#include "xlinq_select.h"
 #include <cstddef>
 #include <memory>
 #include <unordered_map>
@@ -233,6 +234,70 @@ namespace xlinq
 				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
 			}
 		};
+
+		template<typename TKeySelector, typename TSelector>
+		class _GroupByResultBuilder
+		{
+			TKeySelector _keySelector;
+			TSelector _selector;
+		public:
+			_GroupByResultBuilder(TKeySelector keySelector, TSelector selector)
+				: _keySelector(keySelector), _selector(selector) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				return (std::shared_ptr<IEnumerable<std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>>(
+					new _GroupByEnumerable<TKeySelector, TKey, TElem, std::hash<TKey>, std::equal_to<TKey>>(enumerable, _keySelector, std::hash<TKey>(), std::equal_to<TKey>())))
+					>> select(_selector);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+		};
+
+		template<typename TKeySelector, typename TSelector, typename THasher, typename TEqComp>
+		class _GroupByResultBuilderWithHashAndEqComp
+		{
+			TKeySelector _keySelector;
+			TSelector _selector;
+			THasher _hasher;
+			TEqComp _eqComp;
+		public:
+			_GroupByResultBuilderWithHashAndEqComp(TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)
+				: _keySelector(keySelector), _selector(selector), _hasher(hasher), _eqComp(eqComp) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				return (std::shared_ptr<IEnumerable<std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>>(
+					new _GroupByEnumerable<TKeySelector, TKey, TElem, THasher, TEqComp>(enumerable, _keySelector, _hasher, _eqComp)))
+					>> select(_selector);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::shared_ptr<IEnumerable<typename unaryreturntype<TSelector, std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>::type>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -261,6 +326,35 @@ namespace xlinq
 	XLINQ_INLINE internal::_GroupByBuilderWithHashAndEqComp<TKeySelector, THasher, TEqComp> group_by(TKeySelector keySelector, THasher hasher, TEqComp eqComp)
 	{
 		return internal::_GroupByBuilderWithHashAndEqComp<TKeySelector, THasher, TEqComp>(keySelector, hasher, eqComp);
+	}
+
+	/**
+	*	Groups elements by common key.
+	*	This function may be used to group elements by common key which
+	*	is extracted from them by keySelector provided by user.
+	*	Key must have defined std::hash and std::equal_to type spetialization.
+	*	The grouping is transformed to form specified by user using selector.
+	*	@return Builder of group_by expression.
+	*/
+	template<typename TKeySelector, typename TSelector>
+	XLINQ_INLINE internal::_GroupByResultBuilder<TKeySelector, TSelector> group_by(TKeySelector keySelector, TSelector selector)
+	{
+		return internal::_GroupByResultBuilder<TKeySelector, TSelector>(keySelector, selector);
+	}
+
+	/**
+	*	Groups elements by common key with specified key hasher and equality comparer.
+	*	This function may be used to group elements by common key which
+	*	is extracted from them by keySelector provided by user.
+	*	Key must be hashable by specified hash function and comparable with specified
+	*	equality comparer. See std::hash and std::equal_to for details.
+	*	The grouping is transformed to form specified by user using selector.
+	*	@return Builder of group_by expression.
+	*/
+	template<typename TKeySelector, typename TSelector, typename THasher, typename TEqComp>
+	XLINQ_INLINE internal::_GroupByResultBuilderWithHashAndEqComp<TKeySelector, TSelector, THasher, TEqComp> group_by(TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)
+	{
+		return internal::_GroupByResultBuilderWithHashAndEqComp<TKeySelector, TSelector, THasher, TEqComp>(keySelector, selector, hasher, eqComp);
 	}
 }
 
