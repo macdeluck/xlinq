@@ -33,17 +33,112 @@ SOFTWARE.
 #include "xlinq_from.h"
 #include <memory>
 #include <vector>
+#include <list>
 
 namespace xlinq
 {
 	/*@cond INTERNAL*/
 	namespace internal
 	{
+		template<typename TElem>
+		class _Gatherer
+		{
+		private:
+			std::shared_ptr<IEnumerator<TElem>> _enumerator;
+			std::shared_ptr<std::list<TElem>> _list;
+
+		public:
+			_Gatherer(std::shared_ptr<IEnumerator<TElem>> enumerator)
+				: _enumerator(enumerator), _list(new std::list<TElem>()) {}
+
+			bool next()
+			{
+				if (_enumerator)
+				{
+					if (_enumerator->next())
+					{
+						_list->push_back(_enumerator->current());
+						return true;
+					}
+					else _enumerator = nullptr;
+				}
+				return false;
+			}
+
+			bool finished() { return !_enumerator; }
+
+			typename std::list<TElem>::const_iterator begin() { return _list->begin(); }
+
+			typename std::list<TElem>::const_iterator end() { return _list->end(); }
+		};
+
+		template<typename TElem>
+		class _LazyGatherEnumerator : public IEnumerator<TElem>
+		{
+		private:
+			std::shared_ptr<_Gatherer<TElem>> _gatherer;
+			typename std::list<TElem>::const_iterator _it;
+			bool _started;
+			bool _finished;
+
+		public:
+			_LazyGatherEnumerator(std::shared_ptr<_Gatherer<TElem>> gatherer)
+				: _gatherer(gatherer), _it(gatherer->begin()), _started(false), _finished(false) {}
+
+			bool next() override
+			{
+				if (_finished) throw IterationFinishedException();
+				auto itn = _it;
+				auto ite = _gatherer->end();
+				if ((_it == ite) || (_started && (++itn == ite)))
+				{
+					if (!_gatherer->finished() && _gatherer->next())
+					{
+						if (!_started)
+							_it = _gatherer->begin();
+						else ++_it;
+						_started = true;
+						return true;
+					}
+					_finished = true;
+					_started = true;
+					return false;
+				}
+				else if (_started)
+					++_it;
+				_started = true;
+				return true;
+			}
+
+			TElem current() override
+			{
+				if (!_started) throw IterationNotStartedException();
+				if (_finished) throw IterationFinishedException();
+				return *_it;
+			}
+		};
+
+		template<typename TElem>
+		class _LazyGatherEnumerable : public IEnumerable<TElem>
+		{
+		private:
+			std::shared_ptr<_Gatherer<TElem>> _gatherer;
+
+		public:
+			_LazyGatherEnumerable(std::shared_ptr<IEnumerator<TElem>> enumerator)
+				: _gatherer(std::shared_ptr<_Gatherer<TElem>>(new _Gatherer<TElem>(enumerator))) {}
+			
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _LazyGatherEnumerator<TElem>(_gatherer));
+			}
+		};
+
 		class _GatherBuilder
 		{
 		public:
 			template<typename TElem>
-			std::shared_ptr<IRandomAccessEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IRandomAccessEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
 				auto vec = std::shared_ptr<std::vector<TElem>>(new std::vector<TElem>());
 				for (auto it = enumerable->getEnumerator(); it->next();)
@@ -51,6 +146,40 @@ namespace xlinq
 					vec->push_back(it->current());
 				}
 				return from(vec);
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IRandomAccessEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IRandomAccessEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+		};
+
+		class _LazyGatherBuilder
+		{
+		public:
+			template<typename TElem>
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				return std::shared_ptr<IEnumerable<TElem>>(new _LazyGatherEnumerable<TElem>(enumerable->getEnumerator()));
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
 			}
 		};
 	}
@@ -66,6 +195,20 @@ namespace xlinq
 	XLINQ_INLINE internal::_GatherBuilder gather()
 	{
 		return internal::_GatherBuilder();
+	}
+
+	/**
+	*	Gathers elements of collection while manually executing iteration. Next time uses
+	*	already stored elements ignoring source enumerable.
+	*	This function allows to gather elements of collection to improve query performance.
+	*	It is used to intentionally omit effects, advantages and disadvantages of deffered execution,
+	*	allowing to store already quered items, when query is called second time ignoring source
+	*	enumerable.
+	*	@return Builder of gather expression.
+	*/
+	XLINQ_INLINE internal::_LazyGatherBuilder lazy_gather()
+	{
+		return internal::_LazyGatherBuilder();
 	}
 }
 

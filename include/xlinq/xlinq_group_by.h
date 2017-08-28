@@ -33,6 +33,7 @@ SOFTWARE.
 #include "xlinq_lookup.h"
 #include "xlinq_exception.h"
 #include "xlinq_select.h"
+#include "xlinq_gather.h"
 #include <cstddef>
 #include <memory>
 #include <unordered_map>
@@ -250,7 +251,7 @@ namespace xlinq
 				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
 				return (std::shared_ptr<IEnumerable<std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>>(
 					new _GroupByEnumerable<TKeySelector, TKey, TElem, std::hash<TKey>, std::equal_to<TKey>>(enumerable, _keySelector, std::hash<TKey>(), std::equal_to<TKey>())))
-					>> select(_selector);
+					>> select(_selector) >> lazy_gather();
 			}
 
 			template<typename TElem>
@@ -283,7 +284,7 @@ namespace xlinq
 				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
 				return (std::shared_ptr<IEnumerable<std::shared_ptr<IGrouping<typename unaryreturntype<TKeySelector, TElem>::type, TElem>>>>(
 					new _GroupByEnumerable<TKeySelector, TKey, TElem, THasher, TEqComp>(enumerable, _keySelector, _hasher, _eqComp)))
-					>> select(_selector);
+					>> select(_selector) >> lazy_gather();
 			}
 
 			template<typename TElem>

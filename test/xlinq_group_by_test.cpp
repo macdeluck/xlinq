@@ -131,7 +131,8 @@ TEST(XlinqGroupByTest, TestGroupingOwnHasherAndEqComp)
 TEST(XlinqGroupByResultTest, TestGroupingOwnHasherAndEqComp)
 {
 	auto numbers = { 1, 2, 3, 4, 5, 6 };
-	auto enumerator = from(numbers) >> group_by([](int num) { return num % 2 + 1; }, [](std::shared_ptr<IGrouping<int, int>> g) { return std::pair<int, int>(g->getKey(), g >> count());}, MyHash(), MyEq()) >> getEnumerator();
+	auto enumerable = from(numbers) >> group_by([](int num) { return num % 2 + 1; }, [](std::shared_ptr<IGrouping<int, int>> g) { return std::pair<int, int>(g->getKey(), g >> count());}, MyHash(), MyEq());
+	auto enumerator = enumerable >> getEnumerator();
 	ASSERT_TRUE(enumerator->next());
 	auto grouping = enumerator->current();
 	ASSERT_EQ(2, grouping.first);

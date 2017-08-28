@@ -53,14 +53,13 @@ namespace xlinq
 			std::unordered_map<TKey, std::shared_ptr<std::list<TElem>>, THasher, TEqComp> _groupedItems;
 			std::list<TKey> _foundKeys;
 			bool _started;
-			bool _finished;
 
 		public:
 			Lookup(std::shared_ptr<IEnumerator<TElem>> enumerator, TKeySelector keySelector, THasher hasher, TEqComp eqComp)
 				: _enumerator(enumerator), _keySelector(keySelector), _hasher(hasher), _eqComp(eqComp),
 				_groupedItems(std::unordered_map<TKey, std::shared_ptr<std::list<TElem>>, THasher, TEqComp>()),
 				_foundKeys(std::list<TKey>()),
-				_started(false), _finished(false)
+				_started(false)
 			{}
 
 			THasher getHasher() const { return _hasher; }
@@ -70,41 +69,44 @@ namespace xlinq
 			bool next(bool keyStep = true, TKey* aKey = NULL, TElem* anElem = NULL)
 			{
 				_started = true;
-				while (_enumerator->next())
+				if (_enumerator)
 				{
-					auto elem = _enumerator->current();
-					auto key = _keySelector(elem);
-					auto it = _groupedItems.find(key);
-					if (it == _groupedItems.end())
+					while (_enumerator->next())
 					{
-						auto pair = std::make_pair(key, std::shared_ptr<std::list<TElem>>(new std::list<TElem>()));
-						pair.second->push_back(elem);
-						_groupedItems.insert(pair);
-						_foundKeys.push_back(key);
-						if (aKey)
-							*aKey = key;
-						if (anElem)
-							*anElem = elem;
-						return true;
-					}
-					else
-					{
-						(*it).second->push_back(elem);
-						if (!keyStep)
+						auto elem = _enumerator->current();
+						auto key = _keySelector(elem);
+						auto it = _groupedItems.find(key);
+						if (it == _groupedItems.end())
 						{
+							auto pair = std::make_pair(key, std::shared_ptr<std::list<TElem>>(new std::list<TElem>()));
+							pair.second->push_back(elem);
+							_groupedItems.insert(pair);
+							_foundKeys.push_back(key);
 							if (aKey)
 								*aKey = key;
 							if (anElem)
 								*anElem = elem;
 							return true;
 						}
+						else
+						{
+							(*it).second->push_back(elem);
+							if (!keyStep)
+							{
+								if (aKey)
+									*aKey = key;
+								if (anElem)
+									*anElem = elem;
+								return true;
+							}
+						}
 					}
+					_enumerator = nullptr;
 				}
-				_finished = true;
 				return false;
 			}
 
-			bool finished() { return _finished; }
+			bool finished() { return (bool)!_enumerator; }
 
 			typename std::list<TKey>::const_iterator beginKeyIterator() { return _foundKeys.begin(); }
 
