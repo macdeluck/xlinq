@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unaryreturntype',['unaryreturntype',['../structxlinq_1_1unaryreturntype.html',1,'xlinq']]]
+  ['type',['type',['../structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56',1,'xlinq::unaryreturntype']]]
 ];

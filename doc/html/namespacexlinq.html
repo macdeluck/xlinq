@@ -121,6 +121,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1unaryreturntype.html">unaryreturntype</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves return type of unary function of given type.  <a href="structxlinq_1_1unaryreturntype.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1Enumerable.html">Enumerable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> definitions.  <a href="classxlinq_1_1Enumerable.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1Exception.html">Exception</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all exceptions.  <a href="classxlinq_1_1Exception.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,6 +247,10 @@ TEnumerable::ElemType &gt;::type &gt;&#160;</td><td class="memTemplItemRight" va
 internal::_GatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b">gather</a> ()</td></tr>
 <tr class="memdesc:ad8c906f78dfc6d4f875df1328acc010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection.  <a href="#ad8c906f78dfc6d4f875df1328acc010b">More...</a><br/></td></tr>
 <tr class="separator:ad8c906f78dfc6d4f875df1328acc010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7e04d87e3e2a92946119643a8a1b20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_LazyGatherBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a5c7e04d87e3e2a92946119643a8a1b20">lazy_gather</a> ()</td></tr>
+<tr class="memdesc:a5c7e04d87e3e2a92946119643a8a1b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers elements of collection while manually executing iteration.  <a href="#a5c7e04d87e3e2a92946119643a8a1b20">More...</a><br/></td></tr>
+<tr class="separator:a5c7e04d87e3e2a92946119643a8a1b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45a4531c6d8f5ed93d81082d2318f9b9"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector &gt; </td></tr>
 <tr class="memitem:a45a4531c6d8f5ed93d81082d2318f9b9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_GroupByBuilder<br class="typebreak"/>
@@ -257,6 +264,19 @@ internal::_GroupByBuilderWithHashAndEqComp<br class="typebreak"/>
 TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a503af29ed05b682ec78ecfba5ebefff5">group_by</a> (TKeySelector keySelector, THasher hasher, TEqComp eqComp)</td></tr>
 <tr class="memdesc:a503af29ed05b682ec78ecfba5ebefff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#a503af29ed05b682ec78ecfba5ebefff5">More...</a><br/></td></tr>
 <tr class="separator:a503af29ed05b682ec78ecfba5ebefff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52326de2c3b83f7e41e909a949230737"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector , typename TSelector &gt; </td></tr>
+<tr class="memitem:a52326de2c3b83f7e41e909a949230737"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByResultBuilder<br class="typebreak"/>
+&lt; TKeySelector, TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a52326de2c3b83f7e41e909a949230737">group_by</a> (TKeySelector keySelector, TSelector selector)</td></tr>
+<tr class="memdesc:a52326de2c3b83f7e41e909a949230737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key.  <a href="#a52326de2c3b83f7e41e909a949230737">More...</a><br/></td></tr>
+<tr class="separator:a52326de2c3b83f7e41e909a949230737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f9282e112a988ef774942efbd081f0"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector , typename TSelector , typename THasher , typename TEqComp &gt; </td></tr>
+<tr class="memitem:ae4f9282e112a988ef774942efbd081f0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByResultBuilderWithHashAndEqComp<br class="typebreak"/>
+&lt; TKeySelector, TSelector, <br class="typebreak"/>
+THasher, TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae4f9282e112a988ef774942efbd081f0">group_by</a> (TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)</td></tr>
+<tr class="memdesc:ae4f9282e112a988ef774942efbd081f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#ae4f9282e112a988ef774942efbd081f0">More...</a><br/></td></tr>
+<tr class="separator:ae4f9282e112a988ef774942efbd081f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c0c48c2ddd55173be4d492f7b72590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_LastBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590">last</a> ()</td></tr>
 <tr class="memdesc:a73c0c48c2ddd55173be4d492f7b72590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts last element of collection.  <a href="#a73c0c48c2ddd55173be4d492f7b72590">More...</a><br/></td></tr>
 <tr class="separator:a73c0c48c2ddd55173be4d492f7b72590"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -380,7 +400,7 @@ template&lt;typename TElem , int SIZE&gt; </div>
 <p>Function concatenating array with other enumerable into single collection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Enumerable which will be concatenated. </td></tr>
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> which will be concatenated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -407,7 +427,7 @@ template&lt;typename TContainer &gt; </div>
 <p>Function concatenating container with other enumerable into single collection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Enumerable which will be concatenated. </td></tr>
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> which will be concatenated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -434,7 +454,7 @@ template&lt;typename TContainer &gt; </div>
 <p>Function concatenating container pointer with other enumerable into single collection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Enumerable which will be concatenated. </td></tr>
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> which will be concatenated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -461,7 +481,7 @@ template&lt;typename TContainer &gt; </div>
 <p>Function concatenating container shared pointer with other enumerable into single collection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Enumerable which will be concatenated. </td></tr>
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> which will be concatenated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -489,7 +509,7 @@ template&lt;typename TEnumerable &gt; </div>
 <p>Function concatenating two enumerables into single collection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>Enumerable which will be concatenated. </td></tr>
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> which will be concatenated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -560,7 +580,7 @@ template&lt;typename TContainer &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from container. </dd></dl>
 
 </div>
 </div>
@@ -617,7 +637,7 @@ template&lt;typename TContainer &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from container. </dd></dl>
 
 </div>
 </div>
@@ -646,7 +666,7 @@ template&lt;typename TContainer &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from container. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from container. </dd></dl>
 
 </div>
 </div>
@@ -674,7 +694,7 @@ template&lt;typename TElem , int SIZE&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from array. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from array. </dd></dl>
 
 </div>
 </div>
@@ -702,7 +722,7 @@ template&lt;typename TElem , int SIZE&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from array. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from array. </dd></dl>
 
 </div>
 </div>
@@ -730,7 +750,7 @@ template&lt;typename TElem , int SIZE&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable from array. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> from array. </dd></dl>
 
 </div>
 </div>
@@ -874,6 +894,82 @@ template&lt;typename TKeySelector , typename THasher , typename TEqComp &gt; </d
 
 </div>
 </div>
+<a class="anchor" id="a52326de2c3b83f7e41e909a949230737"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TKeySelector , typename TSelector &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GroupByResultBuilder&lt;TKeySelector, TSelector&gt; xlinq::group_by </td>
+          <td>(</td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Groups elements by common key. </p>
+<p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must have defined std::hash and std::equal_to type spetialization. The grouping is transformed to form specified by user using selector. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of group_by expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae4f9282e112a988ef774942efbd081f0"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TKeySelector , typename TSelector , typename THasher , typename TEqComp &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_GroupByResultBuilderWithHashAndEqComp&lt;TKeySelector, TSelector, THasher, TEqComp&gt; xlinq::group_by </td>
+          <td>(</td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TEqComp&#160;</td>
+          <td class="paramname"><em>eqComp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Groups elements by common key with specified key hasher and equality comparer. </p>
+<p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must be hashable by specified hash function and comparable with specified equality comparer. See std::hash and std::equal_to for details. The grouping is transformed to form specified by user using selector. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of group_by expression. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a73c0c48c2ddd55173be4d492f7b72590"></a>
 <div class="memitem">
 <div class="memproto">
@@ -890,6 +986,25 @@ template&lt;typename TKeySelector , typename THasher , typename TEqComp &gt; </d
 <p>Extracts last element of collection. </p>
 <p>This function may be used to extract last element of collection. It will throw <a class="el" href="classxlinq_1_1IterationFinishedException.html" title="Error indicating, that iteration has been already finished. ">IterationFinishedException</a> if collection contains no elements. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of last expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5c7e04d87e3e2a92946119643a8a1b20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_LazyGatherBuilder xlinq::lazy_gather </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gathers elements of collection while manually executing iteration. </p>
+<p>Next time uses already stored elements ignoring source enumerable. This function allows to gather elements of collection to improve query performance. It is used to intentionally omit effects, advantages and disadvantages of deffered execution, allowing to store already quered items, when query is called second time ignoring source enumerable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of gather expression. </dd></dl>
 
 </div>
 </div>

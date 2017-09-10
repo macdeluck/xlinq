@@ -98,6 +98,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &quot;<a class="el" href="xlinq__base_8h_source.html">xlinq_base.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="xlinq__lookup_8h_source.html">xlinq_lookup.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="xlinq__exception_8h_source.html">xlinq_exception.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="xlinq__select_8h_source.html">xlinq_select.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="xlinq__gather_8h_source.html">xlinq_gather.h</a>&quot;</code><br/>
 <code>#include &lt;cstddef&gt;</code><br/>
 <code>#include &lt;memory&gt;</code><br/>
 <code>#include &lt;unordered_map&gt;</code><br/>
@@ -126,6 +128,19 @@ internal::_GroupByBuilderWithHashAndEqComp<br class="typebreak"/>
 TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a503af29ed05b682ec78ecfba5ebefff5">xlinq::group_by</a> (TKeySelector keySelector, THasher hasher, TEqComp eqComp)</td></tr>
 <tr class="memdesc:a503af29ed05b682ec78ecfba5ebefff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#a503af29ed05b682ec78ecfba5ebefff5">More...</a><br/></td></tr>
 <tr class="separator:a503af29ed05b682ec78ecfba5ebefff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52326de2c3b83f7e41e909a949230737"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector , typename TSelector &gt; </td></tr>
+<tr class="memitem:a52326de2c3b83f7e41e909a949230737"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByResultBuilder<br class="typebreak"/>
+&lt; TKeySelector, TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a52326de2c3b83f7e41e909a949230737">xlinq::group_by</a> (TKeySelector keySelector, TSelector selector)</td></tr>
+<tr class="memdesc:a52326de2c3b83f7e41e909a949230737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key.  <a href="#a52326de2c3b83f7e41e909a949230737">More...</a><br/></td></tr>
+<tr class="separator:a52326de2c3b83f7e41e909a949230737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f9282e112a988ef774942efbd081f0"><td class="memTemplParams" colspan="2">template&lt;typename TKeySelector , typename TSelector , typename THasher , typename TEqComp &gt; </td></tr>
+<tr class="memitem:ae4f9282e112a988ef774942efbd081f0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_GroupByResultBuilderWithHashAndEqComp<br class="typebreak"/>
+&lt; TKeySelector, TSelector, <br class="typebreak"/>
+THasher, TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae4f9282e112a988ef774942efbd081f0">xlinq::group_by</a> (TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)</td></tr>
+<tr class="memdesc:ae4f9282e112a988ef774942efbd081f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#ae4f9282e112a988ef774942efbd081f0">More...</a><br/></td></tr>
+<tr class="separator:ae4f9282e112a988ef774942efbd081f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Grouping collection ellements. </p>
