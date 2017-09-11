@@ -1,6 +1,8 @@
 var searchData=
 [
   ['xlinq_5faggregate_2eh',['xlinq_aggregate.h',['../xlinq__aggregate_8h.html',1,'']]],
+  ['xlinq_5fall_2eh',['xlinq_all.h',['../xlinq__all_8h.html',1,'']]],
+  ['xlinq_5fany_2eh',['xlinq_any.h',['../xlinq__any_8h.html',1,'']]],
   ['xlinq_5favg_2eh',['xlinq_avg.h',['../xlinq__avg_8h.html',1,'']]],
   ['xlinq_5fbase_2eh',['xlinq_base.h',['../xlinq__base_8h.html',1,'']]],
   ['xlinq_5fconcat_2eh',['xlinq_concat.h',['../xlinq__concat_8h.html',1,'']]],

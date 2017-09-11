@@ -33,6 +33,8 @@ SOFTWARE.
 #include "xlinq_exception.h"
 #include "xlinq_base.h"
 #include "xlinq_aggregate.h"
+#include "xlinq_all.h"
+#include "xlinq_any.h"
 #include "xlinq_avg.h"
 #include "xlinq_concat.h"
 #include "xlinq_count.h"

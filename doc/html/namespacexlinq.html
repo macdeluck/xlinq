@@ -151,6 +151,21 @@ internal::_AggregateResultBuilder<br class="typebreak"/>
 &lt; TResult, TAggregator &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad8550cfdb369cedb4b9b07a1f66fd498">aggregate</a> (TResult seed, TAggregator aggregator)</td></tr>
 <tr class="memdesc:ad8550cfdb369cedb4b9b07a1f66fd498"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aggregates collection elements to any element type using given function and seed.  <a href="#ad8550cfdb369cedb4b9b07a1f66fd498">More...</a><br/></td></tr>
 <tr class="separator:ad8550cfdb369cedb4b9b07a1f66fd498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7522bac658e1e418b98d363394d41876"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
+<tr class="memitem:a7522bac658e1e418b98d363394d41876"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_AllBuilder<br class="typebreak"/>
+&lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a7522bac658e1e418b98d363394d41876">all</a> (TPredicate predicate)</td></tr>
+<tr class="memdesc:a7522bac658e1e418b98d363394d41876"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all collection elements satysfy given condition.  <a href="#a7522bac658e1e418b98d363394d41876">More...</a><br/></td></tr>
+<tr class="separator:a7522bac658e1e418b98d363394d41876"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ec2f776e1e1cf47cba4caf3c3f8a92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_AnyBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a31ec2f776e1e1cf47cba4caf3c3f8a92">any</a> ()</td></tr>
+<tr class="memdesc:a31ec2f776e1e1cf47cba4caf3c3f8a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if collection contains any element.  <a href="#a31ec2f776e1e1cf47cba4caf3c3f8a92">More...</a><br/></td></tr>
+<tr class="separator:a31ec2f776e1e1cf47cba4caf3c3f8a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13873b931c438d8d141525da818e63e9"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
+<tr class="memitem:a13873b931c438d8d141525da818e63e9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_AnyPredicateBuilder<br class="typebreak"/>
+&lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a13873b931c438d8d141525da818e63e9">any</a> (TPredicate predicate)</td></tr>
+<tr class="memdesc:a13873b931c438d8d141525da818e63e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if collection contains any element satysfaing predicate.  <a href="#a13873b931c438d8d141525da818e63e9">More...</a><br/></td></tr>
+<tr class="separator:a13873b931c438d8d141525da818e63e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af95766c1fee43377ae641827f6453584"><td class="memTemplParams" colspan="2">template&lt;typename TAvgElem &gt; </td></tr>
 <tr class="memitem:af95766c1fee43377ae641827f6453584"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_AvgBuilder<br class="typebreak"/>
@@ -369,6 +384,81 @@ template&lt;typename TResult , typename TAggregator &gt; </div>
 <p>Aggregates collection elements to any element type using given function and seed. </p>
 <p>This function may be used to aggregate collection elements into one result element of specified type. Aggregation is started with given seed. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of average expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7522bac658e1e418b98d363394d41876"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TPredicate &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_AllBuilder&lt;TPredicate&gt; xlinq::all </td>
+          <td>(</td>
+          <td class="paramtype">TPredicate&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if all collection elements satysfy given condition. </p>
+<p>This function may be used to check if all collection elements satisfy provided condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Condition to satisfy. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of all expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a31ec2f776e1e1cf47cba4caf3c3f8a92"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_AnyBuilder xlinq::any </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if collection contains any element. </p>
+<p>This function may be used check if collection is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of any expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a13873b931c438d8d141525da818e63e9"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TPredicate &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_AnyPredicateBuilder&lt;TPredicate&gt; xlinq::any </td>
+          <td>(</td>
+          <td class="paramtype">TPredicate&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if collection contains any element satysfaing predicate. </p>
+<p>This function may be used to check if collection contains elements which will satisfy provided predicate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Predicate function to satisfy. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of any expression. </dd></dl>
 
 </div>
 </div>
