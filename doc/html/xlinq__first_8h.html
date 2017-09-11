@@ -96,6 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Extracting first element from collection.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="xlinq__base_8h_source.html">xlinq_base.h</a>&quot;</code><br/>
+<code>#include &lt;type_traits&gt;</code><br/>
 </div>
 <p><a href="xlinq__first_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -110,6 +111,12 @@ Functions</h2></td></tr>
 internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">xlinq::first</a> ()</td></tr>
 <tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
 <tr class="separator:a921234e8bf3e9579a5aa0a81700c5660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab2e8b1345af67bcf3ca417ec675106"><td class="memTemplParams" colspan="2">template&lt;typename TElem &gt; </td></tr>
+<tr class="memitem:a3ab2e8b1345af67bcf3ca417ec675106"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_FirstOrDefaultBuilder<br class="typebreak"/>
+&lt; TElem &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a3ab2e8b1345af67bcf3ca417ec675106">xlinq::first_or_default</a> (TElem defaultElem)</td></tr>
+<tr class="memdesc:a3ab2e8b1345af67bcf3ca417ec675106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection or returns provided default element.  <a href="#a3ab2e8b1345af67bcf3ca417ec675106">More...</a><br/></td></tr>
+<tr class="separator:a3ab2e8b1345af67bcf3ca417ec675106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extracting first element from collection. </p>

@@ -28,3 +28,17 @@ TEST(XlinqFirstTest, CollectionContainsNoLements)
 
 	}
 }
+
+TEST(XlinqFirstOrDefaultTest, GetFirstElementOfCollection)
+{
+	auto numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> first_or_default(0);
+	ASSERT_EQ(1, val);
+}
+
+TEST(XlinqFirstOrDefaultTest, CollectionContainsNoLements)
+{
+	std::vector<int> numbers;
+	auto val = from(numbers) >> first_or_default(0);
+	ASSERT_EQ(0, val);
+}

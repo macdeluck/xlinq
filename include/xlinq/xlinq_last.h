@@ -42,7 +42,7 @@ namespace xlinq
 			template<typename TElem>
 			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
+				auto enumerator = enumerable->getEnumerator();
 				enumerator->next();
 				while (true)
 				{
@@ -57,36 +57,57 @@ namespace xlinq
 			template<typename TElem>
 			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
-				enumerator->next();
-				while (true)
-				{
-					// Workaround to not create empty object, default constructor may not be accessible.
-					auto result = enumerator->current();
-					if (!enumerator->next())
-						return result;
-				}
+				auto enumerator = enumerable->getEndEnumerator();
+				if (!enumerator->back()) throw IterationFinishedException();
 				return enumerator->current();
 			}
 
 			template<typename TElem>
 			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
-				enumerator->next();
-				while (true)
-				{
-					// Workaround to not create empty object, default constructor may not be accessible.
-					auto result = enumerator->current();
-					if (!enumerator->next())
-						return result;
-				}
+				auto enumerator = enumerable->getEndEnumerator();
+				if (!enumerator->back()) throw IterationFinishedException();
 				return enumerator->current();
+			}
+		};
+
+		template<typename TElem>
+		class _LastBuilderOrDefault
+		{
+			TElem _default;
+		public:
+			_LastBuilderOrDefault(TElem defaultElem) : _default(defaultElem) {}
+
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEnumerator();
+				if (enumerator->next())
+				{
+					while (true)
+					{
+						// Workaround to not create empty object, default constructor may not be accessible.
+						auto result = enumerator->current();
+						if (!enumerator->next())
+							return result;
+					}
+				}
+				return _default;
+			}
+
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEndEnumerator();
+				return enumerator->back() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEndEnumerator();
+				return enumerator->back() ? enumerator->current() : _default;
 			}
 		};
 	}
 	/*@endcond*/
-
 
 	/**
 	*	Extracts last element of collection.
@@ -97,6 +118,19 @@ namespace xlinq
 	XLINQ_INLINE internal::_LastBuilder last()
 	{
 		return internal::_LastBuilder();
+	}
+
+	/**
+	*	Extracts last element of collection or returns provided default element.
+	*	This function may be used to extract last element of collection or return
+	*	provided default element if collection is empty.
+	*	@param defaultElem Default element returned if collection is empty.
+	*	@return Builder of last_or_default expression.
+	*/
+	template<typename TElem>
+	XLINQ_INLINE internal::_LastBuilderOrDefault<TElem> last_or_default(TElem defaultElem)
+	{
+		return internal::_LastBuilderOrDefault<TElem>(defaultElem);
 	}
 }
 

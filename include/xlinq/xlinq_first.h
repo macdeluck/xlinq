@@ -30,6 +30,7 @@ SOFTWARE.
 #define XLINQ_FIRST_H_
 
 #include "xlinq_base.h"
+#include <type_traits>
 
 namespace xlinq
 {
@@ -42,7 +43,7 @@ namespace xlinq
 			template<typename TElem>
 			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
+				auto enumerator = enumerable->getEnumerator();
 				enumerator->next();
 				return enumerator->current();
 			}
@@ -50,7 +51,7 @@ namespace xlinq
 			template<typename TElem>
 			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
+				auto enumerator = enumerable->getEnumerator();
 				enumerator->next();
 				return enumerator->current();
 			}
@@ -58,14 +59,39 @@ namespace xlinq
 			template<typename TElem>
 			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				auto enumerator = enumerable >> getEnumerator();
+				auto enumerator = enumerable->getEnumerator();
 				enumerator->next();
 				return enumerator->current();
 			}
 		};
+
+		template<typename TElem>
+		class _FirstOrDefaultBuilder
+		{
+			TElem _default;
+		public:
+			_FirstOrDefaultBuilder(TElem defaultElem) : _default(defaultElem) {}
+
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = enumerable->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+		};
 	}
 	/*@endcond*/
-
 
 	/**
 	*	Extracts first element of collection.
@@ -76,6 +102,19 @@ namespace xlinq
 	XLINQ_INLINE internal::_FirstBuilder first()
 	{
 		return internal::_FirstBuilder();
+	}
+
+	/**
+	*	Extracts first element of collection or returns provided default element.
+	*	This function may be used to extract first element of collection or
+	*	return provided default element if collection is empty.
+	*	@param defaultElem Default element.
+	*	@return Builder of first_or_default expression.
+	*/
+	template<typename TElem>
+	XLINQ_INLINE internal::_FirstOrDefaultBuilder<TElem> first_or_default(TElem defaultElem)
+	{
+		return internal::_FirstOrDefaultBuilder<TElem>(defaultElem);
 	}
 }
 
