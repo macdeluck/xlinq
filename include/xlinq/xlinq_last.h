@@ -30,6 +30,7 @@ SOFTWARE.
 #define XLINQ_LAST_H_
 
 #include "xlinq_base.h"
+#include "xlinq_where.h"
 
 namespace xlinq
 {
@@ -71,12 +72,52 @@ namespace xlinq
 			}
 		};
 
+		template<typename TPredicate>
+		class _LastPredicateBuilder
+		{
+			TPredicate _predicate;
+
+		public:
+			_LastPredicateBuilder(TPredicate predicate) : _predicate(predicate) {}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				enumerator->next();
+				while (true)
+				{
+					// Workaround to not create empty object, default constructor may not be accessible.
+					auto result = enumerator->current();
+					if (!enumerator->next())
+						return result;
+				}
+				return enumerator->current();
+			}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEndEnumerator();
+				if (!enumerator->back()) throw IterationFinishedException();
+				return enumerator->current();
+			}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEndEnumerator();
+				if (!enumerator->back()) throw IterationFinishedException();
+				return enumerator->current();
+			}
+		};
+
 		template<typename TElem>
-		class _LastBuilderOrDefault
+		class _LastOrDefaultBuilder
 		{
 			TElem _default;
 		public:
-			_LastBuilderOrDefault(TElem defaultElem) : _default(defaultElem) {}
+			_LastOrDefaultBuilder(TElem defaultElem) : _default(defaultElem) {}
 
 			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
@@ -106,6 +147,44 @@ namespace xlinq
 				return enumerator->back() ? enumerator->current() : _default;
 			}
 		};
+
+		template<typename TElem, typename TPredicate>
+		class _LastOrDefaultPredicateBuilder
+		{
+			TElem _default;
+			TPredicate _predicate;
+
+		public:
+			_LastOrDefaultPredicateBuilder(TElem defaultElem, TPredicate predicate) : _default(defaultElem), _predicate(predicate) {}
+
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				if (enumerator->next())
+				{
+					while (true)
+					{
+						// Workaround to not create empty object, default constructor may not be accessible.
+						auto result = enumerator->current();
+						if (!enumerator->next())
+							return result;
+					}
+				}
+				return _default;
+			}
+
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEndEnumerator();
+				return enumerator->back() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEndEnumerator();
+				return enumerator->back() ? enumerator->current() : _default;
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -121,6 +200,20 @@ namespace xlinq
 	}
 
 	/**
+	*	Extracts last element of collection, which satisfies given condition.
+	*	This function may be used to find last element in collection
+	*	satisfying given condition. It will throw IterationFinishedException
+	*	if element satisfying such condition not exists.
+	*	@param predicate Predicate used to find certain element.
+	*	@return Builder of last expression.
+	*/
+	template<typename TPredicate>
+	XLINQ_INLINE internal::_LastPredicateBuilder<TPredicate> last(TPredicate predicate)
+	{
+		return internal::_LastPredicateBuilder<TPredicate>(predicate);
+	}
+
+	/**
 	*	Extracts last element of collection or returns provided default element.
 	*	This function may be used to extract last element of collection or return
 	*	provided default element if collection is empty.
@@ -128,9 +221,23 @@ namespace xlinq
 	*	@return Builder of last_or_default expression.
 	*/
 	template<typename TElem>
-	XLINQ_INLINE internal::_LastBuilderOrDefault<TElem> last_or_default(TElem defaultElem)
+	XLINQ_INLINE internal::_LastOrDefaultBuilder<TElem> last_or_default(TElem defaultElem)
 	{
-		return internal::_LastBuilderOrDefault<TElem>(defaultElem);
+		return internal::_LastOrDefaultBuilder<TElem>(defaultElem);
+	}
+
+	/**
+	*	Extracts last element of collection, which satisfies given condition or returns provided default element.
+	*	This function may be used to find last element in collection satisfying 
+	*	given condition or return provided default element if no such element exists.
+	*	@param defaultElem Default element returned if collection is empty.
+	*	@param predicate Predicate used to find certain element.
+	*	@return Builder of last_or_default expression.
+	*/
+	template<typename TElem, typename TPredicate>
+	XLINQ_INLINE internal::_LastOrDefaultPredicateBuilder<TElem, TPredicate> last_or_default(TElem defaultElem, TPredicate predicate)
+	{
+		return internal::_LastOrDefaultPredicateBuilder<TElem, TPredicate>(defaultElem, predicate);
 	}
 }
 

@@ -30,7 +30,7 @@ SOFTWARE.
 #define XLINQ_FIRST_H_
 
 #include "xlinq_base.h"
-#include <type_traits>
+#include "xlinq_where.h"
 
 namespace xlinq
 {
@@ -65,6 +65,38 @@ namespace xlinq
 			}
 		};
 
+		template<typename TPredicate>
+		class _FirstPredicateBuilder
+		{
+			TPredicate _predicate;
+		public:
+			_FirstPredicateBuilder(TPredicate predicate) : _predicate(predicate) {}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				enumerator->next();
+				return enumerator->current();
+			}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				enumerator->next();
+				return enumerator->current();
+			}
+
+			template<typename TElem>
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				enumerator->next();
+				return enumerator->current();
+			}
+		};
+
 		template<typename TElem>
 		class _FirstOrDefaultBuilder
 		{
@@ -90,6 +122,33 @@ namespace xlinq
 				return enumerator->next() ? enumerator->current() : _default;
 			}
 		};
+
+		template<typename TElem, typename TPredicate>
+		class _FirstOrDefaultPredicateBuilder
+		{
+			TElem _default;
+			TPredicate _predicate;
+		public:
+			_FirstOrDefaultPredicateBuilder(TElem defaultElem, TPredicate predicate) : _default(defaultElem), _predicate(predicate) {}
+
+			TElem build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+
+			TElem build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto enumerator = (enumerable >> where(_predicate))->getEnumerator();
+				return enumerator->next() ? enumerator->current() : _default;
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -105,6 +164,20 @@ namespace xlinq
 	}
 
 	/**
+	*	Extracts first element of collection, which satisfies given condition.
+	*	This function may be used to find certain element in collection
+	*	satisfying given condition. It will throw IterationFinishedException
+	*	if element satisfying such condition not exists.
+	*	@param predicate Predicate used to find certain element.
+	*	@return Builder of first expression.
+	*/
+	template<typename TPredicate>
+	XLINQ_INLINE internal::_FirstPredicateBuilder<TPredicate> first(TPredicate predicate)
+	{
+		return internal::_FirstPredicateBuilder<TPredicate>(predicate);
+	}
+
+	/**
 	*	Extracts first element of collection or returns provided default element.
 	*	This function may be used to extract first element of collection or
 	*	return provided default element if collection is empty.
@@ -115,6 +188,20 @@ namespace xlinq
 	XLINQ_INLINE internal::_FirstOrDefaultBuilder<TElem> first_or_default(TElem defaultElem)
 	{
 		return internal::_FirstOrDefaultBuilder<TElem>(defaultElem);
+	}
+
+	/**
+	*	Extracts first element of collection, which satisfies given condition or returns provided default element.
+	*	This function may be used to find certain element in collection satisfying 
+	*	given condition or return provided default element if no such element exists.
+	*	@param defaultElem Default element.
+	*	@param predicate Predicate used to find certain element.
+	*	@return Builder of first_or_default expression.
+	*/
+	template<typename TElem, typename TPredicate>
+	XLINQ_INLINE internal::_FirstOrDefaultPredicateBuilder<TElem, TPredicate> first_or_default(TElem defaultElem, TPredicate predicate)
+	{
+		return internal::_FirstOrDefaultPredicateBuilder<TElem, TPredicate>(defaultElem, predicate);
 	}
 }
 
