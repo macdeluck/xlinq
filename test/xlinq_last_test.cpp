@@ -14,7 +14,7 @@ TEST(XlinqLastTest, GetLastElementOfCollection)
 	ASSERT_EQ(5, val);
 }
 
-TEST(XlinqLastTest, CollectionContainsNoLements)
+TEST(XlinqLastTest, CollectionContainsNoElements)
 {
 	std::vector<int> numbers;
 	try
@@ -34,12 +34,78 @@ TEST(XlinqLastTest, GetLastElementOfCollectionForwardList)
 	ASSERT_EQ(5, val);
 }
 
-TEST(XlinqLastTest, CollectionContainsNoLementsForwardList)
+TEST(XlinqLastTest, CollectionContainsNoElementsForwardList)
 {
 	std::forward_list<int> numbers;
 	try
 	{
 		from(numbers) >> last();
+		FAIL();
+	}
+	catch (IterationFinishedException exc)
+	{
+	}
+}
+
+TEST(XlinqLastPredicateTest, GetLastElementOfCollection)
+{
+	auto numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last([](int a) { return a < 3; });
+	ASSERT_EQ(2, val);
+}
+
+TEST(XlinqLastPredicateTest, CollectionContainsNoElements)
+{
+	std::vector<int> numbers;
+	try
+	{
+		from(numbers) >> last([](int a) { return a < 3; });
+		FAIL();
+	}
+	catch (IterationFinishedException exc)
+	{
+	}
+}
+
+TEST(XlinqLastPredicateTest, NoElementSatisfiesCondition)
+{
+	auto numbers = { 1, 2, 3, 4, 5 };
+	try
+	{
+		from(numbers) >> last([](int a) { return a < 0; });
+		FAIL();
+	}
+	catch (IterationFinishedException exc)
+	{
+	}
+}
+
+TEST(XlinqLastPredicateTest, GetLastElementOfCollectionForwardList)
+{
+	std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last([](int a) { return a < 3; });
+	ASSERT_EQ(2, val);
+}
+
+TEST(XlinqLastPredicateTest, CollectionContainsNoElementsForwardList)
+{
+	std::forward_list<int> numbers;
+	try
+	{
+		from(numbers) >> last([](int a) { return a < 3; });
+		FAIL();
+	}
+	catch (IterationFinishedException exc)
+	{
+	}
+}
+
+TEST(XlinqLastPredicateTest, NoElementSatisfiesConditionForwardList)
+{
+	std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+	try
+	{
+		from(numbers) >> last([](int a) { return a < 0; });
 		FAIL();
 	}
 	catch (IterationFinishedException exc)
@@ -54,7 +120,7 @@ TEST(XlinqLastOrDefaultTest, GetLastElementOfCollection)
 	ASSERT_EQ(5, val);
 }
 
-TEST(XlinqLastOrDefaultTest, CollectionContainsNoLements)
+TEST(XlinqLastOrDefaultTest, CollectionContainsNoElements)
 {
 	std::vector<int> numbers;
 	auto val = from(numbers) >> last_or_default(0);
@@ -68,9 +134,51 @@ TEST(XlinqLastOrDefaultTest, GetLastElementOfCollectionForwardList)
 	ASSERT_EQ(5, val);
 }
 
-TEST(XlinqLastOrDefaultTest, CollectionContainsNoLementsForwardList)
+TEST(XlinqLastOrDefaultTest, CollectionContainsNoElementsForwardList)
 {
 	std::forward_list<int> numbers;
 	auto val = from(numbers) >> last_or_default(0);
+	ASSERT_EQ(0, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, GetLastElementOfCollection)
+{
+	auto numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 3; });
+	ASSERT_EQ(2, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, CollectionContainsNoElements)
+{
+	std::vector<int> numbers;
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 0; });
+	ASSERT_EQ(0, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, NoElementSatisfiesCondition)
+{
+	auto numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 0; });
+	ASSERT_EQ(0, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, GetLastElementOfCollectionForwardList)
+{
+	std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 3; });
+	ASSERT_EQ(2, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, CollectionContainsNoElementsForwardList)
+{
+	std::forward_list<int> numbers;
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 3; });
+	ASSERT_EQ(0, val);
+}
+
+TEST(XlinqLastOrDefaultPredicateTest, NoElementSatisfiesConditionForwardList)
+{
+	std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+	auto val = from(numbers) >> last_or_default(0, [](int a) { return a < 0; });
 	ASSERT_EQ(0, val);
 }
