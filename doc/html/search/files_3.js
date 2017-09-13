@@ -26,5 +26,6 @@ var searchData=
   ['xlinq_5fselect_2eh',['xlinq_select.h',['../xlinq__select_8h.html',1,'']]],
   ['xlinq_5fselect_5fmany_2eh',['xlinq_select_many.h',['../xlinq__select__many_8h.html',1,'']]],
   ['xlinq_5fsum_2eh',['xlinq_sum.h',['../xlinq__sum_8h.html',1,'']]],
+  ['xlinq_5ftake_2eh',['xlinq_take.h',['../xlinq__take_8h.html',1,'']]],
   ['xlinq_5fwhere_2eh',['xlinq_where.h',['../xlinq__where_8h.html',1,'']]]
 ];

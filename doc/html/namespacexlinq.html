@@ -350,6 +350,15 @@ internal::_LastOrDefaultPredicateBuilder<br class="typebreak"/>
 <tr class="memitem:ac2fbddf94d11626d8f1fd76523883235"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SumBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ac2fbddf94d11626d8f1fd76523883235">sum</a> ()</td></tr>
 <tr class="memdesc:ac2fbddf94d11626d8f1fd76523883235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates sum of collection elements.  <a href="#ac2fbddf94d11626d8f1fd76523883235">More...</a><br/></td></tr>
 <tr class="separator:ac2fbddf94d11626d8f1fd76523883235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dfa8f864cc568360d08fac8c4ea2f1c"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
+<tr class="memitem:a8dfa8f864cc568360d08fac8c4ea2f1c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_TakeWhileBuilder<br class="typebreak"/>
+&lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a8dfa8f864cc568360d08fac8c4ea2f1c">take_while</a> (TPredicate predicate)</td></tr>
+<tr class="memdesc:a8dfa8f864cc568360d08fac8c4ea2f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to enumerate collection as long as given condition holds.  <a href="#a8dfa8f864cc568360d08fac8c4ea2f1c">More...</a><br/></td></tr>
+<tr class="separator:a8dfa8f864cc568360d08fac8c4ea2f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa19bdc33eb3e8cdb940293862103a9fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_TakeBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa19bdc33eb3e8cdb940293862103a9fb">take</a> (int maxItems)</td></tr>
+<tr class="memdesc:aa19bdc33eb3e8cdb940293862103a9fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shortens collection to have specified maximum elements.  <a href="#aa19bdc33eb3e8cdb940293862103a9fb">More...</a><br/></td></tr>
+<tr class="separator:aa19bdc33eb3e8cdb940293862103a9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplItemLeft" align="right" valign="top">internal::_WhereBuilder<br class="typebreak"/>
 &lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7">where</a> (TPredicate predicate)</td></tr>
@@ -1476,6 +1485,60 @@ template&lt;typename TSelector &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="aa19bdc33eb3e8cdb940293862103a9fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_TakeBuilder xlinq::take </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxItems</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shortens collection to have specified maximum elements. </p>
+<p>This function may be used to enumerate over contiguous elements from the start of a sequence. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxItems</td><td>Maximum elements to iterate over. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of take expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8dfa8f864cc568360d08fac8c4ea2f1c"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TPredicate &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_TakeWhileBuilder&lt;TPredicate&gt; xlinq::take_while </td>
+          <td>(</td>
+          <td class="paramtype">TPredicate&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Allows to enumerate collection as long as given condition holds. </p>
+<p>This function may be used to filter collection elements. It is possible to iterate collection as long as predicate returns true. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Function used to filter elements of source collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of take_while expression. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a439f2d6992edc6ceb1d4457168f7d7b7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1496,11 +1559,11 @@ template&lt;typename TPredicate &gt; </div>
 <p>This function may be used to filter collection elements using given condition. It is implemented using deffered execution. The traversing of collection in looking for next element passing given criteria stops until next element will be requested. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">predicate</td><td>Function used to filter elements of source collection. It is common to use lambda expression as selector. </td></tr>
+    <tr><td class="paramname">predicate</td><td>Function used to filter elements of source collection. It is common to use lambda expression as predicate. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Builder of select expression. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of where expression. </dd></dl>
 
 </div>
 </div>

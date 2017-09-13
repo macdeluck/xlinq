@@ -170,8 +170,8 @@ namespace xlinq
 	*	in looking for next element passing given criteria stops until next element
 	*	will be requested.
 	*	@param predicate Function used to filter elements of source collection.
-	*	It is common to use lambda expression as selector.
-	*	@return Builder of select expression.
+	*	It is common to use lambda expression as predicate.
+	*	@return Builder of where expression.
 	*/
 	template<typename TPredicate>
 	internal::_WhereBuilder<TPredicate> where(TPredicate predicate)
