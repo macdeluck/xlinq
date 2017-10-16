@@ -347,6 +347,15 @@ internal::_LastOrDefaultPredicateBuilder<br class="typebreak"/>
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad">select_many</a> (TSelector selector)</td></tr>
 <tr class="memdesc:a56fb6711f909024ee9f1b37f006858ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flattens collection by concatenating subelements of original collection.  <a href="#a56fb6711f909024ee9f1b37f006858ad">More...</a><br/></td></tr>
 <tr class="separator:a56fb6711f909024ee9f1b37f006858ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc1ef7add9029ca553a353fd2fdeee79"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
+<tr class="memitem:afc1ef7add9029ca553a353fd2fdeee79"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_SkipWhileBuilder<br class="typebreak"/>
+&lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#afc1ef7add9029ca553a353fd2fdeee79">skip_while</a> (TPredicate predicate)</td></tr>
+<tr class="memdesc:afc1ef7add9029ca553a353fd2fdeee79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skips collection elements until first element not satisfying predicate occurs.  <a href="#afc1ef7add9029ca553a353fd2fdeee79">More...</a><br/></td></tr>
+<tr class="separator:afc1ef7add9029ca553a353fd2fdeee79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602e7473f6175415bcc40e7a67371fb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SkipBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a602e7473f6175415bcc40e7a67371fb6">skip</a> (int items)</td></tr>
+<tr class="memdesc:a602e7473f6175415bcc40e7a67371fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shortens collection by skipping specified number of elements from beginning of collection.  <a href="#a602e7473f6175415bcc40e7a67371fb6">More...</a><br/></td></tr>
+<tr class="separator:a602e7473f6175415bcc40e7a67371fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2fbddf94d11626d8f1fd76523883235"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SumBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ac2fbddf94d11626d8f1fd76523883235">sum</a> ()</td></tr>
 <tr class="memdesc:ac2fbddf94d11626d8f1fd76523883235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates sum of collection elements.  <a href="#ac2fbddf94d11626d8f1fd76523883235">More...</a><br/></td></tr>
 <tr class="separator:ac2fbddf94d11626d8f1fd76523883235"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1463,6 +1472,60 @@ template&lt;typename TSelector &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of select_many expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a602e7473f6175415bcc40e7a67371fb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SkipBuilder xlinq::skip </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>items</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shortens collection by skipping specified number of elements from beginning of collection. </p>
+<p>This function may be used to enumerate over contiguous elements ommiting few first elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">items</td><td>Number of elements to skip. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of skip expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afc1ef7add9029ca553a353fd2fdeee79"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TPredicate &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SkipWhileBuilder&lt;TPredicate&gt; xlinq::skip_while </td>
+          <td>(</td>
+          <td class="paramtype">TPredicate&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Skips collection elements until first element not satisfying predicate occurs. </p>
+<p>This function may be used to filter collection elements. It allows to ommit collection elements as long as predicate returns true. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Function used to filter elements of source collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of skip_while expression. </dd></dl>
 
 </div>
 </div>
