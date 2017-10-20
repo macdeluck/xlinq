@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keynotfoundexception',['KeyNotFoundException',['../classxlinq_1_1KeyNotFoundException.html#a1d66c2418be57ceedb3ceebfd1dee260',1,'xlinq::KeyNotFoundException']]]
+  ['join',['join',['../namespacexlinq.html#a8b3d981235b61d0edadcb029b2dd67f9',1,'xlinq']]]
 ];

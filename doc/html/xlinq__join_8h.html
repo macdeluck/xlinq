@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>xLinq: Class Members - Variables</title>
+<title>xLinq: include/xlinq/xlinq_join.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,8 +39,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -61,21 +61,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
-      <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
-  <div id="navrow3" class="tabs2">
-    <ul class="tablist">
-      <li><a href="functions.html"><span>All</span></a></li>
-      <li><a href="functions_func.html"><span>Functions</span></a></li>
-      <li class="current"><a href="functions_vars.html"><span>Variables</span></a></li>
-      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
-    </ul>
-  </div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -90,17 +79,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ae1cbb39237af1a38199a349f21292c5.html">xlinq</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">xlinq_join.h File Reference</div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>msg_
-: <a class="el" href="classxlinq_1_1Exception.html#a79b9ec76aba6a5f8339faec21bcb2b36">xlinq::Exception</a>
-</li>
-<li>type
-: <a class="el" href="structxlinq_1_1binaryreturntype.html#ab95968e70e1f4ad167f980517fb3b620">xlinq::binaryreturntype&lt; TFunction, TArgument1, TArgument2 &gt;</a>
-, <a class="el" href="structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56">xlinq::unaryreturntype&lt; TFunction, TArgument &gt;</a>
-</li>
-</ul>
-</div><!-- contents -->
+
+<p>Correlating elements of two collection.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="xlinq__group__by_8h_source.html">xlinq_group_by.h</a>&quot;</code><br/>
+</div>
+<p><a href="xlinq__join_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacexlinq"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html">xlinq</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplParams" colspan="2">template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector &gt; </td></tr>
+<tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_JoinBuilder&lt; TOuter, <br class="typebreak"/>
+TKeySelector, <br class="typebreak"/>
+TOuterKeySelector, <br class="typebreak"/>
+TResultSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a8b3d981235b61d0edadcb029b2dd67f9">xlinq::join</a> (TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)</td></tr>
+<tr class="memdesc:a8b3d981235b61d0edadcb029b2dd67f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates elements of two collections by common key.  <a href="#a8b3d981235b61d0edadcb029b2dd67f9">More...</a><br/></td></tr>
+<tr class="separator:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Correlating elements of two collection. </p>
+<dl class="section author"><dt>Author</dt><dd>TrolleY </dd></dl>
+</div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

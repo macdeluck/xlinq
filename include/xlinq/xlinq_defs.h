@@ -68,6 +68,19 @@ namespace xlinq
 		*/
 		typedef decltype(std::declval<TFunction>()((std::declval<TArgument>()))) type;
 	};
+
+	/**
+	*	Resolves return type of binary function of given type.
+	*	This function may be used to resolve return type of binary function.
+	*/
+	template<typename TFunction, typename TArgument1, typename TArgument2>
+	struct binaryreturntype
+	{
+		/**
+		*	Return type of binary function.
+		*/
+		typedef decltype(std::declval<TFunction>()((std::declval<TArgument1>()), (std::declval<TArgument2>()))) type;
+	};
 }
 
 #endif

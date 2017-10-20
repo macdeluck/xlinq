@@ -134,12 +134,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    {</div>
 <div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56">   69</a></span>&#160;        <span class="keyword">typedef</span> decltype(std::declval&lt;TFunction&gt;()((std::declval&lt;TArgument&gt;()))) <a class="code" href="structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56">type</a>;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    template&lt;typename TFunction, typename TArgument1, typename TArgument2&gt;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structxlinq_1_1binaryreturntype.html">   77</a></span>&#160;    struct <a class="code" href="structxlinq_1_1binaryreturntype.html">binaryreturntype</a></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structxlinq_1_1binaryreturntype.html#ab95968e70e1f4ad167f980517fb3b620">   82</a></span>&#160;        <span class="keyword">typedef</span> decltype(std::declval&lt;TFunction&gt;()((std::declval&lt;TArgument1&gt;()), (std::declval&lt;TArgument2&gt;()))) <a class="code" href="structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56">type</a>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    };</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="structxlinq_1_1array__size_html"><div class="ttname"><a href="structxlinq_1_1array__size.html">xlinq::array_size</a></div><div class="ttdoc">Calculates total size of any dimension array. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:50</div></div>
 <div class="ttc" id="structxlinq_1_1unaryreturntype_html_aefdd04171957cc4c48461d17d11e8c56"><div class="ttname"><a href="structxlinq_1_1unaryreturntype.html#aefdd04171957cc4c48461d17d11e8c56">xlinq::unaryreturntype::type</a></div><div class="ttdeci">decltype(std::declval&lt; TFunction &gt;()((std::declval&lt; TArgument &gt;()))) typedef type</div><div class="ttdoc">Return type of unary function. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:69</div></div>
 <div class="ttc" id="structxlinq_1_1unaryreturntype_html"><div class="ttname"><a href="structxlinq_1_1unaryreturntype.html">xlinq::unaryreturntype</a></div><div class="ttdoc">Resolves return type of unary function of given type. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:64</div></div>
+<div class="ttc" id="structxlinq_1_1binaryreturntype_html"><div class="ttname"><a href="structxlinq_1_1binaryreturntype.html">xlinq::binaryreturntype</a></div><div class="ttdoc">Resolves return type of binary function of given type. </div><div class="ttdef"><b>Definition:</b> xlinq_defs.h:77</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->

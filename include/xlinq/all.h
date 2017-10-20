@@ -48,6 +48,7 @@ SOFTWARE.
 #include "xlinq_from.h"
 #include "xlinq_gather.h"
 #include "xlinq_group_by.h"
+#include "xlinq_join.h"
 #include "xlinq_last.h"
 #include "xlinq_lookup.h"
 #include "xlinq_max.h"

@@ -121,6 +121,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1unaryreturntype.html">unaryreturntype</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves return type of unary function of given type.  <a href="structxlinq_1_1unaryreturntype.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxlinq_1_1binaryreturntype.html">binaryreturntype</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolves return type of binary function of given type.  <a href="structxlinq_1_1binaryreturntype.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1Enumerable.html">Enumerable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> definitions.  <a href="classxlinq_1_1Enumerable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,6 +313,14 @@ internal::_GroupByResultBuilderWithHashAndEqComp<br class="typebreak"/>
 THasher, TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae4f9282e112a988ef774942efbd081f0">group_by</a> (TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)</td></tr>
 <tr class="memdesc:ae4f9282e112a988ef774942efbd081f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#ae4f9282e112a988ef774942efbd081f0">More...</a><br/></td></tr>
 <tr class="separator:ae4f9282e112a988ef774942efbd081f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplParams" colspan="2">template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector &gt; </td></tr>
+<tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_JoinBuilder&lt; TOuter, <br class="typebreak"/>
+TKeySelector, <br class="typebreak"/>
+TOuterKeySelector, <br class="typebreak"/>
+TResultSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a8b3d981235b61d0edadcb029b2dd67f9">join</a> (TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)</td></tr>
+<tr class="memdesc:a8b3d981235b61d0edadcb029b2dd67f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates elements of two collections by common key.  <a href="#a8b3d981235b61d0edadcb029b2dd67f9">More...</a><br/></td></tr>
+<tr class="separator:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c0c48c2ddd55173be4d492f7b72590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_LastBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590">last</a> ()</td></tr>
 <tr class="memdesc:a73c0c48c2ddd55173be4d492f7b72590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts last element of collection.  <a href="#a73c0c48c2ddd55173be4d492f7b72590">More...</a><br/></td></tr>
 <tr class="separator:a73c0c48c2ddd55173be4d492f7b72590"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1206,6 +1217,50 @@ template&lt;typename TKeySelector , typename TSelector , typename THasher , type
 <p>Groups elements by common key with specified key hasher and equality comparer. </p>
 <p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must be hashable by specified hash function and comparable with specified equality comparer. See std::hash and std::equal_to for details. The grouping is transformed to form specified by user using selector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of group_by expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8b3d981235b61d0edadcb029b2dd67f9"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_JoinBuilder&lt;TOuter, TKeySelector, TOuterKeySelector, TResultSelector&gt; xlinq::join </td>
+          <td>(</td>
+          <td class="paramtype">TOuter&#160;</td>
+          <td class="paramname"><em>outer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOuterKeySelector&#160;</td>
+          <td class="paramname"><em>outerKeySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TResultSelector&#160;</td>
+          <td class="paramname"><em>resultSelector</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Correlates elements of two collections by common key. </p>
+<p>This function may be used to correlate elements of two collection when theirs' keys match. Specified functions are used to extract keys from collection elements. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of join expression. </dd></dl>
 
 </div>
 </div>
