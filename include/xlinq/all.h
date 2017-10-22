@@ -37,7 +37,8 @@ SOFTWARE.
 #include "xlinq_any.h"
 #include "xlinq_avg.h"
 #include "xlinq_concat.h"
-#include "xlinq_count.h"
+#include "xlinq_count.h
+#include "xlinq_element_at.h"
 #include "xlinq_enumerable.h"
 #include "xlinq_first.h"
 #include "xlinq_from_array.h"

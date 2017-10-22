@@ -222,6 +222,16 @@ TContainer::value_type &gt;::type&#160;</td><td class="memTemplItemRight" valign
 internal::_CountBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9ec31d8cf9c65eb9f1b5065f7f28bd68">count</a> ()</td></tr>
 <tr class="memdesc:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of elements in collection.  <a href="#a9ec31d8cf9c65eb9f1b5065f7f28bd68">More...</a><br/></td></tr>
 <tr class="separator:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6951a4d487d915b4a1e5f1bd3d9c930"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ElementAtBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa6951a4d487d915b4a1e5f1bd3d9c930">element_at</a> (int index)</td></tr>
+<tr class="memdesc:aa6951a4d487d915b4a1e5f1bd3d9c930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts element at given index.  <a href="#aa6951a4d487d915b4a1e5f1bd3d9c930">More...</a><br/></td></tr>
+<tr class="separator:aa6951a4d487d915b4a1e5f1bd3d9c930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76025ea5baeacd05026549215a379a2b"><td class="memTemplParams" colspan="2">template&lt;typename TElem &gt; </td></tr>
+<tr class="memitem:a76025ea5baeacd05026549215a379a2b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ElementAtOrDefaultBuilder<br class="typebreak"/>
+&lt; TElem &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a76025ea5baeacd05026549215a379a2b">element_at_or_default</a> (int index, TElem defaultElem)</td></tr>
+<tr class="memdesc:a76025ea5baeacd05026549215a379a2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts element at given index or returns default value if it is out of range.  <a href="#a76025ea5baeacd05026549215a379a2b">More...</a><br/></td></tr>
+<tr class="separator:a76025ea5baeacd05026549215a379a2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921234e8bf3e9579a5aa0a81700c5660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">first</a> ()</td></tr>
 <tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
@@ -719,6 +729,65 @@ template&lt;typename TEnumerable &gt; </div>
 <p>Returns number of elements in collection. </p>
 <p>This function may be used to count number of elements in collection. It does not count elements if the collection implements <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html" title="Interface for random access enumerable. ">IRandomAccessEnumerable</a> interface. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of first expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa6951a4d487d915b4a1e5f1bd3d9c930"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ElementAtBuilder xlinq::element_at </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extracts element at given index. </p>
+<p>This function may be used to extract element at given index. It will throw <a class="el" href="classxlinq_1_1IterationFinishedException.html" title="Error indicating, that iteration has been already finished. ">IterationFinishedException</a> if collection has less elements than specified index or <a class="el" href="classxlinq_1_1IterationNotStartedException.html" title="Error indicating, that iteration was not started yet. ">IterationNotStartedException</a> if index is negative number. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classxlinq_1_1IterationNotStartedException.html" title="Error indicating, that iteration was not started yet. ">IterationNotStartedException</a></td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="classxlinq_1_1IterationFinishedException.html" title="Error indicating, that iteration has been already finished. ">IterationFinishedException</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of element_at expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a76025ea5baeacd05026549215a379a2b"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ElementAtOrDefaultBuilder&lt;TElem&gt; xlinq::element_at_or_default </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TElem&#160;</td>
+          <td class="paramname"><em>defaultElem</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extracts element at given index or returns default value if it is out of range. </p>
+<p>This function may be used to extract element at given index. It will return defaultElem if specified index is out of range. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of element_at_or_default expression. </dd></dl>
 
 </div>
 </div>
