@@ -49,22 +49,25 @@ namespace xlinq
 			typedef typename binaryreturntype<TResultSelector, InnerElemType, OuterElemType>::type TResult;
 		};
 
-		template<typename TOuter, typename TOuterKeySelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResultSelector, typename TResult>
+		template<typename TOuter, typename TOuterKeySelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResultSelector, typename TResult,
+			typename TKeyEqComp, typename TOuterHasher, typename TOuterEqComp>
 		class JoinLookup
 		{
 		private:
 			TOuter _outer;
 			std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TInnerKey, TInnerElem>>>> _innerGroupEnumerator;
 			std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TOuterKey, TOuterElem>>>> _outerGroupEnumerator;
-			std::unordered_map<TOuterKey, std::shared_ptr<IEnumerable<TOuterElem>>> _outerSkipped;
+			std::unordered_map<TOuterKey, std::shared_ptr<IEnumerable<TOuterElem>>, TOuterHasher, TOuterEqComp> _outerSkipped;
 			TResultSelector _resultSelector;
 			std::list<TResult> _result;
+			TKeyEqComp _keyEqComp;
 
 		public:
 			JoinLookup(std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TInnerKey, TInnerElem>>>> innerGroupEnumerator,
-				TOuter outer, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)
+				TOuter outer, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)
 				: _outer(outer), _innerGroupEnumerator(innerGroupEnumerator), 
-				_outerGroupEnumerator(from(_outer) >> group_by(outerKeySelector) >> getEnumerator()), _outerSkipped(std::unordered_map<TOuterKey, std::shared_ptr<IEnumerable<TOuterElem>>>()), _resultSelector(resultSelector), _result(std::list<TResult>())
+				_outerGroupEnumerator(from(_outer) >> group_by(outerKeySelector, outerHasher, outerEqComp) >> getEnumerator()), _outerSkipped(std::unordered_map<TOuterKey, std::shared_ptr<IEnumerable<TOuterElem>>, TOuterHasher, TOuterEqComp>()), _resultSelector(resultSelector), _result(std::list<TResult>()),
+				_keyEqComp(keyEqComp)
 			{
 			}
 
@@ -96,7 +99,7 @@ namespace xlinq
 					{
 						while (_outerGroupEnumerator && _outerGroupEnumerator->next())
 						{
-							if (current->getKey() == _outerGroupEnumerator->current()->getKey())
+							if (_keyEqComp(current->getKey(), _outerGroupEnumerator->current()->getKey()))
 							{
 								for (auto inIt = current->getEnumerator(); inIt->next();)
 								{
@@ -125,17 +128,18 @@ namespace xlinq
 			typename std::list<TResult>::const_iterator end() { return _result.end(); }
 		};
 
-		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult>
+		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult,
+			typename TKeyEqComp, typename TInnerHasher, typename TInnerEqComp, typename TOuterHasher, typename TOuterEqComp>
 		class _JoinEnumerator : public IEnumerator<TResult>
 		{
 		private:
-			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult>> _lookup;
+			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> _lookup;
 			typename std::list<TResult>::const_iterator _it;
 			bool _started;
 			bool _finished;
 
 		public:
-			_JoinEnumerator(std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult>> lookup)
+			_JoinEnumerator(std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> lookup)
 				: _lookup(lookup), _it(lookup->begin()), _started(false), _finished(false) {}
 
 			bool next()
@@ -171,24 +175,71 @@ namespace xlinq
 			}
 		};
 
-		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult>
+		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult, 
+			typename TKeyEqComp, typename TInnerHasher, typename TInnerEqComp, typename TOuterHasher, typename TOuterEqComp>
 		class _JoinEnumerable : public IEnumerable<TResult>
 		{
 		private:
-			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult>> _lookup;
+			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> _lookup;
 
 		public:
-			_JoinEnumerable(std::shared_ptr<IEnumerable<TInnerElem>> inner, TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)
-				: _lookup(new JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult>(
-					(inner >> group_by(keySelector))->getEnumerator(),
+			_JoinEnumerable(std::shared_ptr<IEnumerable<TInnerElem>> inner, TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TInnerHasher innerHasher, TInnerEqComp innerEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)
+				: _lookup(new JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>(
+					(inner >> group_by(keySelector, innerHasher, innerEqComp))->getEnumerator(),
 					outer,
 					outerKeySelector,
-					resultSelector))
+					resultSelector, keyEqComp, outerHasher, outerEqComp))
 			{}
 
 			std::shared_ptr<IEnumerator<TResult>> createEnumerator() override
 			{
-				return std::shared_ptr<IEnumerator<TResult>>(new _JoinEnumerator<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult>(_lookup));
+				return std::shared_ptr<IEnumerator<TResult>>(new _JoinEnumerator<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>(_lookup));
+			}
+		};
+
+		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TKeyEqComp, typename TInnerHasher, typename TInnerEqComp, typename TOuterHasher, typename TOuterEqComp>
+		class _JoinBuilderFull
+		{
+		private:
+			TOuter _outer;
+			TKeySelector _keySelector;
+			TOuterKeySelector _outerKeySelector;
+			TResultSelector _resultSelector;
+			TKeyEqComp _keyEqComp;
+			TInnerHasher _innerHasher;
+			TInnerEqComp _innerEqComp;
+			TOuterHasher _outerHasher;
+			TOuterEqComp _outerEqComp;
+		public:
+			_JoinBuilderFull(TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TInnerHasher innerHasher, TInnerEqComp innerEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)
+				: _outer(outer), _keySelector(keySelector), _outerKeySelector(outerKeySelector), _resultSelector(resultSelector), _keyEqComp(keyEqComp), _innerHasher(innerHasher), _innerEqComp(innerEqComp), _outerHasher(outerHasher), _outerEqComp(outerEqComp)
+			{}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> inner) -> 
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerKeyType TInnerKey;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::OuterKeyType TOuterKey;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerElemType TInnerElem;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::OuterElemType TOuterElem;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult TResult;
+				return std::shared_ptr<IEnumerable<typename JoinTypeSelector<std::shared_ptr<IEnumerable<TElem>>, TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+					(new _JoinEnumerable<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>(inner, _outer, _keySelector, _outerKeySelector, _resultSelector, _keyEqComp, _innerHasher, _innerEqComp, _outerHasher, _outerEqComp));
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) ->
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(enumerable), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) ->
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(enumerable), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
 			}
 		};
 
@@ -206,7 +257,7 @@ namespace xlinq
 			{}
 
 			template<typename TElem>
-			auto build(std::shared_ptr<IEnumerable<TElem>> inner) -> 
+			auto build(std::shared_ptr<IEnumerable<TElem>> inner) ->
 				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
 			{
 				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerKeyType TInnerKey;
@@ -214,8 +265,61 @@ namespace xlinq
 				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerElemType TInnerElem;
 				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::OuterElemType TOuterElem;
 				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult TResult;
+				typedef typename std::equal_to<TInnerKey> TKeyEqComp;
+				typedef typename std::hash<TInnerKey> TInnerHasher;
+				typedef typename std::equal_to<TInnerKey> TInnerEqComp;
+				typedef typename std::hash<TOuterKey> TOuterHasher;
+				typedef typename std::equal_to<TOuterKey> TOuterEqComp;
 				return std::shared_ptr<IEnumerable<typename JoinTypeSelector<std::shared_ptr<IEnumerable<TElem>>, TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
-					(new _JoinEnumerable<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult>(inner, _outer, _keySelector, _outerKeySelector, _resultSelector));
+					(new _JoinEnumerable<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>
+					(inner, _outer, _keySelector, _outerKeySelector, _resultSelector, TKeyEqComp(), TInnerHasher(), TInnerEqComp(), TOuterHasher(), TOuterEqComp()));
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) ->
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(enumerable), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) ->
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(enumerable), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				return build((std::shared_ptr<IEnumerable<TElem>>)enumerable);
+			}
+		};
+
+		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TKeyEqComp>
+		class _JoinBuilderWithKeyComp
+		{
+		private:
+			TOuter _outer;
+			TKeySelector _keySelector;
+			TOuterKeySelector _outerKeySelector;
+			TResultSelector _resultSelector;
+			TKeyEqComp _keyEqComp;
+		public:
+			_JoinBuilderWithKeyComp(TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp)
+				: _outer(outer), _keySelector(keySelector), _outerKeySelector(outerKeySelector), _resultSelector(resultSelector), _keyEqComp(keyEqComp)
+			{}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> inner) ->
+				std::shared_ptr<IEnumerable<typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+			{
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerKeyType TInnerKey;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::OuterKeyType TOuterKey;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::InnerElemType TInnerElem;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::OuterElemType TOuterElem;
+				typedef typename JoinTypeSelector<decltype(inner), TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult TResult;
+				typedef typename std::hash<TInnerKey> TInnerHasher;
+				typedef typename std::equal_to<TInnerKey> TInnerEqComp;
+				typedef typename std::hash<TOuterKey> TOuterHasher;
+				typedef typename std::equal_to<TOuterKey> TOuterEqComp;
+				return std::shared_ptr<IEnumerable<typename JoinTypeSelector<std::shared_ptr<IEnumerable<TElem>>, TOuter, TKeySelector, TOuterKeySelector, TResultSelector>::TResult>>
+					(new _JoinEnumerable<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>
+					(inner, _outer, _keySelector, _outerKeySelector, _resultSelector, _keyEqComp, TInnerHasher(), TInnerEqComp(), TOuterHasher(), TOuterEqComp()));
 			}
 
 			template<typename TElem>
@@ -240,12 +344,56 @@ namespace xlinq
 	*	This function may be used to correlate elements of two collection
 	*	when theirs' keys match. Specified functions are used to extract
 	*	keys from collection elements.
+	*	@param outer Outer collection to join.
+	*	@param keySelector Function selecting key from inner collection.
+	*	@param outerKeySelector Function selecting key from outer collection.
+	*	@param resultSelector Funcion selecting result.
 	*	@return Builder of join expression.
 	*/
 	template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector>
 	XLINQ_INLINE internal::_JoinBuilder<TOuter, TKeySelector, TOuterKeySelector, TResultSelector> join(TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)
 	{
 		return internal::_JoinBuilder<TOuter, TKeySelector, TOuterKeySelector, TResultSelector>(outer, keySelector, outerKeySelector, resultSelector);
+	}
+
+	/**
+	*	Correlates elements of two collections by common key.
+	*	This function may be used to correlate elements of two collection
+	*	when theirs' keys match. Specified functions are used to extract
+	*	keys from collection elements.
+	*	@param outer Outer collection to join.
+	*	@param keySelector Function selecting key from inner collection.
+	*	@param outerKeySelector Function selecting key from outer collection.
+	*	@param resultSelector Funcion selecting result.
+	*	@param keyEqComp Comparer of selected keys from inner and outer collection.
+	*	@return Builder of join expression.
+	*/
+	template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TKeyEqComp>
+	XLINQ_INLINE internal::_JoinBuilderWithKeyComp<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp> join(TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp)
+	{
+		return internal::_JoinBuilderWithKeyComp<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp>(outer, keySelector, outerKeySelector, resultSelector, keyEqComp);
+	}
+
+	/**
+	*	Correlates elements of two collections by common key.
+	*	This function may be used to correlate elements of two collection
+	*	when theirs' keys match. Specified functions are used to extract
+	*	keys from collection elements.
+	*	@param outer Outer collection to join.
+	*	@param keySelector Function selecting key from inner collection.
+	*	@param outerKeySelector Function selecting key from outer collection.
+	*	@param resultSelector Funcion selecting result.
+	*	@param keyEqComp Comparer of selected keys from inner and outer collection.
+	*	@param innerHasher Hasher of keys selected from inner collection.
+	*	@param innerEqComp Comparer of keys selected from inner collection.
+	*	@param outerHasher Hasher of keys selected from outer collection.
+	*	@param outerEqComp Comparer of keys selected from outer collection.
+	*	@return Builder of join expression.
+	*/
+	template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TKeyEqComp, typename TInnerHasher, typename TInnerEqComp, typename TOuterHasher, typename TOuterEqComp>
+	XLINQ_INLINE internal::_JoinBuilderFull<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp> join(TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TInnerHasher innerHasher, TInnerEqComp innerEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)
+	{
+		return internal::_JoinBuilderFull<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>(outer, keySelector, outerKeySelector, resultSelector, keyEqComp, innerHasher, innerEqComp, outerHasher, outerEqComp);
 	}
 }
 

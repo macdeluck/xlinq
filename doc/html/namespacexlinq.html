@@ -321,6 +321,24 @@ TOuterKeySelector, <br class="typebreak"/>
 TResultSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a8b3d981235b61d0edadcb029b2dd67f9">join</a> (TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector)</td></tr>
 <tr class="memdesc:a8b3d981235b61d0edadcb029b2dd67f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates elements of two collections by common key.  <a href="#a8b3d981235b61d0edadcb029b2dd67f9">More...</a><br/></td></tr>
 <tr class="separator:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08eb90fa762b70f816892f67af69f52f"><td class="memTemplParams" colspan="2">template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector , typename TKeyEqComp &gt; </td></tr>
+<tr class="memitem:a08eb90fa762b70f816892f67af69f52f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_JoinBuilderWithKeyComp<br class="typebreak"/>
+&lt; TOuter, TKeySelector, <br class="typebreak"/>
+TOuterKeySelector, <br class="typebreak"/>
+TResultSelector, TKeyEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a08eb90fa762b70f816892f67af69f52f">join</a> (TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp)</td></tr>
+<tr class="memdesc:a08eb90fa762b70f816892f67af69f52f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates elements of two collections by common key.  <a href="#a08eb90fa762b70f816892f67af69f52f">More...</a><br/></td></tr>
+<tr class="separator:a08eb90fa762b70f816892f67af69f52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef1fc235c301beb2c98a7878a070b1d"><td class="memTemplParams" colspan="2">template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector , typename TKeyEqComp , typename TInnerHasher , typename TInnerEqComp , typename TOuterHasher , typename TOuterEqComp &gt; </td></tr>
+<tr class="memitem:aeef1fc235c301beb2c98a7878a070b1d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_JoinBuilderFull<br class="typebreak"/>
+&lt; TOuter, TKeySelector, <br class="typebreak"/>
+TOuterKeySelector, <br class="typebreak"/>
+TResultSelector, TKeyEqComp, <br class="typebreak"/>
+TInnerHasher, TInnerEqComp, <br class="typebreak"/>
+TOuterHasher, TOuterEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aeef1fc235c301beb2c98a7878a070b1d">join</a> (TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TInnerHasher innerHasher, TInnerEqComp innerEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)</td></tr>
+<tr class="memdesc:aeef1fc235c301beb2c98a7878a070b1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates elements of two collections by common key.  <a href="#aeef1fc235c301beb2c98a7878a070b1d">More...</a><br/></td></tr>
+<tr class="separator:aeef1fc235c301beb2c98a7878a070b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c0c48c2ddd55173be4d492f7b72590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_LastBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590">last</a> ()</td></tr>
 <tr class="memdesc:a73c0c48c2ddd55173be4d492f7b72590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts last element of collection.  <a href="#a73c0c48c2ddd55173be4d492f7b72590">More...</a><br/></td></tr>
 <tr class="separator:a73c0c48c2ddd55173be4d492f7b72590"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1260,6 +1278,163 @@ template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector
 
 <p>Correlates elements of two collections by common key. </p>
 <p>This function may be used to correlate elements of two collection when theirs' keys match. Specified functions are used to extract keys from collection elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outer</td><td>Outer collection to join. </td></tr>
+    <tr><td class="paramname">keySelector</td><td>Function selecting key from inner collection. </td></tr>
+    <tr><td class="paramname">outerKeySelector</td><td>Function selecting key from outer collection. </td></tr>
+    <tr><td class="paramname">resultSelector</td><td>Funcion selecting result. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of join expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a08eb90fa762b70f816892f67af69f52f"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector , typename TKeyEqComp &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_JoinBuilderWithKeyComp&lt;TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp&gt; xlinq::join </td>
+          <td>(</td>
+          <td class="paramtype">TOuter&#160;</td>
+          <td class="paramname"><em>outer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOuterKeySelector&#160;</td>
+          <td class="paramname"><em>outerKeySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TResultSelector&#160;</td>
+          <td class="paramname"><em>resultSelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKeyEqComp&#160;</td>
+          <td class="paramname"><em>keyEqComp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Correlates elements of two collections by common key. </p>
+<p>This function may be used to correlate elements of two collection when theirs' keys match. Specified functions are used to extract keys from collection elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outer</td><td>Outer collection to join. </td></tr>
+    <tr><td class="paramname">keySelector</td><td>Function selecting key from inner collection. </td></tr>
+    <tr><td class="paramname">outerKeySelector</td><td>Function selecting key from outer collection. </td></tr>
+    <tr><td class="paramname">resultSelector</td><td>Funcion selecting result. </td></tr>
+    <tr><td class="paramname">keyEqComp</td><td>Comparer of selected keys from inner and outer collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of join expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aeef1fc235c301beb2c98a7878a070b1d"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector , typename TKeyEqComp , typename TInnerHasher , typename TInnerEqComp , typename TOuterHasher , typename TOuterEqComp &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_JoinBuilderFull&lt;TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp&gt; xlinq::join </td>
+          <td>(</td>
+          <td class="paramtype">TOuter&#160;</td>
+          <td class="paramname"><em>outer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKeySelector&#160;</td>
+          <td class="paramname"><em>keySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOuterKeySelector&#160;</td>
+          <td class="paramname"><em>outerKeySelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TResultSelector&#160;</td>
+          <td class="paramname"><em>resultSelector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKeyEqComp&#160;</td>
+          <td class="paramname"><em>keyEqComp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TInnerHasher&#160;</td>
+          <td class="paramname"><em>innerHasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TInnerEqComp&#160;</td>
+          <td class="paramname"><em>innerEqComp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOuterHasher&#160;</td>
+          <td class="paramname"><em>outerHasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOuterEqComp&#160;</td>
+          <td class="paramname"><em>outerEqComp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Correlates elements of two collections by common key. </p>
+<p>This function may be used to correlate elements of two collection when theirs' keys match. Specified functions are used to extract keys from collection elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outer</td><td>Outer collection to join. </td></tr>
+    <tr><td class="paramname">keySelector</td><td>Function selecting key from inner collection. </td></tr>
+    <tr><td class="paramname">outerKeySelector</td><td>Function selecting key from outer collection. </td></tr>
+    <tr><td class="paramname">resultSelector</td><td>Funcion selecting result. </td></tr>
+    <tr><td class="paramname">keyEqComp</td><td>Comparer of selected keys from inner and outer collection. </td></tr>
+    <tr><td class="paramname">innerHasher</td><td>Hasher of keys selected from inner collection. </td></tr>
+    <tr><td class="paramname">innerEqComp</td><td>Comparer of keys selected from inner collection. </td></tr>
+    <tr><td class="paramname">outerHasher</td><td>Hasher of keys selected from outer collection. </td></tr>
+    <tr><td class="paramname">outerEqComp</td><td>Comparer of keys selected from outer collection. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of join expression. </dd></dl>
 
 </div>
