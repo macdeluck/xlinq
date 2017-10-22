@@ -385,6 +385,15 @@ internal::_SkipWhileBuilder<br class="typebreak"/>
 <tr class="memitem:a602e7473f6175415bcc40e7a67371fb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SkipBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a602e7473f6175415bcc40e7a67371fb6">skip</a> (int items)</td></tr>
 <tr class="memdesc:a602e7473f6175415bcc40e7a67371fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shortens collection by skipping specified number of elements from beginning of collection.  <a href="#a602e7473f6175415bcc40e7a67371fb6">More...</a><br/></td></tr>
 <tr class="separator:a602e7473f6175415bcc40e7a67371fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e630334a679273d52c7c22ae1b4b87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SortBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#af0e630334a679273d52c7c22ae1b4b87">sort</a> ()</td></tr>
+<tr class="memdesc:af0e630334a679273d52c7c22ae1b4b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs stable sort on collection.  <a href="#af0e630334a679273d52c7c22ae1b4b87">More...</a><br/></td></tr>
+<tr class="separator:af0e630334a679273d52c7c22ae1b4b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a350a99e4016d23d64a00c7c4149adf4e"><td class="memTemplParams" colspan="2">template&lt;typename TComparer &gt; </td></tr>
+<tr class="memitem:a350a99e4016d23d64a00c7c4149adf4e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_SortBuilderWithComp<br class="typebreak"/>
+&lt; TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a350a99e4016d23d64a00c7c4149adf4e">sort</a> (TComparer comparer)</td></tr>
+<tr class="memdesc:a350a99e4016d23d64a00c7c4149adf4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs stable sort on collection.  <a href="#a350a99e4016d23d64a00c7c4149adf4e">More...</a><br/></td></tr>
+<tr class="separator:a350a99e4016d23d64a00c7c4149adf4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2fbddf94d11626d8f1fd76523883235"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SumBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ac2fbddf94d11626d8f1fd76523883235">sum</a> ()</td></tr>
 <tr class="memdesc:ac2fbddf94d11626d8f1fd76523883235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates sum of collection elements.  <a href="#ac2fbddf94d11626d8f1fd76523883235">More...</a><br/></td></tr>
 <tr class="separator:ac2fbddf94d11626d8f1fd76523883235"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1756,6 +1765,47 @@ template&lt;typename TPredicate &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of skip_while expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af0e630334a679273d52c7c22ae1b4b87"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SortBuilder xlinq::sort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs stable sort on collection. </p>
+<p>This function may be used to sort collection elements using standard std::stable_sort algorithm using std::less&lt;T&gt; comparer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of sort expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a350a99e4016d23d64a00c7c4149adf4e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_SortBuilderWithComp&lt;TComparer&gt; xlinq::sort </td>
+          <td>(</td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs stable sort on collection. </p>
+<p>This function may be used to sort collection elements using standard std::stable_sort algorithm with specified elements comparer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of sort expression. </dd></dl>
 
 </div>
 </div>

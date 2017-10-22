@@ -56,6 +56,7 @@ SOFTWARE.
 #include "xlinq_select.h"
 #include "xlinq_select_many.h"
 #include "xlinq_skip.h"
+#include "xlinq_sort.h"
 #include "xlinq_sum.h"
 #include "xlinq_take.h"
 #include "xlinq_where.h"
