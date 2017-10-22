@@ -24,6 +24,7 @@ var searchData=
   ['xlinq_5flookup_2eh',['xlinq_lookup.h',['../xlinq__lookup_8h.html',1,'']]],
   ['xlinq_5fmax_2eh',['xlinq_max.h',['../xlinq__max_8h.html',1,'']]],
   ['xlinq_5fmin_2eh',['xlinq_min.h',['../xlinq__min_8h.html',1,'']]],
+  ['xlinq_5freverse_2eh',['xlinq_reverse.h',['../xlinq__reverse_8h.html',1,'']]],
   ['xlinq_5fselect_2eh',['xlinq_select.h',['../xlinq__select_8h.html',1,'']]],
   ['xlinq_5fselect_5fmany_2eh',['xlinq_select_many.h',['../xlinq__select__many_8h.html',1,'']]],
   ['xlinq_5fskip_2eh',['xlinq_skip.h',['../xlinq__skip_8h.html',1,'']]],

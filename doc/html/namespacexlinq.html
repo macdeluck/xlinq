@@ -366,6 +366,10 @@ internal::_LastOrDefaultPredicateBuilder<br class="typebreak"/>
 <tr class="memitem:a8e27897b54000004b14067939caae6e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_MinBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a8e27897b54000004b14067939caae6e7">min</a> ()</td></tr>
 <tr class="memdesc:a8e27897b54000004b14067939caae6e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts minimal element of collection.  <a href="#a8e27897b54000004b14067939caae6e7">More...</a><br/></td></tr>
 <tr class="separator:a8e27897b54000004b14067939caae6e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34b8077cab181bfa76791f8f56cae88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ReverseBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ad34b8077cab181bfa76791f8f56cae88">reverse</a> ()</td></tr>
+<tr class="memdesc:ad34b8077cab181bfa76791f8f56cae88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reversees order of collection elements.  <a href="#ad34b8077cab181bfa76791f8f56cae88">More...</a><br/></td></tr>
+<tr class="separator:ad34b8077cab181bfa76791f8f56cae88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab738e44970df0cc013b01175278396ff"><td class="memTemplParams" colspan="2">template&lt;typename TSelector &gt; </td></tr>
 <tr class="memitem:ab738e44970df0cc013b01175278396ff"><td class="memTemplItemLeft" align="right" valign="top">internal::_SelectBuilder<br class="typebreak"/>
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ab738e44970df0cc013b01175278396ff">select</a> (TSelector selector)</td></tr>
@@ -1655,6 +1659,25 @@ template&lt;typename TValue , typename TBuilder &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ad34b8077cab181bfa76791f8f56cae88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ReverseBuilder xlinq::reverse </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reversees order of collection elements. </p>
+<p>This function may be used to reverse collection elements. The function is O(1) and does not gather collection elements until IEnumerable&lt;T&gt; is passed. If so, the function operates in O(n), where n is number of collection elements. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of skip_while expression. </dd></dl>
 
 </div>
 </div>

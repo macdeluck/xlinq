@@ -53,6 +53,7 @@ SOFTWARE.
 #include "xlinq_lookup.h"
 #include "xlinq_max.h"
 #include "xlinq_min.h"
+#include "xlinq_reverse.h"
 #include "xlinq_select.h"
 #include "xlinq_select_many.h"
 #include "xlinq_skip.h"
