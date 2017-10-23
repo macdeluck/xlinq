@@ -222,6 +222,41 @@ TContainer::value_type &gt;::type&#160;</td><td class="memTemplItemRight" valign
 internal::_CountBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9ec31d8cf9c65eb9f1b5065f7f28bd68">count</a> ()</td></tr>
 <tr class="memdesc:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of elements in collection.  <a href="#a9ec31d8cf9c65eb9f1b5065f7f28bd68">More...</a><br/></td></tr>
 <tr class="separator:a9ec31d8cf9c65eb9f1b5065f7f28bd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7ea3e14346bf47a9ec0f1291b0a447c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae7ea3e14346bf47a9ec0f1291b0a447c">distinct</a> ()</td></tr>
+<tr class="memdesc:ae7ea3e14346bf47a9ec0f1291b0a447c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection.  <a href="#ae7ea3e14346bf47a9ec0f1291b0a447c">More...</a><br/></td></tr>
+<tr class="separator:ae7ea3e14346bf47a9ec0f1291b0a447c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1be0962a91f43b18e42b288e3a87e9d5"><td class="memTemplParams" colspan="2">template&lt;typename TComparer &gt; </td></tr>
+<tr class="memitem:a1be0962a91f43b18e42b288e3a87e9d5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctWithEqCompBuilder<br class="typebreak"/>
+&lt; TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a1be0962a91f43b18e42b288e3a87e9d5">distinct</a> (TComparer comparer)</td></tr>
+<tr class="memdesc:a1be0962a91f43b18e42b288e3a87e9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection using specified equality comparer.  <a href="#a1be0962a91f43b18e42b288e3a87e9d5">More...</a><br/></td></tr>
+<tr class="separator:a1be0962a91f43b18e42b288e3a87e9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad841937a65fdeaf6e6663012d22e1fc"><td class="memTemplParams" colspan="2">template&lt;typename THasher , typename TComparer &gt; </td></tr>
+<tr class="memitem:aad841937a65fdeaf6e6663012d22e1fc"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctFullBuilder<br class="typebreak"/>
+&lt; THasher, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aad841937a65fdeaf6e6663012d22e1fc">distinct</a> (THasher hasher, TComparer comparer)</td></tr>
+<tr class="memdesc:aad841937a65fdeaf6e6663012d22e1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection using specified equality comparer and hasher.  <a href="#aad841937a65fdeaf6e6663012d22e1fc">More...</a><br/></td></tr>
+<tr class="separator:aad841937a65fdeaf6e6663012d22e1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8b4455f5387f6bb2a06696ce3da7676"><td class="memTemplParams" colspan="2">template&lt;typename TSelector &gt; </td></tr>
+<tr class="memitem:ab8b4455f5387f6bb2a06696ce3da7676"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctByBuilder<br class="typebreak"/>
+&lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ab8b4455f5387f6bb2a06696ce3da7676">distinct_by</a> (TSelector selector)</td></tr>
+<tr class="memdesc:ab8b4455f5387f6bb2a06696ce3da7676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection by given selector.  <a href="#ab8b4455f5387f6bb2a06696ce3da7676">More...</a><br/></td></tr>
+<tr class="separator:ab8b4455f5387f6bb2a06696ce3da7676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9821c9d37bd3a8e72eec3f18780115fb"><td class="memTemplParams" colspan="2">template&lt;typename TSelector , typename TComparer &gt; </td></tr>
+<tr class="memitem:a9821c9d37bd3a8e72eec3f18780115fb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctByWithEqCompBuilder<br class="typebreak"/>
+&lt; TSelector, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9821c9d37bd3a8e72eec3f18780115fb">distinct_by</a> (TSelector selector, TComparer comparer)</td></tr>
+<tr class="memdesc:a9821c9d37bd3a8e72eec3f18780115fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection by given selector.  <a href="#a9821c9d37bd3a8e72eec3f18780115fb">More...</a><br/></td></tr>
+<tr class="separator:a9821c9d37bd3a8e72eec3f18780115fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243fbbb1447f495e93bc94ac445121ea"><td class="memTemplParams" colspan="2">template&lt;typename TSelector , typename THasher , typename TComparer &gt; </td></tr>
+<tr class="memitem:a243fbbb1447f495e93bc94ac445121ea"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_DistinctByFullBuilder<br class="typebreak"/>
+&lt; TSelector, THasher, <br class="typebreak"/>
+TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a243fbbb1447f495e93bc94ac445121ea">distinct_by</a> (TSelector selector, THasher hasher, TComparer comparer)</td></tr>
+<tr class="memdesc:a243fbbb1447f495e93bc94ac445121ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters unique elements from collection by given selector.  <a href="#a243fbbb1447f495e93bc94ac445121ea">More...</a><br/></td></tr>
+<tr class="separator:a243fbbb1447f495e93bc94ac445121ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6951a4d487d915b4a1e5f1bd3d9c930"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_ElementAtBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa6951a4d487d915b4a1e5f1bd3d9c930">element_at</a> (int index)</td></tr>
 <tr class="memdesc:aa6951a4d487d915b4a1e5f1bd3d9c930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts element at given index.  <a href="#aa6951a4d487d915b4a1e5f1bd3d9c930">More...</a><br/></td></tr>
@@ -729,6 +764,205 @@ template&lt;typename TEnumerable &gt; </div>
 <p>Returns number of elements in collection. </p>
 <p>This function may be used to count number of elements in collection. It does not count elements if the collection implements <a class="el" href="classxlinq_1_1IRandomAccessEnumerable.html" title="Interface for random access enumerable. ">IRandomAccessEnumerable</a> interface. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of first expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae7ea3e14346bf47a9ec0f1291b0a447c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctBuilder xlinq::distinct </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be equality comparable and hashable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1be0962a91f43b18e42b288e3a87e9d5"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctWithEqCompBuilder&lt;TComparer&gt; xlinq::distinct </td>
+          <td>(</td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection using specified equality comparer. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aad841937a65fdeaf6e6663012d22e1fc"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename THasher , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctFullBuilder&lt;THasher, TComparer&gt; xlinq::distinct </td>
+          <td>(</td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection using specified equality comparer and hasher. </p>
+<p>This function may be used to create collection with unique set of elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hasher</td><td>Functor used to hash elements. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab8b4455f5387f6bb2a06696ce3da7676"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSelector &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctByBuilder&lt;TSelector&gt; xlinq::distinct_by </td>
+          <td>(</td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection by given selector. </p>
+<p>This function may be used to create collection with unique set of elements by specified selector means. Elements returned by selector should be equality comparable and hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selector</td><td>Function used to extract keys from elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct_by expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9821c9d37bd3a8e72eec3f18780115fb"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSelector , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctByWithEqCompBuilder&lt;TSelector, TComparer&gt; xlinq::distinct_by </td>
+          <td>(</td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection by given selector. </p>
+<p>This function may be used to create collection with unique set of elements by specified selector means. Elements returned by selector should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selector</td><td>Function used to extract keys from elements. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare keys. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct_by expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a243fbbb1447f495e93bc94ac445121ea"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TSelector , typename THasher , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_DistinctByFullBuilder&lt;TSelector, THasher, TComparer&gt; xlinq::distinct_by </td>
+          <td>(</td>
+          <td class="paramtype">TSelector&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters unique elements from collection by given selector. </p>
+<p>This function may be used to create collection with unique set of elements by specified selector means. Elements returned by selector should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selector</td><td>Function used to extract keys from elements. </td></tr>
+    <tr><td class="paramname">hasher</td><td>Functor used to hash keys. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare keys. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of distinct_by expression. </dd></dl>
 
 </div>
 </div>

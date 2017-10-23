@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['element_5fat',['element_at',['../namespacexlinq.html#aa6951a4d487d915b4a1e5f1bd3d9c930',1,'xlinq']]],
-  ['element_5fat_5for_5fdefault',['element_at_or_default',['../namespacexlinq.html#a76025ea5baeacd05026549215a379a2b',1,'xlinq']]],
-  ['elemtype',['ElemType',['../classxlinq_1_1IEnumerator.html#a1cc80ca90b9dc4616482808b5dc22a67',1,'xlinq::IEnumerator::ElemType()'],['../classxlinq_1_1IEnumerable.html#a0ca39305bf18005dedb5bed61b528bb2',1,'xlinq::IEnumerable::ElemType()']]],
-  ['empty',['empty',['../classxlinq_1_1Enumerable.html#a25512b990a1e05df08e07a59e9524356',1,'xlinq::Enumerable']]],
-  ['enumerable',['Enumerable',['../classxlinq_1_1Enumerable.html',1,'xlinq']]],
-  ['exception',['Exception',['../classxlinq_1_1Exception.html',1,'xlinq']]],
-  ['exception',['Exception',['../classxlinq_1_1Exception.html#a5c32e2a1f93bd628bc4bff2537678307',1,'xlinq::Exception::Exception(const char *message)'],['../classxlinq_1_1Exception.html#ad8cb711248f41030522a50fab69f4c48',1,'xlinq::Exception::Exception(const std::string &amp;message)']]]
+  ['distinct',['distinct',['../namespacexlinq.html#ae7ea3e14346bf47a9ec0f1291b0a447c',1,'xlinq::distinct()'],['../namespacexlinq.html#a1be0962a91f43b18e42b288e3a87e9d5',1,'xlinq::distinct(TComparer comparer)'],['../namespacexlinq.html#aad841937a65fdeaf6e6663012d22e1fc',1,'xlinq::distinct(THasher hasher, TComparer comparer)']]],
+  ['distinct_5fby',['distinct_by',['../namespacexlinq.html#ab8b4455f5387f6bb2a06696ce3da7676',1,'xlinq::distinct_by(TSelector selector)'],['../namespacexlinq.html#a9821c9d37bd3a8e72eec3f18780115fb',1,'xlinq::distinct_by(TSelector selector, TComparer comparer)'],['../namespacexlinq.html#a243fbbb1447f495e93bc94ac445121ea',1,'xlinq::distinct_by(TSelector selector, THasher hasher, TComparer comparer)']]]
 ];

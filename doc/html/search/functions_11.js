@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['_7eexception',['~Exception',['../classxlinq_1_1Exception.html#aaaa7bb5eb26144311185f63895fda731',1,'xlinq::Exception']]],
-  ['_7eienumerator',['~IEnumerator',['../classxlinq_1_1IEnumerator.html#aaa2c8f120f2111292e763c48de2daecd',1,'xlinq::IEnumerator']]]
+  ['what',['what',['../classxlinq_1_1Exception.html#a0edfe366ca916f37a607dd9e053df46a',1,'xlinq::Exception']]],
+  ['where',['where',['../namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7',1,'xlinq']]]
 ];

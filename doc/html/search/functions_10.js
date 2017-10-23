@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['what',['what',['../classxlinq_1_1Exception.html#a0edfe366ca916f37a607dd9e053df46a',1,'xlinq::Exception']]],
-  ['where',['where',['../namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7',1,'xlinq']]]
+  ['take',['take',['../namespacexlinq.html#aa19bdc33eb3e8cdb940293862103a9fb',1,'xlinq']]],
+  ['take_5fwhile',['take_while',['../namespacexlinq.html#a8dfa8f864cc568360d08fac8c4ea2f1c',1,'xlinq']]]
 ];
