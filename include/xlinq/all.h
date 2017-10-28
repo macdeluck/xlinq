@@ -58,6 +58,7 @@ SOFTWARE.
 #include "xlinq_reverse.h"
 #include "xlinq_select.h"
 #include "xlinq_select_many.h"
+#include "xlinq_sequence_equals.h"
 #include "xlinq_skip.h"
 #include "xlinq_sort.h"
 #include "xlinq_sum.h"

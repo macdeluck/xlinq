@@ -2,6 +2,7 @@ var searchData=
 [
   ['select',['select',['../namespacexlinq.html#ab738e44970df0cc013b01175278396ff',1,'xlinq']]],
   ['select_5fmany',['select_many',['../namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad',1,'xlinq']]],
+  ['sequence_5fequals',['sequence_equals',['../namespacexlinq.html#a606abd3916c1b266c38c971b1d8cf817',1,'xlinq::sequence_equals(TEnumerable enumerable)'],['../namespacexlinq.html#af49626d213f43a45d8e3525349fc9d51',1,'xlinq::sequence_equals(TEnumerable enumerable, TComparer comparer)']]],
   ['size',['size',['../classxlinq_1_1IRandomAccessEnumerable.html#ab7fca624021486d780445aba53bef951',1,'xlinq::IRandomAccessEnumerable']]],
   ['skip',['skip',['../namespacexlinq.html#a602e7473f6175415bcc40e7a67371fb6',1,'xlinq']]],
   ['skip_5fwhile',['skip_while',['../namespacexlinq.html#afc1ef7add9029ca553a353fd2fdeee79',1,'xlinq']]],

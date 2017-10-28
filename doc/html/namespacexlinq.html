@@ -425,6 +425,16 @@ internal::_ReverseBuilder&#160;</td><td class="memItemRight" valign="bottom"><a 
 &lt; TSelector &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad">select_many</a> (TSelector selector)</td></tr>
 <tr class="memdesc:a56fb6711f909024ee9f1b37f006858ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flattens collection by concatenating subelements of original collection.  <a href="#a56fb6711f909024ee9f1b37f006858ad">More...</a><br/></td></tr>
 <tr class="separator:a56fb6711f909024ee9f1b37f006858ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a606abd3916c1b266c38c971b1d8cf817"><td class="memTemplParams" colspan="2">template&lt;typename TEnumerable &gt; </td></tr>
+<tr class="memitem:a606abd3916c1b266c38c971b1d8cf817"><td class="memTemplItemLeft" align="right" valign="top">internal::_SequenceEqualsBuilder<br class="typebreak"/>
+&lt; TEnumerable &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a606abd3916c1b266c38c971b1d8cf817">sequence_equals</a> (TEnumerable enumerable)</td></tr>
+<tr class="memdesc:a606abd3916c1b266c38c971b1d8cf817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if collection elements sequence is equal.  <a href="#a606abd3916c1b266c38c971b1d8cf817">More...</a><br/></td></tr>
+<tr class="separator:a606abd3916c1b266c38c971b1d8cf817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49626d213f43a45d8e3525349fc9d51"><td class="memTemplParams" colspan="2">template&lt;typename TEnumerable , typename TComparer &gt; </td></tr>
+<tr class="memitem:af49626d213f43a45d8e3525349fc9d51"><td class="memTemplItemLeft" align="right" valign="top">internal::_SequenceEqualsWithEqCompBuilder<br class="typebreak"/>
+&lt; TEnumerable, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#af49626d213f43a45d8e3525349fc9d51">sequence_equals</a> (TEnumerable enumerable, TComparer comparer)</td></tr>
+<tr class="memdesc:af49626d213f43a45d8e3525349fc9d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if collection elements sequence is equal using specified element comparer.  <a href="#af49626d213f43a45d8e3525349fc9d51">More...</a><br/></td></tr>
+<tr class="separator:af49626d213f43a45d8e3525349fc9d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc1ef7add9029ca553a353fd2fdeee79"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
 <tr class="memitem:afc1ef7add9029ca553a353fd2fdeee79"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_SkipWhileBuilder<br class="typebreak"/>
@@ -2037,6 +2047,72 @@ template&lt;typename TSelector &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Builder of select_many expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a606abd3916c1b266c38c971b1d8cf817"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnumerable &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">internal::_SequenceEqualsBuilder&lt;TEnumerable&gt; xlinq::sequence_equals </td>
+          <td>(</td>
+          <td class="paramtype">TEnumerable&#160;</td>
+          <td class="paramname"><em>enumerable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if collection elements sequence is equal. </p>
+<p>This function compares two sequences for exact equality. It iterates through both of collections and compares each of their elements. Returns false when it finds first not matching element or when one of collections is shorter than another. Otherwise needs to loop though all elements of both collections. If both of enumerables support random access then size if collections is compared first. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of sequence_equals expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af49626d213f43a45d8e3525349fc9d51"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TEnumerable , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">internal::_SequenceEqualsWithEqCompBuilder&lt;TEnumerable, TComparer&gt; xlinq::sequence_equals </td>
+          <td>(</td>
+          <td class="paramtype">TEnumerable&#160;</td>
+          <td class="paramname"><em>enumerable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if collection elements sequence is equal using specified element comparer. </p>
+<p>This function compares two sequences for exact equality. It iterates through both of collections and compares each of their elements. Returns false when it finds first not matching element or when one of collections is shorter than another. Otherwise needs to loop though all elements of both collections. If both of enumerables support random access then size if collections is compared first. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enumerable</td><td><a class="el" href="classxlinq_1_1Enumerable.html" title="Enumerable definitions. ">Enumerable</a> to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of sequence_equals expression. </dd></dl>
 
 </div>
 </div>
