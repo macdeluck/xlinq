@@ -141,6 +141,24 @@ namespace xlinq
 				assert_finished();
 				return *(_begin + _index);
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayEnumerator<TElem>>(other);
+				if (!pother) return false;
+				return pother->_begin == this->_begin &&
+					pother->_size == this->_size &&
+					pother->_index == this->_index &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _ArrayEnumerator<TElem>(this->_begin, this->_size);
+				ptr->_index = this->_index;
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TElem>
@@ -272,6 +290,23 @@ namespace xlinq
 				assert_started();
 				assert_finished();
 				return _array[_index];
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StdArrayEnumerator<TElem, SIZE>>(other);
+				if (!pother) return false;
+				return pother->_array == this->_array &&
+					pother->_index == this->_index &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StdArrayEnumerator<TElem, SIZE>(this->_array);
+				ptr->_index = this->_index;
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
@@ -440,6 +475,32 @@ namespace xlinq
 				assert_started();
 				assert_finished();
 				return _currentEnumerator->current();
+			}
+			/*TArray* _begin;
+			int _size;
+			int _index;
+			bool _started;
+			std::shared_ptr<IRandomAccessEnumerator<TElem>> _currentEnumerator;*/
+			//_ArrayOverArrayEnumerator(TArray* begin, int size) : _begin(begin), _size(size), _index(0), _started(false) {}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayOverArrayEnumerator<TArray, TElem>>(other);
+				if (!pother) return false;
+				return pother->_begin == this->_begin &&
+					pother->_size == this->_size &&
+					pother->_index == this->_index &&
+					pother->_started == this->_started &&
+					pother->_currentEnumerator->equals(this->_currentEnumerator);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _ArrayOverArrayEnumerator<TArray, TElem>(this->_begin, _size);
+				ptr->_index = this->_index;
+				ptr->_started = this->_started;
+				ptr->_currentEnumerator = std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_currentEnumerator->clone());
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 

@@ -187,6 +187,26 @@ TEST(XLinqFromTest, XLinqStlIterableFromPointerToVector)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqFromTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = make_shared<vector<Person>>(getPersons());
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqFromTest, XLinqArrayEnumerator)
 {
 	int values[] = { 1, 2, 3, 4, 5 };
@@ -278,6 +298,26 @@ TEST(XLinqFromTest, XLinqEnumerableFromArray)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(5, enumerator->current());
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromTest, XLinqEnumerableFromArray_CloneAndEqualsEnumeratorTest)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	auto enumerator = from(values) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
 }
 
 TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray)
@@ -378,6 +418,35 @@ TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray)
 	ASSERT_EQ(3, enumerator->current());
 }
 
+TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray_CloneAndEqualsEnumeratorTest)
+{
+	int values[2][2][3] = {
+		{
+			{ 1, 2, 3 },
+			{ 4, 5, 6 }
+		},
+		{
+			{ 7, 8, 9 },
+			{ 10, 11, 12 },
+		}
+	};
+	auto enumerator = from_array(values) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+}
+
 TEST(XLinqFromTest, XLinqEnumerableFromStdArray)
 {
 	array<int, 5> values = { 1, 2, 3, 4, 5 };
@@ -393,6 +462,26 @@ TEST(XLinqFromTest, XLinqEnumerableFromStdArray)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(5, enumerator->current());
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqFromTest, XLinqEnumerableFromStdArray_CloneAndEqualsEnumeratorTest)
+{
+	array<int, 5> values = { 1, 2, 3, 4, 5 };
+	auto enumerator = from(values) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
 }
 
 TEST(XLinqFromTest, XlinqStlRandomAccessEnumerator)
