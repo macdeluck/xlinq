@@ -318,6 +318,26 @@ TEST(XLinqFromVectorTest, RandomAccessEnumerableSize)
 	ASSERT_EQ(6, from(persons)->size());
 }
 
+TEST(XLinqFromVectorTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersons();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqFromListTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsList();
@@ -511,6 +531,26 @@ TEST(XLinqFromListTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromListTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsList();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqFromForwardListTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsForwardList();
@@ -612,6 +652,26 @@ TEST(XLinqFromForwardListTest, EnumerableEmpty)
 {
 	std::forward_list<int> container;
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromForwardListTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsForwardList();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
 }
 
 TEST(XLinqFromSetTest, CallCurrentBeforeEnumerationWasStarted)
@@ -779,6 +839,27 @@ TEST(XLinqFromSetTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromSetTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsSet();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
+}
+
 TEST(XLinqFromMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiSet();
@@ -942,6 +1023,27 @@ TEST(XLinqFromMultiSetTest, BidirectionalEnumerableEmpty)
 	std::multiset<int> container;
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
+TEST(XLinqFromMultiSetTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
 }
 
 TEST(XLinqFromMapTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1109,6 +1211,27 @@ TEST(XLinqFromMapTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromMapTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMap();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiMap();
@@ -1274,6 +1397,27 @@ TEST(XLinqFromMultiMapTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromMultiMapTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromUnorderedSetTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedSet();
@@ -1365,6 +1509,27 @@ TEST(XLinqFromUnorderedSetTest, EnumerableEmpty)
 {
 	std::unordered_set<int> container;
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromUnorderedSetTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedSet();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
 }
 
 TEST(XLinqFromUnorderedMultiSetTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1460,6 +1625,27 @@ TEST(XLinqFromUnorderedMultiSetTest, EnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
+TEST(XLinqFromUnorderedMultiSetTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMultiSet();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
+}
+
 TEST(XLinqFromUnorderedMapTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMap();
@@ -1553,6 +1739,27 @@ TEST(XLinqFromUnorderedMapTest, EnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
+TEST(XLinqFromUnorderedMapTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMap();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromUnorderedMultiMapTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMultiMap();
@@ -1644,4 +1851,25 @@ TEST(XLinqFromUnorderedMultiMapTest, EnumerableEmpty)
 {
 	std::unordered_multimap<int, int> container;
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromUnorderedMultiMapTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMultiMap();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
 }

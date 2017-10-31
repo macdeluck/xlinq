@@ -75,6 +75,22 @@ namespace xlinq
 				assert_finished();
 				return *_begin;
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlEnumerator<TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_begin == this->_begin &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlEnumerator<TIterator, TElem>(_begin, _end);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TIterator, typename TElem>
@@ -122,6 +138,24 @@ namespace xlinq
 				assert_started();
 				assert_finished();
 				return *_current;
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlBidirectionalEnumerator<TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_begin == this->_begin &&
+					pother->_current == this->_current &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlBidirectionalEnumerator<TIterator, TElem>(_begin, _end);
+				ptr->_current = this->_current;
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
@@ -220,6 +254,23 @@ namespace xlinq
 				assert_started();
 				assert_finished();
 				return *_current;
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlRandomAccessEnumerator<TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_begin == this->_begin &&
+					pother->_current == this->_current &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlRandomAccessEnumerator<TIterator, TElem>(_begin, _end, _current);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
