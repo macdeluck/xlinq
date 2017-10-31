@@ -56,7 +56,7 @@ namespace xlinq
 
 			_StlIterator(const _StlIterator<TElem>& other)
 			{
-				this->_enumerator = other->_enumerator->clone();
+				this->_enumerator = other._enumerator->clone();
 			}
 
 			_StlIterator<TElem>& operator++()
