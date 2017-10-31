@@ -283,6 +283,20 @@ namespace xlinq
 				if (_index >= (int)_parent->_source.size()) throw IterationFinishedException();
 				return ++_index < (int)_parent->_source.size();
 			}
+
+			XLINQ_INLINE bool equals(std::shared_ptr<IEnumerator<Person>> other) const
+			{
+				auto pother = std::dynamic_pointer_cast<PersonEnumerator>(other);
+				if (!pother) return false;
+				return pother->_parent == this->_parent && pother->_index == this->_index;
+			}
+
+			XLINQ_INLINE std::shared_ptr<IEnumerator<Person>> clone() const
+			{
+				auto ptr = new PersonEnumerator(_parent);
+				ptr->_index = _index;
+				return std::shared_ptr<IEnumerator<Person>>(ptr);
+			}
 		};
 	public:
 		XLINQ_INLINE PersonEnumerable() : _source(getPersons()) {}

@@ -112,3 +112,23 @@ TEST(XLinqBaseTest, XlinqGetEnumeratorTest)
 	ASSERT_EQ("Kempa", enumerator->current().secondName);
 	ASSERT_EQ(21, enumerator->current().age);
 }
+
+TEST(XLinqBaseTest, CloneAndEqualsEnumeratorTest)
+{
+	shared_ptr<PersonEnumerable> enumerable(new PersonEnumerable());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}

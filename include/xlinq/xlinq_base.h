@@ -105,6 +105,23 @@ namespace xlinq
 		*	@return current enumeration element.
 		*/
 		virtual TElem current() XLINQ_ABSTRACT;
+
+		/**
+		*	Checks if enumerators equals.
+		*	The enumerators are equal when they were created from the same IEnumerable and
+		*	they both point on the same element in sequence.
+		*	@param other The enumerator to compare with.
+		*	@return true, if enumerators are equal
+		*/
+		virtual bool equals(std::shared_ptr<IEnumerator<TElem>> other) const XLINQ_ABSTRACT;
+
+		/**
+		*	Creates enumerator's clone.
+		*	This function clones enumerator. It's clone enumeration should be completely
+		*	separate.
+		*	@return enumerator clone
+		*/
+		virtual std::shared_ptr<IEnumerator<TElem>> clone() const XLINQ_ABSTRACT;
 	};
 
 	/**
