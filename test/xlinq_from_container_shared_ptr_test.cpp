@@ -319,6 +319,26 @@ TEST(XLinqFromVectorSharedPtrTest, RandomAccessEnumerableSize)
 	ASSERT_EQ(6, from(persons)->size());
 }
 
+TEST(XLinqFromVectorSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqFromListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsListSharedPtr();
@@ -513,6 +533,26 @@ TEST(XLinqFromListSharedPtrTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromListSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsListSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqFromForwardListSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsForwardListSharedPtr();
@@ -615,6 +655,26 @@ TEST(XLinqFromForwardListSharedPtrTest, EnumerableEmpty)
 	typedef std::forward_list<int> tcontainer;
 	std::shared_ptr<tcontainer> container(new tcontainer());
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromForwardListSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsForwardListSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Piotr", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Piotr", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
 }
 
 TEST(XLinqFromSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -783,6 +843,27 @@ TEST(XLinqFromSetSharedPtrTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromSetSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsSetSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
+}
+
 TEST(XLinqFromMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiSetSharedPtr();
@@ -947,6 +1028,27 @@ TEST(XLinqFromMultiSetSharedPtrTest, BidirectionalEnumerableEmpty)
 	std::shared_ptr<tcontainer> container(new tcontainer());
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
+}
+
+TEST(XLinqFromMultiSetSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMultiSetSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
 }
 
 TEST(XLinqFromMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1115,6 +1217,27 @@ TEST(XLinqFromMapSharedPtrTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromMapSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMapSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsMultiMapSharedPtr();
@@ -1281,6 +1404,27 @@ TEST(XLinqFromMultiMapSharedPtrTest, BidirectionalEnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEndEnumerator())->back());
 }
 
+TEST(XLinqFromMultiMapSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsMultiMapSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromUnorderedSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedSetSharedPtr();
@@ -1373,6 +1517,27 @@ TEST(XLinqFromUnorderedSetSharedPtrTest, EnumerableEmpty)
 	typedef std::unordered_set<int> tcontainer;
 	std::shared_ptr<tcontainer> container(new tcontainer());
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromUnorderedSetSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedSetSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
 }
 
 TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
@@ -1469,6 +1634,27 @@ TEST(XLinqFromUnorderedMultiSetSharedPtrTest, EnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
+TEST(XLinqFromUnorderedMultiSetSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMultiSetSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().firstName);
+}
+
 TEST(XLinqFromUnorderedMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMapSharedPtr();
@@ -1563,6 +1749,27 @@ TEST(XLinqFromUnorderedMapSharedPtrTest, EnumerableEmpty)
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
 }
 
+TEST(XLinqFromUnorderedMapSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMapSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
+}
+
 TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsUnorderedMultiMapSharedPtr();
@@ -1655,4 +1862,25 @@ TEST(XLinqFromUnorderedMultiMapSharedPtrTest, EnumerableEmpty)
 	typedef std::unordered_multimap<int, int> tcontainer;
 	std::shared_ptr<tcontainer> container(new tcontainer());
 	ASSERT_FALSE((from(container) >> getEnumerator())->next());
+}
+
+TEST(XLinqFromUnorderedMultiMapSharedPtrTest, CloneAndEqualsEnumeratorTest)
+{
+	auto persons = getPersonsUnorderedMultiMapSharedPtr();
+	auto enumerator = from(persons) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	string fName = enumerator->current().second.firstName;
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	string sName = enumerator->current().second.firstName;
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(fName, second->current().second.firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ(fName, second->current().second.firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(sName, second->current().second.firstName);
 }

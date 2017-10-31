@@ -44,27 +44,63 @@ namespace xlinq
 		template<typename TContainer, typename TIterator, typename TElem>
 		class _StlSharedPointerEnumerator : public _StlEnumerator<TIterator, TElem>
 		{
-		private:
+		protected:
 			std::shared_ptr<TContainer> _container;
 		public:
 			_StlSharedPointerEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
 				: _StlEnumerator<TIterator, TElem>(begin, end), _container(container) {}
+			
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerEnumerator<TContainer, TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_container == this->_container &&
+					pother->_begin == this->_begin &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlSharedPointerEnumerator<TContainer, TIterator, TElem>(this->_container, this->_begin, this->_end);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 		
 		template<typename TContainer, typename TIterator, typename TElem>
 		class _StlSharedPointerBidirectionalEnumerator : public _StlBidirectionalEnumerator<TIterator, TElem>
 		{
-		private:
+		protected:
 			std::shared_ptr<TContainer> _container;
 		public:
 			_StlSharedPointerBidirectionalEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, bool atBegin = true)
 				: _StlBidirectionalEnumerator<TIterator, TElem>(begin, end, atBegin), _container(container) {}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerBidirectionalEnumerator<TContainer, TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_container == this->_container &&
+					pother->_begin == this->_begin &&
+					pother->_current == this->_current &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlSharedPointerBidirectionalEnumerator<TContainer, TIterator, TElem>(this->_container, this->_begin, this->_end);
+				ptr->_current = this->_current;
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 		
 		template<typename TContainer, typename TIterator, typename TElem>
 		class _StlSharedPointerRandomAccessEnumerator : public _StlRandomAccessEnumerator<TIterator, TElem>
 		{
-		private:
+		protected:
 			std::shared_ptr<TContainer> _container;
 		public:
 			_StlSharedPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end)
@@ -72,6 +108,24 @@ namespace xlinq
 
 			_StlSharedPointerRandomAccessEnumerator(std::shared_ptr<TContainer> container, TIterator begin, TIterator end, TIterator current)
 				: _StlRandomAccessEnumerator<TIterator, TElem>(begin, end, current), _container(container) {}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerRandomAccessEnumerator<TContainer, TIterator, TElem>>(other);
+				if (!pother) return false;
+				return pother->_container == this->_container &&
+					pother->_begin == this->_begin &&
+					pother->_current == this->_current &&
+					pother->_end == this->_end &&
+					pother->_started == this->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _StlSharedPointerRandomAccessEnumerator<TContainer, TIterator, TElem>(this->_container, this->_begin, this->_end, this->_current);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TContainer, typename TElem>

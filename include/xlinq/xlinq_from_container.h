@@ -44,7 +44,7 @@ namespace xlinq
 		template<typename TIterator, typename TElem>
 		class _StlEnumerator : public IEnumerator<TElem>
 		{
-		private:
+		protected:
 			TIterator _begin, _end;
 			bool _started;
 
@@ -87,7 +87,7 @@ namespace xlinq
 
 			std::shared_ptr<IEnumerator<TElem>> clone() const override
 			{
-				auto ptr = new _StlEnumerator<TIterator, TElem>(_begin, _end);
+				auto ptr = new _StlEnumerator<TIterator, TElem>(this->_begin, this->_end);
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
@@ -96,7 +96,7 @@ namespace xlinq
 		template<typename TIterator, typename TElem>
 		class _StlBidirectionalEnumerator : public IBidirectionalEnumerator<TElem>
 		{
-		private:
+		protected:
 			TIterator _begin, _end, _current;
 			bool _started;
 
@@ -152,7 +152,7 @@ namespace xlinq
 
 			std::shared_ptr<IEnumerator<TElem>> clone() const override
 			{
-				auto ptr = new _StlBidirectionalEnumerator<TIterator, TElem>(_begin, _end);
+				auto ptr = new _StlBidirectionalEnumerator<TIterator, TElem>(this->_begin, this->_end);
 				ptr->_current = this->_current;
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
@@ -162,7 +162,7 @@ namespace xlinq
 		template<typename TIterator, typename TElem>
 		class _StlRandomAccessEnumerator : public IRandomAccessEnumerator<TElem>
 		{
-		private:
+		protected:
 			TIterator _begin, _end, _current;
 			bool _started;
 
@@ -268,7 +268,7 @@ namespace xlinq
 
 			std::shared_ptr<IEnumerator<TElem>> clone() const override
 			{
-				auto ptr = new _StlRandomAccessEnumerator<TIterator, TElem>(_begin, _end, _current);
+				auto ptr = new _StlRandomAccessEnumerator<TIterator, TElem>(this->_begin, this->_end, this->_current);
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
