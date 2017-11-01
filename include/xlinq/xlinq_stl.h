@@ -240,6 +240,271 @@ namespace xlinq
 		}
 	};
 
+	/**
+	*	Iterator created from IEnumerator implementing C++ forward iterator concept.
+	*	This class implements C++ forward iterator concept and allows to use
+	*	all read-only algrithms from <algorithm> header.
+	*/
+	template<typename TElem>
+	class XlinqBidirectionalIterator
+	{
+	private:
+		std::shared_ptr<IBidirectionalEnumerator<TElem>> _enumerator;
+		bool _reversed;
+
+	public:
+		/**
+		*	Iterator category to support std::iterator_traits.
+		*/
+		typedef std::bidirectional_iterator_tag iterator_category;
+
+		/**
+		*	Iterator value type to support std::iterator_traits.
+		*/
+		typedef TElem value_type;
+
+		/**
+		*	Iterator difference type to support std::iterator_traits.
+		*/
+		typedef int difference_type;
+
+		/**
+		*	Iterator pointer type to support std::iterator_traits.
+		*/
+		typedef TElem* pointer;
+
+		/**
+		*	Iterator reference type to support std::iterator_traits.
+		*/
+		typedef TElem& reference;
+
+		/**
+		*	Creates empty iterator.
+		*/
+		XlinqBidirectionalIterator() : _enumerator(nullptr),_reversed(false) {}
+
+		/**
+		*	Creates forward iterator from enumerator.
+		*	This constructor allows to create STL-like iterator from given enumerator.
+		*	@param enumerator Source enumerator
+		*	@param reversed Is enumerator reversed.
+		*/
+		XlinqBidirectionalIterator(std::shared_ptr<IBidirectionalEnumerator<TElem>> enumerator,bool reversed) : _enumerator(enumerator), _reversed(reversed) {}
+
+		/**
+		*	Creates copy of iterator.
+		*	This constructor creates deep copy of iterator. The iteration of copy
+		*	is independent of iteration of source.
+		*	@param other iterator to copy
+		*/
+		XlinqBidirectionalIterator(const XlinqBidirectionalIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(other._enumerator->clone()) : nullptr;
+			this->_reversed = other._reversed;
+		}
+
+		/**
+		*	Moves iterator to the instance.
+		*	This constructor creates shallow copy of iterator. The source iterator
+		*	is no longer valid.
+		*	@param other iterator to move
+		*/
+		XlinqBidirectionalIterator(const XlinqBidirectionalIterator<TElem>&& other)
+		{
+			this->_enumerator = std::move(other._enumerator);
+			this->_reversed = other._reversed;
+		}
+
+		/**
+		*	Assigns copy of the instance.
+		*	This operator creates deep copy of iterator. The iteration of copy
+		*	is independent of iteration of source.
+		*	@param other iterator to copy
+		*	@return copy of given iterator
+		*/
+		XlinqBidirectionalIterator<TElem> operator=(const XlinqBidirectionalIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(other._enumerator->clone()) : nullptr;
+			this->_reversed = other._reversed;
+			return *this;
+		}
+
+		/**
+		*	Moves iterator to the next element.
+		*	This pre-increment operator advances to the next element and
+		*	then returns itself.
+		*	@return self instance after moving to next element
+		*/
+		XlinqBidirectionalIterator<TElem>& operator++()
+		{
+			_reversed ? _enumerator->back() : _enumerator->next();
+			return *this;
+		}
+
+		/**
+		*	Moves iterator to the previous element.
+		*	This pre-increment operator advances to the previous element and
+		*	then returns itself.
+		*	@return self instance after moving to previous element
+		*/
+		XlinqBidirectionalIterator<TElem>& operator--()
+		{
+			_reversed ? _enumerator->next() : _enumerator->back();
+			return *this;
+		}
+
+		/**
+		*	Returns element iterator points to.
+		*	This operation allows to get element iterator points to.
+		*	@return element iterator points to
+		*/
+		TElem operator*() const
+		{
+			return _enumerator->current();
+		}
+
+		/**
+		*	Swaps iterators between themselves.
+		*	This function allows to exchange iterators contents between themselves.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*/
+		friend void swap(XlinqBidirectionalIterator<TElem>& lhs, XlinqBidirectionalIterator<TElem>& rhs)
+		{
+			auto tmp = lhs->_reversed;
+			lhs->_reversed = rhs->_reversed;
+			rhs->_reversed = tmp;
+			std::swap(lhs->_enumerator, rhs->_enumerator);
+		}
+
+		/**
+		*	Creates copy of itself and then moves iterator to the next element.
+		*	This post-increment operator copies itself and advances to the next
+		*	element.
+		*	@return copy of instance before moving to next element
+		*/
+		XlinqBidirectionalIterator<TElem> operator++(int)
+		{
+			XlinqBidirectionalIterator<TElem> res(_enumerator ? std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(_enumerator->clone()) : nullptr, _reversed);
+			_reversed ? _enumerator->back() : _enumerator->next();
+			return res;
+		}
+
+		/**
+		*	Creates copy of itself and then moves iterator to the previous element.
+		*	This post-increment operator copies itself and advances to the previous
+		*	element.
+		*	@return copy of instance before moving to previous element
+		*/
+		XlinqBidirectionalIterator<TElem> operator--(int)
+		{
+			XlinqBidirectionalIterator<TElem> res(_enumerator ? std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(_enumerator->clone()) : nullptr, _reversed);
+			_reversed ? _enumerator->next() : _enumerator->back();
+			return res;
+		}
+
+		/**
+		*	Checks if iterators points to the same element.
+		*	This function allows to compare iterator for their equality. Iterators are equal
+		*	it they point to the same element.
+		*	@return True, if iterators point to the same element.
+		*/
+		friend bool operator==(const XlinqBidirectionalIterator<TElem>& lhs, const XlinqBidirectionalIterator<TElem>& rhs)
+		{
+			return lhs._reversed == rhs._reversed &&
+				(((bool)lhs._enumerator) == ((bool)rhs._enumerator)) &&
+				((!lhs._enumerator) || lhs._enumerator->equals(rhs._enumerator));
+		}
+
+		/**
+		*	Checks if iterators does not point to the same element.
+		*	This function allows to compare iterator for their inequality. Iterators are equal
+		*	it they point to the same element.
+		*	@return True, if iterators does not poin to the same element.
+		*/
+		friend bool operator!=(const XlinqBidirectionalIterator<TElem>& lhs, const XlinqBidirectionalIterator<TElem>& rhs)
+		{
+			return !(lhs == rhs);
+		}
+	};
+
+	/**
+	*	STL-like container allowing to get STL-like iterator from IEnumerable
+	*	This class implements C++ container concept allowing to get STL-like iterator.
+	*/
+	template<typename TElem>
+	class XlinqBidirectionalContainer
+	{
+	private:
+		std::shared_ptr<IBidirectionalEnumerable<TElem>> _enumerable;
+
+	public:
+		/**
+		*	Type of iterator.
+		*/
+		typedef XlinqBidirectionalIterator<TElem> iterator;
+
+		/**
+		*	Creates new instance of container from given enumerable.
+		*	@param enumerable Enumerable to create container from.
+		*/
+		XlinqBidirectionalContainer(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) : _enumerable(enumerable) {}
+
+		/**
+		*	Gets iterator pointing to before beggining of collection.
+		*	@return iterator pointing to before beggining of collection
+		*/
+		iterator before_begin()
+		{
+			return iterator(_enumerable->getEnumerator(), false);
+		}
+
+		/**
+		*	Gets iterator pointing to beggining of collection.
+		*	@return iterator pointing to beggining of collection
+		*/
+		iterator begin()
+		{
+			return ++before_begin();
+		}
+
+		/**
+		*	Gets iterator pointing to end of collection.
+		*	@return iterator pointing to end of collection (guard)
+		*/
+		iterator end()
+		{
+			return iterator(_enumerable->getEndEnumerator(), false);
+		}
+
+		/**
+		*	Gets iterator pointing to before reverse beggining of collection.
+		*	@return iterator pointing to before reverse beggining of collection
+		*/
+		iterator before_rbegin()
+		{
+			return iterator(_enumerable->getEndEnumerator(), true);
+		}
+
+		/**
+		*	Gets iterator pointing to reverse beggining of collection.
+		*	@return iterator pointing to reverse beggining of collection
+		*/
+		iterator rbegin()
+		{
+			return ++before_rbegin();
+		}
+
+		/**
+		*	Gets iterator pointing to reverse end of collection.
+		*	@return iterator pointing to reverse end of collection (guard)
+		*/
+		iterator rend()
+		{
+			return iterator(_enumerable->getEnumerator(), true);
+		}
+	};
+
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
@@ -253,9 +518,9 @@ namespace xlinq
 			}
 
 			template<typename TElem>
-			XlinqContainer<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			XlinqBidirectionalContainer<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return XlinqContainer<TElem>(enumerable);
+				return XlinqBidirectionalContainer<TElem>(enumerable);
 			}
 
 			template<typename TElem>
