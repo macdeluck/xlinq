@@ -58,6 +58,12 @@ namespace xlinq
 			this->_finished = other._finished;
 		}
 
+		XlinqIterator(const XlinqIterator<TElem>&& other)
+		{
+			this->_enumerator = other._enumerator;
+			this->_finished = other._finished;
+		}
+
 		XlinqIterator<TElem> operator=(const XlinqIterator<TElem>& other)
 		{
 			this->_enumerator = other._enumerator ? other._enumerator->clone() : nullptr;
