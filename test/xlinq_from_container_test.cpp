@@ -338,6 +338,67 @@ TEST(XLinqFromVectorTest, CloneAndEqualsEnumeratorTest)
 	ASSERT_EQ("Micha³", second->current().firstName);
 }
 
+TEST(XLinqFromVectorTest, DistanceLtGtTest)
+{
+	auto persons = getPersons();
+	auto enumerable = from(persons);
+	auto it = enumerable >> getEnumerator();
+	auto end = enumerable >> getEndEnumerator();
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() + 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() + 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size(), it->distance_to(end));
+	ASSERT_EQ(-enumerable->size(), end->distance_to(it));
+
+	auto itc = std::dynamic_pointer_cast<IRandomAccessEnumerator<Person>>(it->clone());
+
+	ASSERT_TRUE(it->equals(itc));
+	ASSERT_FALSE(it->less_than(itc));
+	ASSERT_FALSE(itc->less_than(it));
+	ASSERT_FALSE(it->greater_than(itc));
+	ASSERT_FALSE(itc->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(itc));
+	ASSERT_EQ(0, itc->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->advance(it->distance_to(end)));
+
+	ASSERT_TRUE(it->equals(end));
+	ASSERT_FALSE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_FALSE(end->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(end));
+	ASSERT_EQ(0, end->distance_to(it));
+}
+
 TEST(XLinqFromListTest, CallCurrentBeforeEnumerationWasStarted)
 {
 	auto persons = getPersonsList();

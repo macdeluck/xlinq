@@ -169,6 +169,32 @@ namespace xlinq
 		*	@return true, if new enumerator position is within collection. Otherwise false.
 		*/
 		virtual bool advance(int step) XLINQ_ABSTRACT;
+
+		/**
+		*	Calculactes distance to other enumerator.
+		*	This function calculates how many steps must be advanced to get to other enumerator.
+		*	@param other other enumerator to calculate distance to.
+		*	@return distance to other enumerator.
+		*/
+		virtual int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const XLINQ_ABSTRACT;
+
+		/**
+		*	Checks if instance points to element before other.
+		*	This function checks if instance points to element appearing before the one
+		*	that other enumerator points to.
+		*	@param other other enumerator to compare with.
+		*	@return true, if instance points to element appearing before the out other enumerator points to.
+		*/
+		virtual bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const XLINQ_ABSTRACT;
+
+		/**
+		*	Checks if instance points to element after other.
+		*	This function checks if instance points to element appearing after the one
+		*	that other enumerator points to.
+		*	@param other other enumerator to compare with.
+		*	@return true, if instance points to element appearing after the out other enumerator points to.
+		*/
+		virtual bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const XLINQ_ABSTRACT;
 	};
 
 	/**

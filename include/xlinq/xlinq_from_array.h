@@ -159,6 +159,39 @@ namespace xlinq
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayEnumerator<TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				auto dist = pother->_index - this->_index;
+				if (!this->_started && pother->_started)
+					++dist;
+				else if (this->_started && !pother->_started)
+					--dist;
+				return dist;
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayEnumerator<TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				if (!this->_started && pother->_started) return true;
+				if (this->_started && !pother->_started) return false;
+				return this->_index < pother->_index;
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayEnumerator<TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				if (!this->_started && pother->_started) return false;
+				if (this->_started && !pother->_started) return true;
+				return this->_index > pother->_index;
+			}
 		};
 
 		template<typename TElem>
@@ -307,6 +340,39 @@ namespace xlinq
 				ptr->_index = this->_index;
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StdArrayEnumerator<TElem, SIZE>>(other);
+				assert(pother);
+				assert(pother->_array == this->_array);
+				auto dist = pother->_index - this->_index;
+				if (!this->_started && pother->_started)
+					++dist;
+				else if (this->_started && !pother->_started)
+					--dist;
+				return dist;
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StdArrayEnumerator<TElem, SIZE>>(other);
+				assert(pother);
+				assert(pother->_array == this->_array);
+				if (!this->_started && pother->_started) return true;
+				if (this->_started && !pother->_started) return false;
+				return this->_index < pother->_index;
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StdArrayEnumerator<TElem, SIZE>>(other);
+				assert(pother);
+				assert(pother->_array == this->_array);
+				if (!this->_started && pother->_started) return false;
+				if (this->_started && !pother->_started) return true;
+				return this->_index > pother->_index;
 			}
 		};
 
@@ -501,6 +567,55 @@ namespace xlinq
 				ptr->_started = this->_started;
 				ptr->_currentEnumerator = std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_currentEnumerator->clone());
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayOverArrayEnumerator<TArray, TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				auto dist = pother->_index - this->_index;
+				if (!this->_started && pother->_started)
+					++dist;
+				else if (this->_started && !pother->_started)
+					--dist;
+				return dist;
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayOverArrayEnumerator<TArray, TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				if (!this->_started && pother->_started) return true;
+				if (this->_started && !pother->_started) return false;
+				if (this->_index < pother->_index)
+					return true;
+				if (this->_index > pother->_index)
+					return false;
+				if (!this->_currentEnumerator && pother->_currentEnumerator)
+					return true;
+				if (this->_currentEnumerator && !pother->_currentEnumerator)
+					return false;
+				return this->_currentEnumerator->less_than(pother->_currentEnumerator);
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ArrayOverArrayEnumerator<TArray, TElem>>(other);
+				assert(pother);
+				assert(pother->_begin == this->_begin);
+				if (!this->_started && pother->_started) return false;
+				if (this->_started && !pother->_started) return true;
+				if (this->_index < pother->_index)
+					return false;
+				if (this->_index > pother->_index)
+					return true;
+				if (!this->_currentEnumerator && pother->_currentEnumerator)
+					return false;
+				if (this->_currentEnumerator && !pother->_currentEnumerator)
+					return true;
+				return this->_currentEnumerator->greater_than(pother->_currentEnumerator);
 			}
 		};
 

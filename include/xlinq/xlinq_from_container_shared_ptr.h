@@ -126,6 +126,36 @@ namespace xlinq
 				ptr->_started = this->_started;
 				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerRandomAccessEnumerator<TContainer, TIterator, TElem>>(other);
+				assert(pother);
+				auto dist = std::distance(this->_current, pother->_current);
+				if (!this->_started && pother->_started)
+					++dist;
+				else if (this->_started && !pother->_started)
+					--dist;
+				return dist;
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerRandomAccessEnumerator<TContainer, TIterator, TElem>>(other);
+				assert(pother);
+				if (!this->_started && pother->_started) return true;
+				if (this->_started && !pother->_started) return false;
+				return this->_current < pother->_current;
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_StlSharedPointerRandomAccessEnumerator<TContainer, TIterator, TElem>>(other);
+				assert(pother);
+				if (!this->_started && pother->_started) return false;
+				if (this->_started && !pother->_started) return true;
+				return this->_current > pother->_current;
+			}
 		};
 
 		template<typename TContainer, typename TElem>

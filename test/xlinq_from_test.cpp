@@ -320,6 +320,67 @@ TEST(XLinqFromTest, XLinqEnumerableFromArray_CloneAndEqualsEnumeratorTest)
 	ASSERT_EQ(2, second->current());
 }
 
+TEST(XLinqFromTest, XLinqEnumerableFromArray_DistanceLtGtTest)
+{
+	int values[] = { 1, 2, 3, 4, 5 };
+	auto enumerable = from(values);
+	auto it = enumerable >> getEnumerator();
+	auto end = enumerable >> getEndEnumerator();
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() + 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() + 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size(), it->distance_to(end));
+	ASSERT_EQ(-enumerable->size(), end->distance_to(it));
+
+	auto itc = std::dynamic_pointer_cast<IRandomAccessEnumerator<int>>(it->clone());
+
+	ASSERT_TRUE(it->equals(itc));
+	ASSERT_FALSE(it->less_than(itc));
+	ASSERT_FALSE(itc->less_than(it));
+	ASSERT_FALSE(it->greater_than(itc));
+	ASSERT_FALSE(itc->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(itc));
+	ASSERT_EQ(0, itc->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->advance(it->distance_to(end)));
+
+	ASSERT_TRUE(it->equals(end));
+	ASSERT_FALSE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_FALSE(end->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(end));
+	ASSERT_EQ(0, end->distance_to(it));
+}
+
 TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray)
 {
 	int values[2][2][3] = {
@@ -447,6 +508,120 @@ TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray_CloneAndEqualsEnumeratorTes
 	ASSERT_EQ(2, second->current());
 }
 
+TEST(XLinqFromTest, XLinqEnumerableFromMultiDimArray_DistanceLtGtTest)
+{
+	int values[2][2][3] = {
+		{
+			{ 1, 2, 3 },
+			{ 4, 5, 6 }
+		},
+		{
+			{ 7, 8, 9 },
+			{ 10, 11, 12 },
+		}
+	};
+	auto enumerable = from_array(values);
+	auto it = enumerable >> getEnumerator();
+	auto end = enumerable >> getEndEnumerator();
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() + 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() + 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size(), it->distance_to(end));
+	ASSERT_EQ(-enumerable->size(), end->distance_to(it));
+
+	auto itc = std::dynamic_pointer_cast<IRandomAccessEnumerator<int>>(it->clone());
+
+	ASSERT_TRUE(it->equals(itc));
+	ASSERT_FALSE(it->less_than(itc));
+	ASSERT_FALSE(itc->less_than(it));
+	ASSERT_FALSE(it->greater_than(itc));
+	ASSERT_FALSE(itc->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(itc));
+	ASSERT_EQ(0, itc->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 2, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 2), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 3, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 3), end->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 4, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 4), end->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 5, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 5), end->distance_to(it));
+
+	ASSERT_TRUE(it->advance(it->distance_to(end)));
+
+	ASSERT_TRUE(it->equals(end));
+	ASSERT_FALSE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_FALSE(end->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(end));
+	ASSERT_EQ(0, end->distance_to(it));
+}
+
 TEST(XLinqFromTest, XLinqEnumerableFromStdArray)
 {
 	array<int, 5> values = { 1, 2, 3, 4, 5 };
@@ -482,6 +657,67 @@ TEST(XLinqFromTest, XLinqEnumerableFromStdArray_CloneAndEqualsEnumeratorTest)
 	ASSERT_EQ(1, second->current());
 	ASSERT_TRUE(second->next());
 	ASSERT_EQ(2, second->current());
+}
+
+TEST(XLinqFromTest, XLinqEnumerableFromStdArray_DistanceLtGtTest)
+{
+	array<int, 5> values = { 1, 2, 3, 4, 5 };
+	auto enumerable = from(values);
+	auto it = enumerable >> getEnumerator();
+	auto end = enumerable >> getEndEnumerator();
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() + 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() + 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size(), it->distance_to(end));
+	ASSERT_EQ(-enumerable->size(), end->distance_to(it));
+
+	auto itc = std::dynamic_pointer_cast<IRandomAccessEnumerator<int>>(it->clone());
+
+	ASSERT_TRUE(it->equals(itc));
+	ASSERT_FALSE(it->less_than(itc));
+	ASSERT_FALSE(itc->less_than(it));
+	ASSERT_FALSE(it->greater_than(itc));
+	ASSERT_FALSE(itc->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(itc));
+	ASSERT_EQ(0, itc->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->advance(it->distance_to(end)));
+
+	ASSERT_TRUE(it->equals(end));
+	ASSERT_FALSE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_FALSE(end->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(end));
+	ASSERT_EQ(0, end->distance_to(it));
 }
 
 TEST(XLinqFromTest, XlinqStlRandomAccessEnumerator)
