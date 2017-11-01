@@ -33,121 +33,134 @@ SOFTWARE.
 
 namespace xlinq
 {
+	template<typename TElem>
+	class XlinqIterator
+	{
+	private:
+		std::shared_ptr<IEnumerator<TElem>> _enumerator;
+		bool _finished;
+
+	public:
+		typedef std::forward_iterator_tag iterator_category;
+		typedef TElem value_type;
+		typedef int difference_type;
+
+		typedef TElem* pointer;
+		typedef TElem& reference;
+
+		XlinqIterator() : _enumerator(nullptr), _finished(true) {}
+
+		XlinqIterator(std::shared_ptr<IEnumerator<TElem>> enumerator, bool finished) : _enumerator(enumerator), _finished(finished) {}
+
+		XlinqIterator(const XlinqIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? other._enumerator->clone() : nullptr;
+			this->_finished = other._finished;
+		}
+
+		XlinqIterator<TElem> operator=(const XlinqIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? other._enumerator->clone() : nullptr;
+			this->_finished = other._finished;
+			return *this;
+		}
+
+		XlinqIterator<TElem>& operator++()
+		{
+			_finished = !_enumerator->next();
+			return *this;
+		}
+
+		TElem operator*() const
+		{
+			return _enumerator->current();
+		}
+
+		friend void swap(XlinqIterator<TElem>& lhs, XlinqIterator<TElem>& rhs)
+		{
+			auto tmp = lhs->_finished;
+			lhs->_finished = rhs->_finished;
+			rhs->_finished = tmp;
+			std::swap(lhs->_enumerator, rhs->_enumerator);
+		}
+
+		XlinqIterator<TElem> operator++(int)
+		{
+			XlinqIterator<TElem> res(_enumerator ? _enumerator->clone() : nullptr, _finished);
+			_finished = !_enumerator->next();
+			return res;
+		}
+
+		friend bool operator==(const XlinqIterator<TElem>& lhs, const XlinqIterator<TElem>& rhs)
+		{
+			if (lhs._finished && rhs._finished) return true;
+			if (lhs._finished != rhs._finished) return false;
+			return lhs._finished == rhs._finished &&
+				(((bool)lhs._enumerator) == ((bool)rhs._enumerator)) &&
+				((!lhs._enumerator) || lhs._enumerator->equals(rhs._enumerator));
+		}
+
+		friend bool operator!=(const XlinqIterator<TElem>& lhs, const XlinqIterator<TElem>& rhs)
+		{
+			return !(lhs == rhs);
+		}
+	};
+
+	template<typename TElem>
+	class XlinqContainer
+	{
+	private:
+		std::shared_ptr<IEnumerable<TElem>> _enumerable;
+
+	public:
+		typedef XlinqIterator<TElem> iterator;
+
+		XlinqContainer(std::shared_ptr<IEnumerable<TElem>> enumerable) : _enumerable(enumerable) {}
+
+		iterator begin()
+		{
+			auto enumerator = _enumerable->getEnumerator();
+			return ++iterator(enumerator, false);
+		}
+
+		iterator end()
+		{
+			return iterator();
+		}
+	};
+
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
-		template<typename TElem>
-		class _StlIterator
-		{
-		private:
-			std::shared_ptr<IEnumerator<TElem>> _enumerator;
-			bool _finished;
-
-		public:
-			typedef int difference_type;
-			typedef TElem value_type;
-			typedef TElem& reference_type;
-			typedef TElem* pointer;
-			typedef std::forward_iterator_tag iterator_category;
-
-			_StlIterator() : _enumerator(nullptr), _finished(true) {}
-
-			_StlIterator(std::shared_ptr<IEnumerator<TElem>> enumerator, bool finished) : _enumerator(enumerator), _finished(finished) {}
-
-			_StlIterator(const _StlIterator<TElem>& other)
-			{
-				this->_enumerator = other._enumerator->clone();
-				this->_finished = other._finished;
-			}
-
-			_StlIterator<TElem>& operator++()
-			{
-				_finished = !_enumerator->next();
-				return *this;
-			}
-
-			TElem operator*() const
-			{
-				return _enumerator->current();
-			}
-
-			friend void swap(_StlIterator<TElem>& lhs, _StlIterator<TElem>& rhs)
-			{
-				auto tmp = lhs->_finished;
-				lhs->_finished = rhs->_finished;
-				rhs->_finished = tmp;
-				std::swap(lhs->_enumerator, rhs->_enumerator);
-			}
-
-			_StlIterator<TElem> operator++(int)
-			{
-				_StlIterator<TElem> res(_enumerator->clone(), _finished);
-				_finished = !_enumerator->next();
-				return res;
-			}
-
-			pointer operator->() const;
-
-			friend bool operator==(const _StlIterator<TElem>& lhs, const _StlIterator<TElem>& rhs)
-			{
-				if (lhs._finished && rhs._finished) return true;
-				return lhs._finished == rhs._finished &&
-					lhs._enumerator->equals(rhs._enumerator);
-			}
-
-			friend bool operator!=(const _StlIterator<TElem>& lhs, const _StlIterator<TElem>& rhs)
-			{
-				return !(lhs == rhs);
-			}
-		};
-
-		template<typename TElem>
-		class _StlContainer
-		{
-		private:
-			std::shared_ptr<IEnumerable<TElem>> _enumerable;
-
-		public:
-			typedef _StlIterator<TElem> iterator;
-			
-			_StlContainer(std::shared_ptr<IEnumerable<TElem>> enumerable) : _enumerable(enumerable) {}
-
-			iterator begin()
-			{
-				auto enumerator = _enumerable->getEnumerator();
-				return iterator(enumerator, enumerator->next());
-			}
-
-			iterator end()
-			{
-				return iterator();
-			}
-		};
-
 		class _StlBuilder
 		{
 		public:
 			template<typename TElem>
-			_StlContainer<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			XlinqContainer<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return _StlContainer<TElem>(enumerable);
+				return XlinqContainer<TElem>(enumerable);
 			}
 
 			template<typename TElem>
-			_StlContainer<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			XlinqContainer<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return _StlContainer<TElem>(enumerable);
+				return XlinqContainer<TElem>(enumerable);
 			}
 
 			template<typename TElem>
-			_StlContainer<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			XlinqContainer<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return _StlContainer<TElem>(enumerable);
+				return XlinqContainer<TElem>(enumerable);
 			}
 		};
 	}
 	/*@endcond*/
 
+	/**
+	*	Converts IEnumerable to STL-like container.
+	*	This function alllows to convert enumerable to STL-like container.
+	*	This allows use read-only algorithms and modern for each loop syntax.
+	*/
 	XLINQ_INLINE internal::_StlBuilder stl()
 	{
 		return internal::_StlBuilder();
