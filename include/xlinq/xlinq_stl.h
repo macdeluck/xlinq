@@ -175,6 +175,8 @@ namespace xlinq
 		*	Checks if iterators points to the same element.
 		*	This function allows to compare iterator for their equality. Iterators are equal
 		*	it they point to the same element.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
 		*	@return True, if iterators point to the same element.
 		*/
 		friend bool operator==(const XlinqIterator<TElem>& lhs, const XlinqIterator<TElem>& rhs)
@@ -190,6 +192,8 @@ namespace xlinq
 		*	Checks if iterators does not point to the same element.
 		*	This function allows to compare iterator for their inequality. Iterators are equal
 		*	it they point to the same element.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
 		*	@return True, if iterators does not poin to the same element.
 		*/
 		friend bool operator!=(const XlinqIterator<TElem>& lhs, const XlinqIterator<TElem>& rhs)
@@ -241,8 +245,8 @@ namespace xlinq
 	};
 
 	/**
-	*	Iterator created from IEnumerator implementing C++ forward iterator concept.
-	*	This class implements C++ forward iterator concept and allows to use
+	*	Iterator created from IEnumerator implementing C++ bidirectional iterator concept.
+	*	This class implements C++ forward bidirectional concept and allows to use
 	*	all read-only algrithms from <algorithm> header.
 	*/
 	template<typename TElem>
@@ -505,6 +509,449 @@ namespace xlinq
 		}
 	};
 
+	/**
+	*	Iterator created from IEnumerator implementing C++ random access iterator concept.
+	*	This class implements C++ random access iterator concept and allows to use
+	*	all read-only algrithms from <algorithm> header.
+	*/
+	template<typename TElem>
+	class XlinqRandomAccessIterator
+	{
+	private:
+		std::shared_ptr<IRandomAccessEnumerator<TElem>> _enumerator;
+		bool _reversed;
+
+	public:
+		/**
+		*	Iterator category to support std::iterator_traits.
+		*/
+		typedef std::random_access_iterator_tag iterator_category;
+
+		/**
+		*	Iterator value type to support std::iterator_traits.
+		*/
+		typedef TElem value_type;
+
+		/**
+		*	Iterator difference type to support std::iterator_traits.
+		*/
+		typedef int difference_type;
+
+		/**
+		*	Iterator pointer type to support std::iterator_traits.
+		*/
+		typedef TElem* pointer;
+
+		/**
+		*	Iterator reference type to support std::iterator_traits.
+		*/
+		typedef TElem& reference;
+
+		/**
+		*	Creates empty iterator.
+		*/
+		XlinqRandomAccessIterator() : _enumerator(nullptr), _reversed(false) {}
+
+		/**
+		*	Creates forward iterator from enumerator.
+		*	This constructor allows to create STL-like iterator from given enumerator.
+		*	@param enumerator Source enumerator
+		*	@param reversed Is enumerator reversed.
+		*/
+		XlinqRandomAccessIterator(std::shared_ptr<IRandomAccessEnumerator<TElem>> enumerator, bool reversed) : _enumerator(enumerator), _reversed(reversed) {}
+
+		/**
+		*	Creates copy of iterator.
+		*	This constructor creates deep copy of iterator. The iteration of copy
+		*	is independent of iteration of source.
+		*	@param other iterator to copy
+		*/
+		XlinqRandomAccessIterator(const XlinqRandomAccessIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(other._enumerator->clone()) : nullptr;
+			this->_reversed = other._reversed;
+		}
+
+		/**
+		*	Moves iterator to the instance.
+		*	This constructor creates shallow copy of iterator. The source iterator
+		*	is no longer valid.
+		*	@param other iterator to move
+		*/
+		XlinqRandomAccessIterator(const XlinqRandomAccessIterator<TElem>&& other)
+		{
+			this->_enumerator = std::move(other._enumerator);
+			this->_reversed = other._reversed;
+		}
+
+		/**
+		*	Assigns copy of the instance.
+		*	This operator creates deep copy of iterator. The iteration of copy
+		*	is independent of iteration of source.
+		*	@param other iterator to copy
+		*	@return copy of given iterator
+		*/
+		XlinqRandomAccessIterator<TElem> operator=(const XlinqRandomAccessIterator<TElem>& other)
+		{
+			this->_enumerator = other._enumerator ? std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(other._enumerator->clone()) : nullptr;
+			this->_reversed = other._reversed;
+			return *this;
+		}
+
+		/**
+		*	Moves iterator to the next element.
+		*	This pre-increment operator advances to the next element and
+		*	then returns itself.
+		*	@return self instance after moving to next element
+		*/
+		XlinqRandomAccessIterator<TElem>& operator++()
+		{
+			_reversed ? _enumerator->back() : _enumerator->next();
+			return *this;
+		}
+
+		/**
+		*	Moves iterator to the previous element.
+		*	This pre-increment operator advances to the previous element and
+		*	then returns itself.
+		*	@return self instance after moving to previous element
+		*/
+		XlinqRandomAccessIterator<TElem>& operator--()
+		{
+			_reversed ? _enumerator->next() : _enumerator->back();
+			return *this;
+		}
+
+		/**
+		*	Returns element iterator points to.
+		*	This operation allows to get element iterator points to.
+		*	@return element iterator points to
+		*/
+		TElem operator*() const
+		{
+			return _enumerator->current();
+		}
+
+		/**
+		*	Swaps iterators between themselves.
+		*	This function allows to exchange iterators contents between themselves.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*/
+		friend void swap(XlinqRandomAccessIterator<TElem>& lhs, XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			auto tmp = lhs->_reversed;
+			lhs->_reversed = rhs->_reversed;
+			rhs->_reversed = tmp;
+			std::swap(lhs->_enumerator, rhs->_enumerator);
+		}
+
+		/**
+		*	Creates copy of itself and then moves iterator to the next element.
+		*	This post-increment operator copies itself and advances to the next
+		*	element.
+		*	@return copy of instance before moving to next element
+		*/
+		XlinqRandomAccessIterator<TElem> operator++(int)
+		{
+			XlinqRandomAccessIterator<TElem> res(_enumerator ? std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(_enumerator->clone()) : nullptr, _reversed);
+			_reversed ? _enumerator->back() : _enumerator->next();
+			return res;
+		}
+
+		/**
+		*	Creates copy of itself and then moves iterator to the previous element.
+		*	This post-increment operator copies itself and advances to the previous
+		*	element.
+		*	@return copy of instance before moving to previous element
+		*/
+		XlinqRandomAccessIterator<TElem> operator--(int)
+		{
+			XlinqRandomAccessIterator<TElem> res(_enumerator ? std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(_enumerator->clone()) : nullptr, _reversed);
+			_reversed ? _enumerator->next() : _enumerator->back();
+			return res;
+		}
+
+		/**
+		*	Checks if iterators points to the same element.
+		*	This function allows to compare iterator for their equality. Iterators are equal
+		*	it they point to the same element.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if iterators point to the same element.
+		*/
+		friend bool operator==(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			return lhs._reversed == rhs._reversed &&
+				(((bool)lhs._enumerator) == ((bool)rhs._enumerator)) &&
+				((!lhs._enumerator) || lhs._enumerator->equals(rhs._enumerator));
+		}
+
+		/**
+		*	Checks if iterators does not point to the same element.
+		*	This function allows to compare iterators for their inequality. Iterators are equal
+		*	it they point to the same element.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if iterators does not poin to the same element.
+		*/
+		friend bool operator!=(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			return !(lhs == rhs);
+		}
+
+		/**
+		*	Checks if left side iterator points to element before right side iterator.
+		*	This function allows to compare iterators in terms of index of element they point to.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if left side iterator points to element before right side iterator.
+		*/
+		friend bool operator<(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			assert(lhs._reversed == rhs._reversed);
+			assert(((bool)lhs._enumerator) == ((bool)rhs._enumerator));
+			return lhs._reversed ? lhs._enumerator->greater_than(rhs._enumerator) : lhs._enumerator->less_than(rhs._enumerator);
+		}
+
+		/**
+		*	Checks if left side iterator points to element after right side iterator.
+		*	This function allows to compare iterators in terms of index of element they point to.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if left side iterator points to element after right side iterator.
+		*/
+		friend bool operator>(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			assert(lhs._reversed == rhs._reversed);
+			assert(((bool)lhs._enumerator) == ((bool)rhs._enumerator));
+			return lhs._reversed ? lhs._enumerator->less_than(rhs._enumerator) : lhs._enumerator->greater_than(rhs._enumerator);
+		}
+
+		/**
+		*	Checks if left side iterator points to element before right side iterator or they point to the same element.
+		*	This function allows to compare iterators in terms of index of element they point to.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if left side iterator points to element before right side iterator or they point to the same element.
+		*/
+		friend bool operator<=(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			assert(lhs._reversed == rhs._reversed);
+			assert(lhs._enumerator);
+			assert(rhs._enumerator);
+			if (lhs._enumerator->equals(rhs._enumerator)) return true;
+			return lhs._reversed ? lhs._enumerator->greater_than(rhs._enumerator) : lhs._enumerator->less_than(rhs._enumerator);
+		}
+
+		/**
+		*	Checks if left side iterator points to element after right side iterator or they point to the same element.
+		*	This function allows to compare iterators in terms of index of element they point to.
+		*	@param lhs left side iterator
+		*	@param rhs right side iterator
+		*	@return True, if left side iterator points to element after right side iterator or they point to the same element.
+		*/
+		friend bool operator>=(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			assert(lhs._reversed == rhs._reversed);
+			assert(lhs._enumerator);
+			assert(rhs._enumerator);
+			if (lhs._enumerator->equals(rhs._enumerator)) return true;
+			return lhs._reversed ? lhs._enumerator->less_than(rhs._enumerator) : lhs._enumerator->greater_than(rhs._enumerator);
+		}
+
+		/**
+		*	Advances iterator by given step and then returns itself.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param step Number of elements to omit.
+		*	@return Iterator at new position.
+		*/
+		XlinqRandomAccessIterator<TElem>& operator+=(int step)
+		{
+			this->_enumerator->advance(this->_reversed ? -step : step);
+			return *this;
+		}
+
+		/**
+		*	Advances iterator by given step and then returns itself.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param step Number of elements to omit.
+		*	@return Iterator at new position.
+		*/
+		XlinqRandomAccessIterator<TElem>& operator-=(int step)
+		{
+			this->_enumerator->advance(this->_reversed ? step : -step);
+			return *this;
+		}
+
+		/**
+		*	Copies iterator and advances it by given step.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param lhs Iterator to copy and advance.
+		*	@param rhs Number of elements to omit.
+		*	@return Iterator copy at new position.
+		*/
+		friend XlinqRandomAccessIterator<TElem> operator+(const XlinqRandomAccessIterator<TElem>& lhs, int rhs)
+		{
+			XlinqRandomAccessIterator<TElem> result(lhs);
+			result += rhs;
+			return result;
+		}
+
+		/**
+		*	Copies iterator and advances it by given step.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param lhs Number of elements to omit.
+		*	@param rhs Iterator to copy and advance.
+		*	@return Iterator copy at new position.
+		*/
+		friend XlinqRandomAccessIterator<TElem> operator+(int lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			XlinqRandomAccessIterator<TElem> result(rhs);
+			result += lhs;
+			return result;
+		}
+
+		/**
+		*	Copies iterator and advances it by given step.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param lhs Iterator to copy and advance.
+		*	@param rhs Number of elements to omit.
+		*	@return Iterator copy at new position.
+		*/
+		friend XlinqRandomAccessIterator<TElem> operator-(const XlinqRandomAccessIterator<TElem>& lhs, int rhs)
+		{
+			XlinqRandomAccessIterator<TElem> result(lhs);
+			result -= rhs;
+			return result;
+		}
+
+		/**
+		*	Copies iterator and advances it by given step.
+		*	This function allos to skip specified number of items and jump to
+		*	futher element right away.
+		*	@param lhs Number of elements to omit.
+		*	@param rhs Iterator to copy and advance.
+		*	@return Iterator copy at new position.
+		*/
+		friend XlinqRandomAccessIterator<TElem> operator-(int lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			XlinqRandomAccessIterator<TElem> result(rhs);
+			result -= lhs;
+			return result;
+		}
+
+		/**
+		*	Calculates distance between iterators.
+		*	This function calculates how many steps left side iterator needs to be advanced
+		*	to be equal to right side iterator.
+		*	@param lhs Left side iterator.
+		*	@param rhs Right side iterator.
+		*	@return Distance from left side iterator to right side iterator.
+		*/
+		friend int operator-(const XlinqRandomAccessIterator<TElem>& lhs, const XlinqRandomAccessIterator<TElem>& rhs)
+		{
+			assert(lhs._reversed == rhs._reversed);
+			assert(lhs._enumerator);
+			assert(rhs._enumerator);
+			return rhs._enumerator->distance_to(lhs._enumerator) * (lhs._reversed ? -1 : 1);
+		}
+
+		/**
+		*	Advances iterator copy by given step and returns element it points to.
+		*	@param step Step to advance iterator.
+		*	@return Element achieved by advancing iterator.
+		*/
+		TElem operator[](int step) const
+		{
+			XlinqRandomAccessIterator<TElem> res(*this);
+			res += step;
+			return *res;
+		}
+	};
+
+	/**
+	*	STL-like container allowing to get STL-like iterator from IEnumerable
+	*	This class implements C++ container concept allowing to get STL-like iterator.
+	*/
+	template<typename TElem>
+	class XlinqRandomAccessContainer
+	{
+	private:
+		std::shared_ptr<IRandomAccessEnumerable<TElem>> _enumerable;
+
+	public:
+		/**
+		*	Type of iterator.
+		*/
+		typedef XlinqRandomAccessIterator<TElem> iterator;
+
+		/**
+		*	Creates new instance of container from given enumerable.
+		*	@param enumerable Enumerable to create container from.
+		*/
+		XlinqRandomAccessContainer(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) : _enumerable(enumerable) {}
+
+		/**
+		*	Gets iterator pointing to before beggining of collection.
+		*	@return iterator pointing to before beggining of collection
+		*/
+		iterator before_begin()
+		{
+			return iterator(_enumerable->getEnumerator(), false);
+		}
+
+		/**
+		*	Gets iterator pointing to beggining of collection.
+		*	@return iterator pointing to beggining of collection
+		*/
+		iterator begin()
+		{
+			return ++before_begin();
+		}
+
+		/**
+		*	Gets iterator pointing to end of collection.
+		*	@return iterator pointing to end of collection (guard)
+		*/
+		iterator end()
+		{
+			return iterator(_enumerable->getEndEnumerator(), false);
+		}
+
+		/**
+		*	Gets iterator pointing to before reverse beggining of collection.
+		*	@return iterator pointing to before reverse beggining of collection
+		*/
+		iterator before_rbegin()
+		{
+			return iterator(_enumerable->getEndEnumerator(), true);
+		}
+
+		/**
+		*	Gets iterator pointing to reverse beggining of collection.
+		*	@return iterator pointing to reverse beggining of collection
+		*/
+		iterator rbegin()
+		{
+			return ++before_rbegin();
+		}
+
+		/**
+		*	Gets iterator pointing to reverse end of collection.
+		*	@return iterator pointing to reverse end of collection (guard)
+		*/
+		iterator rend()
+		{
+			return iterator(_enumerable->getEnumerator(), true);
+		}
+	};
+
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
@@ -524,9 +971,9 @@ namespace xlinq
 			}
 
 			template<typename TElem>
-			XlinqContainer<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			XlinqRandomAccessContainer<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return XlinqContainer<TElem>(enumerable);
+				return XlinqRandomAccessContainer<TElem>(enumerable);
 			}
 		};
 	}
