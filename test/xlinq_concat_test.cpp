@@ -85,6 +85,38 @@ TEST(XLinqConcatForwardOnlyTest, BothEmpty)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqConcatForwardOnlyTest, CloneAndEqualsEnumeratorTest)
+{
+	std::forward_list<int> vfirst = { 1, 2, 3, 4, 5 };
+	std::forward_list<int> vsecond = { 6, 7, 8, 9 };
+
+	auto enumerator = from(vfirst) >> concat(vsecond) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(3, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(4, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(5, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(6, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(7, second->current());
+}
+
 TEST(XLinqConcatForwardAndBidirectionalTest, Enumeration)
 {
 	std::forward_list<int> first = { 1, 2, 3, 4, 5 };
@@ -400,6 +432,43 @@ TEST(XLinqConcatBidirectionalOnlyTest, BothEmpty)
 	enumerator = from(first) >> concat(second) >> getEndEnumerator();
 	
 	ASSERT_FALSE(enumerator->back());
+}
+
+TEST(XLinqConcatBidirectionalOnlyTest, CloneAndEqualsEnumeratorTest)
+{
+	std::list<int> vfirst = { 1, 2, 3, 4, 5 };
+	std::list<int> vsecond = { 6, 7, 8, 9 };
+
+	auto enumerator = from(vfirst) >> concat(vsecond) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(3, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(4, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(5, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(6, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(7, second->current());
+
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->equals(second));
 }
 
 TEST(XLinqConcatBidirectionalAndRandomAccessTest, Enumeration)
@@ -980,6 +1049,106 @@ TEST(XLinqConcatRandomAccessOnlyTest, Size)
 	std::vector<int> second = { 6, 7, 8, 9 };
 
 	ASSERT_EQ(9, (from(first) >> concat(second))->size());
+}
+
+TEST(XLinqConcatRandomAccessOnlyTest, CloneAndEqualsEnumeratorTest)
+{
+	std::vector<int> vfirst = { 1, 2, 3, 4, 5 };
+	std::vector<int> vsecond = { 6, 7, 8, 9 };
+
+	auto enumerator = from(vfirst) >> concat(vsecond) >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(3, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(4, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(5, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(6, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(7, second->current());
+
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->back());
+	ASSERT_TRUE(enumerator->equals(second));
+}
+
+TEST(XLinqConcatRandomAccessOnlyTest, DistanceLtGtTest)
+{
+	std::vector<int> vfirst = { 1, 2, 3, 4, 5 };
+	std::vector<int> vsecond = { 6, 7, 8, 9 };
+
+	auto enumerable = from(vfirst) >> concat(vsecond);
+	auto it = enumerable >> getEnumerator();
+	auto end = enumerable >> getEndEnumerator();
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() + 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() + 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->next());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size(), it->distance_to(end));
+	ASSERT_EQ(-enumerable->size(), end->distance_to(it));
+
+	auto itc = std::dynamic_pointer_cast<IRandomAccessEnumerator<int>>(it->clone());
+
+	ASSERT_TRUE(it->equals(itc));
+	ASSERT_FALSE(it->less_than(itc));
+	ASSERT_FALSE(itc->less_than(it));
+	ASSERT_FALSE(it->greater_than(itc));
+	ASSERT_FALSE(itc->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(itc));
+	ASSERT_EQ(0, itc->distance_to(it));
+
+	ASSERT_TRUE(end->back());
+
+	ASSERT_FALSE(it->equals(end));
+	ASSERT_TRUE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_TRUE(end->greater_than(it));
+
+	ASSERT_EQ(enumerable->size() - 1, it->distance_to(end));
+	ASSERT_EQ(-(enumerable->size() - 1), end->distance_to(it));
+
+	ASSERT_TRUE(it->advance(it->distance_to(end)));
+
+	ASSERT_TRUE(it->equals(end));
+	ASSERT_FALSE(it->less_than(end));
+	ASSERT_FALSE(end->less_than(it));
+	ASSERT_FALSE(it->greater_than(end));
+	ASSERT_FALSE(end->greater_than(it));
+
+	ASSERT_EQ(0, it->distance_to(end));
+	ASSERT_EQ(0, end->distance_to(it));
 }
 
 TEST(XLinqConcatArray, Enumeration)

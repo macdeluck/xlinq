@@ -66,6 +66,23 @@ namespace xlinq
 			{
 				return _firstFinished ? _second->current() : _first->current();
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_first->equals(pother->_first) && 
+					this->_firstFinished == pother->_firstFinished &&
+					this->_second->equals(pother->_second);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new ConcatEnumerator<TElem>(this->_first->clone(), this->_second->clone());
+				ptr->_firstFinished = this->_firstFinished;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TElem>
@@ -105,6 +122,24 @@ namespace xlinq
 			TElem current() override
 			{
 				return _firstFinished ? _second->current() : _first->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatBidirectionalEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_first->equals(pother->_first) &&
+					this->_firstFinished == pother->_firstFinished &&
+					this->_second->equals(pother->_second);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new ConcatBidirectionalEnumerator<TElem>(
+					std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(this->_first->clone()), 
+					std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(this->_second->clone()), 
+					this->_firstFinished));
 			}
 		};
 
@@ -203,6 +238,50 @@ namespace xlinq
 			TElem current() override
 			{
 				return _index < _firstSize ? _first->current() : _second->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatRandomAccessEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_first->equals(pother->_first) &&
+					this->_second->equals(pother->_second) &&
+					this->_firstSize == pother->_firstSize &&
+					this->_secondSize == pother->_secondSize &&
+					this->_index == pother->_index;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new ConcatRandomAccessEnumerator<TElem>(
+					std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_first->clone()),
+					std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_second->clone()),
+					this->_firstSize, 
+					this->_secondSize);
+				ptr->_index = this->_index;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return pother->_index - this->_index;
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->_index < pother->_index;
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<ConcatRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->_index > pother->_index;
 			}
 		};
 
