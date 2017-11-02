@@ -30,6 +30,7 @@ SOFTWARE.
 #define XLINQ_SELECT_H_
 
 #include <memory>
+#include <cassert>
 #include "xlinq_base.h"
 
 namespace xlinq
@@ -57,6 +58,19 @@ namespace xlinq
 			{
 				return _selector(_source->current());
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectEnumerator<TSelector, TElem, TSelect>>(other);
+				if (!pother)
+					return false;
+				return this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TSelect>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectEnumerator<TSelector, TElem, TSelect>(this->_selector, this->_source->clone()));
+			}
 		};
 
 		template<typename TSelector, typename TElem, typename TSelect>
@@ -83,6 +97,21 @@ namespace xlinq
 			TSelect current() override
 			{
 				return _selector(_source->current());
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectBidirectionalEnumerator<TSelector, TElem, TSelect>>(other);
+				if (!pother)
+					return false;
+				return this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TSelect>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectBidirectionalEnumerator<TSelector, TElem, TSelect>(
+					this->_selector,
+					std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(this->_source->clone())));
 			}
 		};
 
@@ -115,6 +144,42 @@ namespace xlinq
 			TSelect current() override
 			{
 				return _selector(_source->current());
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectRandomAccessEnumerator<TSelector, TElem, TSelect>>(other);
+				if (!pother)
+					return false;
+				return this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TSelect>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TSelect>>(new _SelectRandomAccessEnumerator<TSelector, TElem, TSelect>(
+					this->_selector,
+					std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_source->clone())));
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectRandomAccessEnumerator<TSelector, TElem, TSelect>>(other);
+				assert(pother);
+				return this->_source->distance_to(pother->_source);
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectRandomAccessEnumerator<TSelector, TElem, TSelect>>(other);
+				assert(pother);
+				return this->_source->less_than(pother->_source);
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectRandomAccessEnumerator<TSelector, TElem, TSelect>>(other);
+				assert(pother);
+				return this->_source->greater_than(pother->_source);
 			}
 		};
 

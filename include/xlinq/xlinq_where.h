@@ -66,7 +66,7 @@ namespace xlinq
 				auto pother = std::dynamic_pointer_cast<_WhereEnumerator<TElem, TPredicate>>(other);
 				if (!pother)
 					return false;
-				return this->_source->equals(pother->_source) && this->_predicate == pother->_predicate;
+				return this->_source->equals(pother->_source);
 			}
 
 			std::shared_ptr<IEnumerator<TElem>> clone() const override
