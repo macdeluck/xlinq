@@ -116,6 +116,25 @@ namespace xlinq
 				if (_finished) throw IterationFinishedException();
 				return *_it;
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_LazyGatherEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_it == pother->_it &&
+					this->_started == pother->_started &&
+					this->_finished == pother->_finished;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new _LazyGatherEnumerator<TElem>(_gatherer);
+				ptr->_it = this->_it;
+				ptr->_started = this->_started;
+				ptr->_finished = this->_finished;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TElem>

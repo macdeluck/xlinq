@@ -30,7 +30,7 @@ TEST(XLinqGatherTest, XlinqGatherValuesAllocatedOnStackTest)
 	ASSERT_FALSE(enumerator->next());
 }
 
-TEST(XLinLazyqGatherTest, TestGatherReleasingPointer)
+TEST(XLinqLazyGatherTest, TestGatherReleasingPointer)
 {
 	int useCount = 0;
 	auto ints = { 1, 2, 3, 4, 5 };
@@ -69,4 +69,34 @@ TEST(XLinLazyqGatherTest, TestGatherReleasingPointer)
 	ASSERT_FALSE(enumerator->next());
 	// not incremented, source ignored
 	ASSERT_EQ(5, useCount);
+}
+
+TEST(XLinqLazyGatherTest, CloneAndEqualsEnumeratorTest)
+{
+	auto ints = { 1, 2, 3, 4, 5 };
+	auto enumerable = from(ints) >> lazy_gather();
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(3, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(4, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(5, second->current());
+	ASSERT_FALSE(second->next());
+
+	ASSERT_TRUE(enumerator->equals(second));
 }
