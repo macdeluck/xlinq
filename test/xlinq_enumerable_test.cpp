@@ -89,6 +89,19 @@ TEST(XlinqEmptyEnumerableTest, CallNextWhenEnumerationWasFinished)
 	FAIL();
 }
 
+TEST(XlinqEmptyEnumerableTest, CloneAndEqualsEnumeratorTest)
+{
+	auto enumerator = Enumerable::empty<int>()->getEnumerator();
+
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_FALSE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->equals(Enumerable::empty<int>()->getEndEnumerator()));
+	ASSERT_FALSE(second->next());
+	ASSERT_TRUE(enumerator->equals(second));
+}
+
 TEST(XlinqRepeatEnumerableTest, IterateInfiniteStream)
 {
 	auto enumerator = Enumerable::repeat(1)->getEnumerator();
@@ -111,6 +124,25 @@ TEST(XlinqRepeatEnumerableTest, IterateFiniteStream)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XlinqRepeatEnumerableTest, FiniteStream_CloneAndEqualsEnumeratorTest)
+{
+	auto enumerator = Enumerable::repeat(1, 100)->getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(1, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(1, second->current());
+}
+
 TEST(XlinqRangeEnumerableTest, IterateRange)
 {
 	auto enumerator = Enumerable::range(1, 101)->getEnumerator();
@@ -120,4 +152,23 @@ TEST(XlinqRangeEnumerableTest, IterateRange)
 		ASSERT_EQ(i, enumerator->current());
 	}
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XlinqRangeEnumerableTest, Range_CloneAndEqualsEnumeratorTest)
+{
+	auto enumerator = Enumerable::range(1, 101)->getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
 }

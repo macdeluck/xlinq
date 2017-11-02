@@ -60,6 +60,19 @@ namespace xlinq
 			{
 				return _source->current();
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_WhereEnumerator<TElem, TPredicate>>(other);
+				if (!pother)
+					return false;
+				return this->_source->equals(pother->_source) && this->_predicate == pother->_predicate;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _WhereEnumerator<TElem, TPredicate>(this->_source->clone(), this->_predicate));
+			}
 		};
 
 		template<typename TElem, typename TPredicate>
@@ -92,6 +105,21 @@ namespace xlinq
 			TElem current() override
 			{
 				return _source->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_WhereBidirectionalEnumerator<TElem, TPredicate>>(other);
+				if (!pother)
+					return false;
+				// comparison of predicate not needed because conversion to pother will fail earlier
+				return this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _WhereBidirectionalEnumerator<TElem, TPredicate>(
+					std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(this->_source->clone()), this->_predicate));
 			}
 		};
 

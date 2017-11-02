@@ -64,6 +64,19 @@ namespace xlinq
 				if (!_started) throw IterationNotStartedException();
 				else throw IterationFinishedException();
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<EmptyEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_started == pother->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new EmptyEnumerator(this->_started));
+			}
 		};
 
 		template<typename TElem>
@@ -81,13 +94,16 @@ namespace xlinq
 		};
 
 		template<typename TElem>
+		class InfiniteRepeatEnumerable;
+
+		template<typename TElem>
 		class InfiniteRepeatEnumerator : public IEnumerator<TElem>
 		{
 		protected:
-			TElem _element;
+			std::shared_ptr<InfiniteRepeatEnumerable<TElem>> _parent;
 			bool _started;
 		public:
-			InfiniteRepeatEnumerator(TElem element) : _element(element), _started(false) {}
+			InfiniteRepeatEnumerator(std::shared_ptr<InfiniteRepeatEnumerable<TElem>> parent) : _parent(parent), _started(false) {}
 
 			virtual bool next() override
 			{
@@ -98,7 +114,22 @@ namespace xlinq
 			TElem current()
 			{
 				if (!_started) throw IterationNotStartedException();
-				return _element;
+				return _parent->getElement();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<InfiniteRepeatEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_parent == pother->_parent && this->_started == pother->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new InfiniteRepeatEnumerator<TElem>(this->_parent);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
@@ -107,38 +138,57 @@ namespace xlinq
 		{
 			int _size;
 		public:
-			RepeatEnumerator(TElem element, int size) : InfiniteRepeatEnumerator<TElem>(element), _size(size + 1) {}
+			RepeatEnumerator(std::shared_ptr<InfiniteRepeatEnumerable<TElem>> parent, int size) : InfiniteRepeatEnumerator<TElem>(parent), _size(size + 1) {}
 
 			virtual bool next() override
 			{
 				return InfiniteRepeatEnumerator<TElem>::next() && (--_size > 0);
 			}
-		};
 
-		template<typename TElem>
-		class InfiniteRepeatEnumerable : public IEnumerable<TElem>
-		{
-			TElem _element;
-		public:
-			InfiniteRepeatEnumerable(TElem element) : _element(element) {}
-
-			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
 			{
-				return std::shared_ptr<IEnumerator<TElem>>(new InfiniteRepeatEnumerator<TElem>(_element));
+				auto pother = std::dynamic_pointer_cast<RepeatEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_parent == pother->_parent &&
+					this->_started == pother->_started && 
+					this->_size == pother->_size;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new RepeatEnumerator<TElem>(this->_parent, this->_size - 1);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
 		template<typename TElem>
-		class RepeatEnumerable : public IEnumerable<TElem>
+		class InfiniteRepeatEnumerable : public IEnumerable<TElem>, public std::enable_shared_from_this<InfiniteRepeatEnumerable<TElem>>
 		{
+		protected:
 			TElem _element;
-			int _size;
 		public:
-			RepeatEnumerable(TElem element, int size) : _element(element), _size(size) {}
+			InfiniteRepeatEnumerable(TElem element) : _element(element) {}
+
+			XLINQ_INLINE TElem getElement() const { return _element; }
 
 			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
 			{
-				return std::shared_ptr<IEnumerator<TElem>>(new RepeatEnumerator<TElem>(_element, _size));
+				return std::shared_ptr<IEnumerator<TElem>>(new InfiniteRepeatEnumerator<TElem>(this->shared_from_this()));
+			}
+		};
+
+		template<typename TElem>
+		class RepeatEnumerable : public InfiniteRepeatEnumerable<TElem>
+		{
+			int _size;
+		public:
+			RepeatEnumerable(TElem element, int size) : InfiniteRepeatEnumerable<TElem>(element), _size(size) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new RepeatEnumerator<TElem>(this->shared_from_this(), _size));
 			}
 		};
 
@@ -167,6 +217,23 @@ namespace xlinq
 			{
 				if (!_started) throw IterationNotStartedException();
 				return _current;
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<RangeEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_current == pother->_current &&
+					this->_upper == pother->_upper &&
+					this->_started == pother->_started;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new RangeEnumerator<TElem>(this->_current, this->_upper);
+				ptr->_started = this->_started;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
 			}
 		};
 
