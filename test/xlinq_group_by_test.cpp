@@ -66,6 +66,52 @@ TEST(XlinqGroupByResultTest, TestGrouping)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XlinqGroupByTest, CloneAndEqualsEnumeratorTest)
+{
+	auto numbers = { 1, 2, 3, 4, 5, 6 };
+	auto enumerable = from(numbers) >> group_by([](int num) { return num % 2 + 1; });
+	auto enumerator = enumerable >> getEnumerator();
+	auto secondEnumerator = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(secondEnumerator));
+	ASSERT_TRUE(secondEnumerator->equals(enumerator));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(secondEnumerator));
+	ASSERT_FALSE(secondEnumerator->equals(enumerator));
+
+	auto grouping = enumerator->current();
+	ASSERT_EQ(2, grouping->getKey());
+
+	auto groupingEnumerator = grouping->getEnumerator();
+	auto secondGroupingEnumerator = groupingEnumerator->clone();
+	ASSERT_TRUE(groupingEnumerator->equals(secondGroupingEnumerator));
+	ASSERT_TRUE(secondGroupingEnumerator->equals(groupingEnumerator));
+	ASSERT_TRUE(groupingEnumerator->next());
+	ASSERT_FALSE(groupingEnumerator->equals(secondGroupingEnumerator));
+	ASSERT_FALSE(secondGroupingEnumerator->equals(groupingEnumerator));
+
+	ASSERT_EQ(1, groupingEnumerator->current());
+	ASSERT_TRUE(groupingEnumerator->next());
+	ASSERT_EQ(3, groupingEnumerator->current());
+	ASSERT_TRUE(groupingEnumerator->next());
+	ASSERT_EQ(5, groupingEnumerator->current());
+	ASSERT_FALSE(groupingEnumerator->next());
+
+	ASSERT_TRUE(secondGroupingEnumerator->next());
+	ASSERT_EQ(1, secondGroupingEnumerator->current());
+	ASSERT_TRUE(secondGroupingEnumerator->next());
+	ASSERT_EQ(3, secondGroupingEnumerator->current());
+	ASSERT_TRUE(secondGroupingEnumerator->next());
+	ASSERT_EQ(5, secondGroupingEnumerator->current());
+	ASSERT_FALSE(secondGroupingEnumerator->next());
+	ASSERT_TRUE(groupingEnumerator->equals(secondGroupingEnumerator));
+	ASSERT_TRUE(secondGroupingEnumerator->equals(groupingEnumerator));
+
+	ASSERT_TRUE(secondEnumerator->next());
+	ASSERT_TRUE(enumerator->equals(secondEnumerator));
+	ASSERT_TRUE(secondEnumerator->equals(enumerator));
+}
+
+
 /**
 *	Simple generally invalid hasher just for test purposes.
 */

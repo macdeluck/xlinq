@@ -96,6 +96,24 @@ namespace xlinq
 				if (!_started) throw IterationNotStartedException();
 				return *_it;
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<GroupingEnumerator<TKeySelector, TKey, TElem, THasher, TEqComp>>(other);
+				if (!pother)
+					return false;
+				return this->_it == pother->_it && // enough to compare iterator
+					this->_started == pother->_started &&
+					this->_finished == pother->_finished;
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				auto ptr = new GroupingEnumerator<TKeySelector, TKey, TElem, THasher, TEqComp>(this->_lookup, this->_key, this->_it);
+				ptr->_started = this->_started;
+				ptr->_finished = this->_finished;
+				return std::shared_ptr<IEnumerator<TElem>>(ptr);
+			}
 		};
 
 		template<typename TKeySelector, typename TKey, typename TElem, typename THasher, typename TEqComp>
@@ -131,6 +149,9 @@ namespace xlinq
 			bool next() override
 			{
 				if (_finished) throw IterationFinishedException();
+				if (!_started)
+					_it = _lookup->beginKeyIterator();
+
 				auto itn = _it;
 				auto ite = _lookup->endKeyIterator();
 				if ((_it == ite) || (_started && (++itn == ite)))
@@ -158,6 +179,25 @@ namespace xlinq
 				if (_finished) throw IterationFinishedException();
 				if (!_started) throw IterationNotStartedException();
 				return std::shared_ptr<IGrouping<TKey, TElem>>(new Grouping<TKeySelector, TKey, TElem, THasher, TEqComp>(_lookup, *_it));
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TKey, TElem>>>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<GroupsEnumerator<TKeySelector, TKey, TElem, THasher, TEqComp>>(other);
+				if (!pother)
+					return false;
+				return this->_it == pother->_it && // enough to compare iterator
+					this->_started == pother->_started &&
+					this->_finished == pother->_finished;
+			}
+
+			std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TKey, TElem>>>> clone() const override
+			{
+				auto ptr = new GroupsEnumerator<TKeySelector, TKey, TElem, THasher, TEqComp>(this->_lookup);
+				ptr->_it = this->_it;
+				ptr->_started = this->_started;
+				ptr->_finished = this->_finished;
+				return std::shared_ptr<IEnumerator<std::shared_ptr<IGrouping<TKey, TElem>>>>(ptr);
 			}
 		};
 
