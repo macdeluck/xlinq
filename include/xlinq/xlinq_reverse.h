@@ -65,6 +65,19 @@ namespace xlinq
 			{
 				return _source->current();
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ReverseBidirectionalEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return _source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _ReverseBidirectionalEnumerator<TElem>(std::dynamic_pointer_cast<IBidirectionalEnumerator<TElem>>(_source->clone())));
+			}
 		};
 
 		template<typename TElem>
@@ -119,6 +132,40 @@ namespace xlinq
 			TElem current() override
 			{
 				return _source->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ReverseRandomAccessEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return _source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _ReverseRandomAccessEnumerator<TElem>(std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(_source->clone())));
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ReverseRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return pother->_source->distance_to(this->_source);
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ReverseRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->distance_to(pother) > 0;
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_ReverseRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->distance_to(pother) < 0;
 			}
 		};
 
