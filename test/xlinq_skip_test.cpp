@@ -137,7 +137,7 @@ TEST(XLinqSkipTest, RandomAccessEnumerable_CloneAndEqualsEnumeratorTest)
 TEST(XLinqSkipTest, RandomAccessEnumerable_DistanceLtGtTest)
 {
 	vector<int> numbers = { 4, 5, 6, 7, 1, 2, 3 };
-	auto enumerable = from(numbers) >> skip(4);
+	auto enumerable = from(numbers) >> skip(2);
 	auto it = enumerable >> getEnumerator();
 	auto end = enumerable >> getEndEnumerator();
 

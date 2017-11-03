@@ -324,7 +324,7 @@ namespace xlinq
 
 			int size() override
 			{
-				return _items;
+				return _source->size() - _items;
 			}
 		};
 
