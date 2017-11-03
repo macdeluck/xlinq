@@ -43,14 +43,19 @@ namespace xlinq
 		class _SelectManyEnumerator : public IEnumerator<TSelect>
 		{
 		private:
+			struct CollectionContainer
+			{
+				TSelectCollection collection;
+			};
+
 			TSelector _selector;
-			TSelectCollection _currentCollection;
 			std::shared_ptr<IEnumerator<TElem>> _source;
+			std::shared_ptr<CollectionContainer> _container;
 			std::shared_ptr<IEnumerator<TSelect>> _current;
 
 		public:
 			_SelectManyEnumerator(TSelector selector, std::shared_ptr<IEnumerator<TElem>> source)
-				: _selector(selector), _source(source) {}
+				: _selector(selector), _source(source), _container(nullptr), _current(nullptr) {}
 
 			bool next() override
 			{
@@ -58,8 +63,9 @@ namespace xlinq
 				{
 					if (!_source->next())
 						return false;
-					_currentCollection = _selector(_source->current());
-					_current = from(_currentCollection)->getEnumerator();
+					_container.reset(new CollectionContainer());
+					_container->collection = _selector(_source->current());
+					_current = from(_container->collection)->getEnumerator();
 				}
 				return true;
 			}
@@ -67,6 +73,26 @@ namespace xlinq
 			TSelect current() override
 			{
 				return _current->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TSelect>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_SelectManyEnumerator<TSelector, TElem, TSelectCollection, TSelect>>(other);
+				if (!pother)
+					return false;
+				return this->_source->equals(pother->_source) &&
+					((bool)this->_current) == ((bool)pother->_current) &&
+					((!this->_current) || (this->_current->equals(pother->_current)));
+			}
+
+			std::shared_ptr<IEnumerator<TSelect>> clone() const override
+			{
+				auto ptr = new _SelectManyEnumerator<TSelector, TElem, TSelectCollection, TSelect>(this->_selector, this->_source->clone());
+				if (this->_container)
+					ptr->_container = this->_container;
+				if (this->_current)
+					ptr->_current = this->_current->clone();
+				return std::shared_ptr<IEnumerator<TSelect>>(ptr);
 			}
 		};
 

@@ -31,6 +31,27 @@ TEST(XLinqSelectManyTest, FlatteningCollectionContainingVectors)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqSelectManyTest, CloneAndEqualsEnumeratorTest)
+{
+	auto companies = getCompanies();
+	auto enumerable = from(companies) >> select_many([](Company c) { return c.employees; });
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ("Micha³", enumerator->current().firstName);
+	ASSERT_EQ("Anna", second->current().firstName);
+
+	while (enumerator->next());
+
+	ASSERT_EQ("Anna", second->current().firstName);
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ("Micha³", second->current().firstName);
+}
+
 TEST(XLinqSelectManyTest, SelectingFromDictionary)
 {
 	auto companies = getCompaniesUnorderedMap();
