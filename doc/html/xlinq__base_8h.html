@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -184,7 +184,7 @@ internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bot
 <div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEndEnumerator(); \</div>
 <div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
 <div class="line">    }</div>
-<div class="ttc" id="namespacexlinq_html_a584dee55e0e1bb36c76f963eadddd910"><div class="ttname"><a href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">xlinq::getEndEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEndEnumeratorBuilder getEndEnumerator()</div><div class="ttdoc">Function extracting end enumerator from bidirectional enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:362</div></div>
+<div class="ttc" id="namespacexlinq_html_a584dee55e0e1bb36c76f963eadddd910"><div class="ttname"><a href="namespacexlinq.html#a584dee55e0e1bb36c76f963eadddd910">xlinq::getEndEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEndEnumeratorBuilder getEndEnumerator()</div><div class="ttdoc">Function extracting end enumerator from bidirectional enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:405</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -206,7 +206,7 @@ internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bot
 <div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEnumerator(); \</div>
 <div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
 <div class="line">    }</div>
-<div class="ttc" id="namespacexlinq_html_a29c51dfbb405e91dbf589ba4864d700c"><div class="ttname"><a href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()</div><div class="ttdoc">Function extracting enumerator from enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:353</div></div>
+<div class="ttc" id="namespacexlinq_html_a29c51dfbb405e91dbf589ba4864d700c"><div class="ttname"><a href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c">xlinq::getEnumerator</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorBuilder getEnumerator()</div><div class="ttdoc">Function extracting enumerator from enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:396</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -228,7 +228,7 @@ internal::_GetEnumeratorAtBuilder&#160;</td><td class="memItemRight" valign="bot
 <div class="line">        std::shared_ptr&lt;IEnumerator&lt;TElem&gt;&gt; res = this-&gt;createEnumeratorAt(index); \</div>
 <div class="line">        return std::static_pointer_cast&lt;TEnumerator&gt;(res); \</div>
 <div class="line">    }</div>
-<div class="ttc" id="namespacexlinq_html_aff22f546b38f9e0a88fd478b8710b6c0"><div class="ttname"><a href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">xlinq::getEnumeratorAt</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorAtBuilder getEnumeratorAt(int elementIndex)</div><div class="ttdoc">Function extracting enumerator at given position from random access enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:372</div></div>
+<div class="ttc" id="namespacexlinq_html_aff22f546b38f9e0a88fd478b8710b6c0"><div class="ttname"><a href="namespacexlinq.html#aff22f546b38f9e0a88fd478b8710b6c0">xlinq::getEnumeratorAt</a></div><div class="ttdeci">XLINQ_INLINE internal::_GetEnumeratorAtBuilder getEnumeratorAt(int elementIndex)</div><div class="ttdoc">Function extracting enumerator at given position from random access enumerable. </div><div class="ttdef"><b>Definition:</b> xlinq_base.h:415</div></div>
 </div><!-- fragment -->
 </div>
 </div>

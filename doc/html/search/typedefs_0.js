@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['elemtype',['ElemType',['../classxlinq_1_1IEnumerator.html#a1cc80ca90b9dc4616482808b5dc22a67',1,'xlinq::IEnumerator::ElemType()'],['../classxlinq_1_1IEnumerable.html#a0ca39305bf18005dedb5bed61b528bb2',1,'xlinq::IEnumerable::ElemType()']]]
+  ['difference_5ftype',['difference_type',['../classxlinq_1_1XlinqIterator.html#ac5a4b6467c22aaf7200c0300939ee646',1,'xlinq::XlinqIterator::difference_type()'],['../classxlinq_1_1XlinqBidirectionalIterator.html#adc6ea7e1fe1bbbd696c57342e3296b87',1,'xlinq::XlinqBidirectionalIterator::difference_type()'],['../classxlinq_1_1XlinqRandomAccessIterator.html#a52746edf10f49021f2ebf3235437f58a',1,'xlinq::XlinqRandomAccessIterator::difference_type()']]]
 ];

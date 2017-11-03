@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,6 +115,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9ac21f328a8907188895140ca8ea9d2a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html#a9ac21f328a8907188895140ca8ea9d2a">advance</a> (int step) <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
 <tr class="memdesc:a9ac21f328a8907188895140ca8ea9d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves enumeration forward or backward by given number of steps.  <a href="#a9ac21f328a8907188895140ca8ea9d2a">More...</a><br/></td></tr>
 <tr class="separator:a9ac21f328a8907188895140ca8ea9d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dfa111d8717a2b34c02f7b79fd1969a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html#a8dfa111d8717a2b34c02f7b79fd1969a">distance_to</a> (std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt; other) const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:a8dfa111d8717a2b34c02f7b79fd1969a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculactes distance to other enumerator.  <a href="#a8dfa111d8717a2b34c02f7b79fd1969a">More...</a><br/></td></tr>
+<tr class="separator:a8dfa111d8717a2b34c02f7b79fd1969a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f7b0307630ab3791d2594a5cb5307aa"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html#a7f7b0307630ab3791d2594a5cb5307aa">less_than</a> (std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt; other) const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:a7f7b0307630ab3791d2594a5cb5307aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if instance points to element before other.  <a href="#a7f7b0307630ab3791d2594a5cb5307aa">More...</a><br/></td></tr>
+<tr class="separator:a7f7b0307630ab3791d2594a5cb5307aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788ebcc10840838d10f6dc5c368d0254"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html#a788ebcc10840838d10f6dc5c368d0254">greater_than</a> (std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt; other) const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:a788ebcc10840838d10f6dc5c368d0254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if instance points to element after other.  <a href="#a788ebcc10840838d10f6dc5c368d0254">More...</a><br/></td></tr>
+<tr class="separator:a788ebcc10840838d10f6dc5c368d0254"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classxlinq_1_1IBidirectionalEnumerator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classxlinq_1_1IBidirectionalEnumerator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classxlinq_1_1IBidirectionalEnumerator.html">xlinq::IBidirectionalEnumerator&lt; TElem &gt;</a></td></tr>
 <tr class="memitem:aed72952e6398e8417da20514437a196d inherit pub_methods_classxlinq_1_1IBidirectionalEnumerator"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IBidirectionalEnumerator.html#aed72952e6398e8417da20514437a196d">back</a> () <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
 <tr class="memdesc:aed72952e6398e8417da20514437a196d inherit pub_methods_classxlinq_1_1IBidirectionalEnumerator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves enumeration to previous element.  <a href="#aed72952e6398e8417da20514437a196d">More...</a><br/></td></tr>
@@ -129,6 +138,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4850bf89f2815648e3eb1fa3053fa908 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memItemLeft" align="right" valign="top">virtual TElem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#a4850bf89f2815648e3eb1fa3053fa908">current</a> () <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
 <tr class="memdesc:a4850bf89f2815648e3eb1fa3053fa908 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current element of enumeration.  <a href="#a4850bf89f2815648e3eb1fa3053fa908">More...</a><br/></td></tr>
 <tr class="separator:a4850bf89f2815648e3eb1fa3053fa908 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ed816395352c89f4a071017a6d15f1 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#aa0ed816395352c89f4a071017a6d15f1">equals</a> (std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt; TElem &gt;&gt; other) const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:aa0ed816395352c89f4a071017a6d15f1 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if enumerators equals.  <a href="#aa0ed816395352c89f4a071017a6d15f1">More...</a><br/></td></tr>
+<tr class="separator:aa0ed816395352c89f4a071017a6d15f1 inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae371e1593d333aaf23242bb03f6715df inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt; TElem &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#ae371e1593d333aaf23242bb03f6715df">clone</a> () const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:ae371e1593d333aaf23242bb03f6715df inherit pub_methods_classxlinq_1_1IEnumerator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerator's clone.  <a href="#ae371e1593d333aaf23242bb03f6715df">More...</a><br/></td></tr>
+<tr class="separator:ae371e1593d333aaf23242bb03f6715df inherit pub_methods_classxlinq_1_1IEnumerator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -177,6 +193,114 @@ template&lt;typename TElem &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true, if new enumerator position is within collection. Otherwise false. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8dfa111d8717a2b34c02f7b79fd1969a"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">xlinq::IRandomAccessEnumerator</a>&lt; TElem &gt;::distance_to </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculactes distance to other enumerator. </p>
+<p>This function calculates how many steps must be advanced to get to other enumerator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>other enumerator to calculate distance to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>distance to other enumerator. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a788ebcc10840838d10f6dc5c368d0254"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">xlinq::IRandomAccessEnumerator</a>&lt; TElem &gt;::greater_than </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if instance points to element after other. </p>
+<p>This function checks if instance points to element appearing after the one that other enumerator points to. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>other enumerator to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true, if instance points to element appearing after the out other enumerator points to. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7f7b0307630ab3791d2594a5cb5307aa"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">xlinq::IRandomAccessEnumerator</a>&lt; TElem &gt;::less_than </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IRandomAccessEnumerator.html">IRandomAccessEnumerator</a>&lt; TElem &gt;&gt;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if instance points to element before other. </p>
+<p>This function checks if instance points to element appearing before the one that other enumerator points to. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>other enumerator to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true, if instance points to element appearing before the out other enumerator points to. </dd></dl>
 
 </div>
 </div>

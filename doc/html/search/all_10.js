@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['select',['select',['../namespacexlinq.html#ab738e44970df0cc013b01175278396ff',1,'xlinq']]],
-  ['select_5fmany',['select_many',['../namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad',1,'xlinq']]],
-  ['sequence_5fequals',['sequence_equals',['../namespacexlinq.html#a606abd3916c1b266c38c971b1d8cf817',1,'xlinq::sequence_equals(TEnumerable enumerable)'],['../namespacexlinq.html#af49626d213f43a45d8e3525349fc9d51',1,'xlinq::sequence_equals(TEnumerable enumerable, TComparer comparer)']]],
-  ['size',['size',['../classxlinq_1_1IRandomAccessEnumerable.html#ab7fca624021486d780445aba53bef951',1,'xlinq::IRandomAccessEnumerable']]],
-  ['skip',['skip',['../namespacexlinq.html#a602e7473f6175415bcc40e7a67371fb6',1,'xlinq']]],
-  ['skip_5fwhile',['skip_while',['../namespacexlinq.html#afc1ef7add9029ca553a353fd2fdeee79',1,'xlinq']]],
-  ['sort',['sort',['../namespacexlinq.html#af0e630334a679273d52c7c22ae1b4b87',1,'xlinq::sort()'],['../namespacexlinq.html#a350a99e4016d23d64a00c7c4149adf4e',1,'xlinq::sort(TComparer comparer)']]],
-  ['sum',['sum',['../namespacexlinq.html#ac2fbddf94d11626d8f1fd76523883235',1,'xlinq']]]
+  ['range',['range',['../classxlinq_1_1Enumerable.html#a347425e7fa303b6831b07914c9f6bddc',1,'xlinq::Enumerable']]],
+  ['rbegin',['rbegin',['../classxlinq_1_1XlinqBidirectionalContainer.html#a6c2ab8d45194ec2d73b393a220f032bf',1,'xlinq::XlinqBidirectionalContainer::rbegin()'],['../classxlinq_1_1XlinqRandomAccessContainer.html#ad85ad10d43df038b3dce4d10bde10e87',1,'xlinq::XlinqRandomAccessContainer::rbegin()']]],
+  ['reference',['reference',['../classxlinq_1_1XlinqIterator.html#a5f796724101e546ced0d8ba80d308125',1,'xlinq::XlinqIterator::reference()'],['../classxlinq_1_1XlinqBidirectionalIterator.html#a0b7e7abc893d4180859d48485f81528f',1,'xlinq::XlinqBidirectionalIterator::reference()'],['../classxlinq_1_1XlinqRandomAccessIterator.html#abbe37e82d17b5d226cd2c1dc7d84c696',1,'xlinq::XlinqRandomAccessIterator::reference()']]],
+  ['rend',['rend',['../classxlinq_1_1XlinqBidirectionalContainer.html#a2f288744097dc0aec256ccb6f44a8c4c',1,'xlinq::XlinqBidirectionalContainer::rend()'],['../classxlinq_1_1XlinqRandomAccessContainer.html#ad2ea11859f11e903193f251363a53aa1',1,'xlinq::XlinqRandomAccessContainer::rend()']]],
+  ['repeat',['repeat',['../classxlinq_1_1Enumerable.html#af94169af1cb854806f6de363032daa49',1,'xlinq::Enumerable::repeat(TElem element)'],['../classxlinq_1_1Enumerable.html#a0b57c55c6d52c47e0105e6f9f9e65504',1,'xlinq::Enumerable::repeat(TElem element, int size)']]],
+  ['reverse',['reverse',['../namespacexlinq.html#ad34b8077cab181bfa76791f8f56cae88',1,'xlinq']]]
 ];

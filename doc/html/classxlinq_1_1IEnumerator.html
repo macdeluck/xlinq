@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -128,6 +128,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4850bf89f2815648e3eb1fa3053fa908"><td class="memItemLeft" align="right" valign="top">virtual TElem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#a4850bf89f2815648e3eb1fa3053fa908">current</a> () <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
 <tr class="memdesc:a4850bf89f2815648e3eb1fa3053fa908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current element of enumeration.  <a href="#a4850bf89f2815648e3eb1fa3053fa908">More...</a><br/></td></tr>
 <tr class="separator:a4850bf89f2815648e3eb1fa3053fa908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ed816395352c89f4a071017a6d15f1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#aa0ed816395352c89f4a071017a6d15f1">equals</a> (std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt; TElem &gt;&gt; other) const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:aa0ed816395352c89f4a071017a6d15f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if enumerators equals.  <a href="#aa0ed816395352c89f4a071017a6d15f1">More...</a><br/></td></tr>
+<tr class="separator:aa0ed816395352c89f4a071017a6d15f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae371e1593d333aaf23242bb03f6715df"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt; TElem &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxlinq_1_1IEnumerator.html#ae371e1593d333aaf23242bb03f6715df">clone</a> () const <a class="el" href="xlinq__defs_8h.html#ac8b13cc3c658f55400b68065597441fb">XLINQ_ABSTRACT</a></td></tr>
+<tr class="memdesc:ae371e1593d333aaf23242bb03f6715df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates enumerator's clone.  <a href="#ae371e1593d333aaf23242bb03f6715df">More...</a><br/></td></tr>
+<tr class="separator:ae371e1593d333aaf23242bb03f6715df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename TElem&gt;<br/>
@@ -182,6 +189,35 @@ template&lt;typename TElem &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae371e1593d333aaf23242bb03f6715df"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt;TElem&gt; &gt; <a class="el" href="classxlinq_1_1IEnumerator.html">xlinq::IEnumerator</a>&lt; TElem &gt;::clone </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates enumerator's clone. </p>
+<p>This function clones enumerator. It's clone enumeration should be completely separate. </p>
+<dl class="section return"><dt>Returns</dt><dd>enumerator clone </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a4850bf89f2815648e3eb1fa3053fa908"></a>
 <div class="memitem">
 <div class="memproto">
@@ -215,6 +251,42 @@ template&lt;typename TElem &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>current enumeration element. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa0ed816395352c89f4a071017a6d15f1"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TElem &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool <a class="el" href="classxlinq_1_1IEnumerator.html">xlinq::IEnumerator</a>&lt; TElem &gt;::equals </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classxlinq_1_1IEnumerator.html">IEnumerator</a>&lt; TElem &gt;&gt;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if enumerators equals. </p>
+<p>The enumerators are equal when they were created from the same <a class="el" href="classxlinq_1_1IEnumerable.html" title="Interface for enumerable. ">IEnumerable</a> and they both point on the same element in sequence. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The enumerator to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true, if enumerators are equal </dd></dl>
 
 </div>
 </div>

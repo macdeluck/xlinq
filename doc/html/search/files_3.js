@@ -32,6 +32,7 @@ var searchData=
   ['xlinq_5fsequence_5fequals_2eh',['xlinq_sequence_equals.h',['../xlinq__sequence__equals_8h.html',1,'']]],
   ['xlinq_5fskip_2eh',['xlinq_skip.h',['../xlinq__skip_8h.html',1,'']]],
   ['xlinq_5fsort_2eh',['xlinq_sort.h',['../xlinq__sort_8h.html',1,'']]],
+  ['xlinq_5fstl_2eh',['xlinq_stl.h',['../xlinq__stl_8h.html',1,'']]],
   ['xlinq_5fsum_2eh',['xlinq_sum.h',['../xlinq__sum_8h.html',1,'']]],
   ['xlinq_5ftake_2eh',['xlinq_take.h',['../xlinq__take_8h.html',1,'']]],
   ['xlinq_5fwhere_2eh',['xlinq_where.h',['../xlinq__where_8h.html',1,'']]]
