@@ -128,18 +128,17 @@ namespace xlinq
 			typename std::list<TResult>::const_iterator end() { return _result.end(); }
 		};
 
-		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult,
-			typename TKeyEqComp, typename TInnerHasher, typename TInnerEqComp, typename TOuterHasher, typename TOuterEqComp>
+		template<typename LookupType, typename TResult>
 		class _JoinEnumerator : public IEnumerator<TResult>
 		{
 		private:
-			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> _lookup;
+			std::shared_ptr<LookupType> _lookup;
 			typename std::list<TResult>::const_iterator _it;
 			bool _started;
 			bool _finished;
 
 		public:
-			_JoinEnumerator(std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> lookup)
+			_JoinEnumerator(std::shared_ptr<LookupType> lookup)
 				: _lookup(lookup), _it(lookup->begin()), _started(false), _finished(false) {}
 
 			bool next()
@@ -147,6 +146,8 @@ namespace xlinq
 				if (_finished) throw IterationFinishedException();
 				auto itn = _it;
 				auto ite = _lookup->end();
+				if (!_started)
+					_it = _lookup->begin();
 				if ((_it == ite) || (_started && (++itn == ite)))
 				{
 					if (!_lookup->finished() && _lookup->next())
@@ -173,6 +174,25 @@ namespace xlinq
 				if (!_started) throw IterationNotStartedException();
 				return *_it;
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TResult>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_JoinEnumerator<LookupType, TResult>>(other);
+				if (!pother)
+					return false;
+				return this->_it == pother->_it && // enough to compare iterator
+					this->_started == pother->_started &&
+					this->_finished == pother->_finished;
+			}
+
+			std::shared_ptr<IEnumerator<TResult>> clone() const override
+			{
+				auto ptr = new _JoinEnumerator<LookupType, TResult>(this->_lookup);
+				ptr->_it = this->_it;
+				ptr->_started = this->_started;
+				ptr->_finished = this->_finished;
+				return std::shared_ptr<IEnumerator<TResult>>(ptr);
+			}
 		};
 
 		template<typename TOuter, typename TKeySelector, typename TOuterKeySelector, typename TResultSelector, typename TInnerKey, typename TOuterKey, typename TInnerElem, typename TOuterElem, typename TResult, 
@@ -180,11 +200,12 @@ namespace xlinq
 		class _JoinEnumerable : public IEnumerable<TResult>
 		{
 		private:
-			std::shared_ptr<JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>> _lookup;
+			typedef JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp> LookupType;
+			std::shared_ptr<LookupType> _lookup;
 
 		public:
 			_JoinEnumerable(std::shared_ptr<IEnumerable<TInnerElem>> inner, TOuter outer, TKeySelector keySelector, TOuterKeySelector outerKeySelector, TResultSelector resultSelector, TKeyEqComp keyEqComp, TInnerHasher innerHasher, TInnerEqComp innerEqComp, TOuterHasher outerHasher, TOuterEqComp outerEqComp)
-				: _lookup(new JoinLookup<TOuter, TOuterKeySelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResultSelector, TResult, TKeyEqComp, TOuterHasher, TOuterEqComp>(
+				: _lookup(new LookupType(
 					(inner >> group_by(keySelector, innerHasher, innerEqComp))->getEnumerator(),
 					outer,
 					outerKeySelector,
@@ -193,7 +214,7 @@ namespace xlinq
 
 			std::shared_ptr<IEnumerator<TResult>> createEnumerator() override
 			{
-				return std::shared_ptr<IEnumerator<TResult>>(new _JoinEnumerator<TOuter, TKeySelector, TOuterKeySelector, TResultSelector, TInnerKey, TOuterKey, TInnerElem, TOuterElem, TResult, TKeyEqComp, TInnerHasher, TInnerEqComp, TOuterHasher, TOuterEqComp>(_lookup));
+				return std::shared_ptr<IEnumerator<TResult>>(new _JoinEnumerator<LookupType, TResult>(_lookup));
 			}
 		};
 
