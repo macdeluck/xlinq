@@ -62,6 +62,20 @@ namespace xlinq
 				if (!_source) throw IterationFinishedException();
 				return _source->current();
 			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeWhileEnumerator<TElem, TPredicate>>(other);
+				if (!pother)
+					return false;
+				return ((bool)this->_source) == ((bool)pother->_source) &&
+					(!(this->_source) || this->_source->equals(pother->_source));
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _TakeWhileEnumerator<TElem, TPredicate>(this->_source->clone(), this->_predicate));
+			}
 		};
 
 		template<typename TElem, typename TPredicate>
@@ -129,6 +143,20 @@ namespace xlinq
 			TElem current() override
 			{
 				return _source->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_maxItems == pother->_maxItems &&
+					this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _TakeEnumerator<TElem>(this->_source->clone(), this->_maxItems));
 			}
 		};
 
@@ -203,6 +231,45 @@ namespace xlinq
 				if (_index < 0) throw IterationNotStartedException();
 				if (_index == _maxItems) throw IterationFinishedException();
 				return _source->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeRandomAccessEnumerator<TElem>>(other);
+				if (!pother)
+					return false;
+				return this->_maxItems == pother->_maxItems &&
+					this->_index == pother->_index &&
+					this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _TakeRandomAccessEnumerator<TElem>(
+					std::dynamic_pointer_cast<IRandomAccessEnumerator<TElem>>(this->_source->clone()),
+					this->_maxItems,
+					this->_index));
+			}
+
+			int distance_to(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->_source->distance_to(pother->_source);
+			}
+
+			bool less_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->_source->less_than(pother->_source);
+			}
+
+			bool greater_than(std::shared_ptr<IRandomAccessEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_TakeRandomAccessEnumerator<TElem>>(other);
+				assert(pother);
+				return this->_source->greater_than(pother->_source);
 			}
 		};
 
