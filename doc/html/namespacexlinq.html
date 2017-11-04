@@ -602,6 +602,25 @@ internal::_ToUnorderedMapFullBuilder<br class="typebreak"/>
 THasher, TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a0f9fc90dab9e86eccdd0555b3248ddbc">to_unordered_map</a> (TKeySelector keySelector, TValueSelector valueSelector, THasher hasher, TEqComp comparer)</td></tr>
 <tr class="memdesc:a0f9fc90dab9e86eccdd0555b3248ddbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts <a class="el" href="classxlinq_1_1IEnumerable.html" title="Interface for enumerable. ">IEnumerable</a> to STL map with specified comparer.  <a href="#a0f9fc90dab9e86eccdd0555b3248ddbc">More...</a><br/></td></tr>
 <tr class="separator:a0f9fc90dab9e86eccdd0555b3248ddbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b78b3277b650aba66f9de8a695f59f1"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:a7b78b3277b650aba66f9de8a695f59f1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_UnionBuilder<br class="typebreak"/>
+&lt; TContainer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a7b78b3277b650aba66f9de8a695f59f1">union_with</a> (TContainer container)</td></tr>
+<tr class="memdesc:a7b78b3277b650aba66f9de8a695f59f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container.  <a href="#a7b78b3277b650aba66f9de8a695f59f1">More...</a><br/></td></tr>
+<tr class="separator:a7b78b3277b650aba66f9de8a695f59f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae919c4387a3832d1f6cda4c2cc6b5791"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename TComparer &gt; </td></tr>
+<tr class="memitem:ae919c4387a3832d1f6cda4c2cc6b5791"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_UnionBuilderWithEqCompBuilder<br class="typebreak"/>
+&lt; TContainer, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae919c4387a3832d1f6cda4c2cc6b5791">union_with</a> (TContainer container, TComparer comparer)</td></tr>
+<tr class="memdesc:ae919c4387a3832d1f6cda4c2cc6b5791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container using specified equality comparer.  <a href="#ae919c4387a3832d1f6cda4c2cc6b5791">More...</a><br/></td></tr>
+<tr class="separator:ae919c4387a3832d1f6cda4c2cc6b5791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fac81bf849727adfd3546992ba65782"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename THasher , typename TComparer &gt; </td></tr>
+<tr class="memitem:a9fac81bf849727adfd3546992ba65782"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_UnionFullBuilder<br class="typebreak"/>
+&lt; TContainer, THasher, <br class="typebreak"/>
+TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a9fac81bf849727adfd3546992ba65782">union_with</a> (TContainer container, THasher hasher, TComparer comparer)</td></tr>
+<tr class="memdesc:a9fac81bf849727adfd3546992ba65782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container using specified equality comparer and hasher.  <a href="#a9fac81bf849727adfd3546992ba65782">More...</a><br/></td></tr>
+<tr class="separator:a9fac81bf849727adfd3546992ba65782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplParams" colspan="2">template&lt;typename TPredicate &gt; </td></tr>
 <tr class="memitem:a439f2d6992edc6ceb1d4457168f7d7b7"><td class="memTemplItemLeft" align="right" valign="top">internal::_WhereBuilder<br class="typebreak"/>
 &lt; TPredicate &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7">where</a> (TPredicate predicate)</td></tr>
@@ -3107,6 +3126,119 @@ template&lt;typename THasher , typename TEqComp &gt; </div>
 <p>Converts <a class="el" href="classxlinq_1_1IEnumerable.html" title="Interface for enumerable. ">IEnumerable</a> to STL vector. </p>
 <p>This function allows to gather all enumerable elements to STL vector. </p>
 <dl class="section return"><dt>Returns</dt><dd>to_vector expression builder </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7b78b3277b650aba66f9de8a695f59f1"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_UnionBuilder&lt;TContainer&gt; xlinq::union_with </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be equality comparable and hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of union_with expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae919c4387a3832d1f6cda4c2cc6b5791"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_UnionBuilderWithEqCompBuilder&lt;TContainer, TComparer&gt; xlinq::union_with </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container using specified equality comparer. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of union_with expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9fac81bf849727adfd3546992ba65782"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename THasher , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_UnionFullBuilder&lt;TContainer, THasher, TComparer&gt; xlinq::union_with </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container using specified equality comparer and hasher. </p>
+<p>This function may be used to create collection with unique set of elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">hasher</td><td>Functor used to hash elements. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of union_with expression. </dd></dl>
 
 </div>
 </div>

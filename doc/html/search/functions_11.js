@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['what',['what',['../classxlinq_1_1Exception.html#a0edfe366ca916f37a607dd9e053df46a',1,'xlinq::Exception']]],
-  ['where',['where',['../namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7',1,'xlinq']]]
+  ['union_5fwith',['union_with',['../namespacexlinq.html#a7b78b3277b650aba66f9de8a695f59f1',1,'xlinq::union_with(TContainer container)'],['../namespacexlinq.html#ae919c4387a3832d1f6cda4c2cc6b5791',1,'xlinq::union_with(TContainer container, TComparer comparer)'],['../namespacexlinq.html#a9fac81bf849727adfd3546992ba65782',1,'xlinq::union_with(TContainer container, THasher hasher, TComparer comparer)']]]
 ];

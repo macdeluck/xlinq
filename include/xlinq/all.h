@@ -67,6 +67,7 @@ SOFTWARE.
 #include "xlinq_sum.h"
 #include "xlinq_take.h"
 #include "xlinq_to_container.h"
+#include "xlinq_union.h"
 #include "xlinq_where.h"
 
 #endif
