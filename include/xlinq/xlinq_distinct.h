@@ -41,59 +41,80 @@ namespace xlinq
 	/*@cond XLINQ_INTERNAL*/
 	namespace internal
 	{
-		template<typename TEnumerable, typename THasher, typename TEqComp>
-		std::shared_ptr<IBidirectionalEnumerable<typename TEnumerable::element_type::ElemType>> build_distinct(TEnumerable enumerable, THasher hasher, TEqComp eqComp, int buckets = 8)
+		template<typename TElem, typename THasher, typename TEqComp>
+		class _DistinctEnumerator : public IEnumerator<TElem>
 		{
-			typedef typename TEnumerable::element_type::ElemType TElem;
-			typedef std::unordered_set<TElem, THasher, TEqComp> TSet;
-			typedef std::list<TElem> TResultList;
+			std::unordered_set<TElem, THasher, TEqComp> _set;
+			std::shared_ptr<IEnumerator<TElem>> _source;
+		public:
+			_DistinctEnumerator(const std::unordered_set<TElem, THasher, TEqComp>& set, std::shared_ptr<IEnumerator<TElem>> source)
+				: _set(set), _source(source) {}
 
-			auto res = std::shared_ptr<TResultList>(new TResultList());
-			auto set = TSet(buckets, hasher, eqComp);
-			for (auto it = enumerable->getEnumerator(); it->next();)
-				if (set.insert(it->current()).second)
-					res->push_back(it->current());
+			bool next() override
+			{
+				while (_source->next())
+					if (_set.insert(_source->current()).second)
+						return true;
+				return false;
+			}
 
-			return from(res);
-		}
+			TElem current() override
+			{
+				return _source->current();
+			}
 
-		template<typename TEnumerable, typename THasher, typename TEqComp, typename TSelector>
-		std::shared_ptr<IBidirectionalEnumerable<typename TEnumerable::element_type::ElemType>>
-			build_distinct_by(TEnumerable enumerable, THasher hasher, TEqComp eqComp, TSelector selector, int buckets = 8)
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_DistinctEnumerator<TElem, THasher, TEqComp>>(other);
+				if (!pother)
+					return false;
+				return this->_set.size() == pother->_set.size() &&
+					this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _DistinctEnumerator<TElem, THasher, TEqComp>(this->_set, this->_source->clone()));
+			}
+		};
+
+		template<typename TElem, typename THasher, typename TEqComp>
+		class _DistinctEnumerable : public IEnumerable<TElem>
 		{
-			typedef typename TEnumerable::element_type::ElemType TElem;
-			typedef typename unaryreturntype<TSelector, TElem>::type TResult;
-			typedef std::unordered_set<TResult, THasher, TEqComp> TSet;
-			typedef std::list<TResult> TResultList;
+			const int default_buckets = 8;
+			THasher _hasher;
+			TEqComp _eqComp;
+			std::shared_ptr<IEnumerable<TElem>> _source;
+		public:
+			_DistinctEnumerable(THasher hasher, TEqComp eqComp, std::shared_ptr<IEnumerable<TElem>> source)
+				: _hasher(hasher), _eqComp(eqComp), _source(source) {}
 
-			auto res = std::shared_ptr<TResultList>(new TResultList());
-			auto set = TSet(buckets, hasher, eqComp);
-			for (auto it = enumerable->getEnumerator(); it->next();)
-				if (set.insert(selector(it->current())).second)
-					res->push_back(it->current());
-
-			return from(res);
-		}
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _DistinctEnumerator<TElem, THasher, TEqComp>(std::unordered_set<TElem, THasher, TEqComp>(default_buckets, _hasher, _eqComp), _source->getEnumerator()));
+			}
+		};
 
 		class _DistinctBuilder
 		{
 		public:
+
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), std::equal_to<TElem>());
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, std::equal_to<TElem>>(std::hash<TElem>(), std::equal_to<TElem>(), enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), std::equal_to<TElem>());
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, std::equal_to<TElem>>(std::hash<TElem>(), std::equal_to<TElem>(), enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), std::equal_to<TElem>(), enumerable->size());
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, std::equal_to<TElem>>(std::hash<TElem>(), std::equal_to<TElem>(), enumerable));
 			}
 		};
 
@@ -102,25 +123,26 @@ namespace xlinq
 		{
 		private:
 			TEqComp _eqComp;
+
 		public:
 			_DistinctWithEqCompBuilder(TEqComp eqComp) : _eqComp(eqComp) {}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), _eqComp);
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, TEqComp>(std::hash<TElem>(), _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), _eqComp);
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, TEqComp>(std::hash<TElem>(), _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, std::hash<TElem>(), _eqComp, enumerable->size());
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, std::hash<TElem>, TEqComp>(std::hash<TElem>(), _eqComp, enumerable));
 			}
 		};
 
@@ -134,48 +156,106 @@ namespace xlinq
 			_DistinctFullBuilder(THasher hasher, TEqComp eqComp) : _hasher(hasher), _eqComp(eqComp) {}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, _hasher, _eqComp);
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, THasher, TEqComp>(_hasher, _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, _hasher, _eqComp);
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, THasher, TEqComp>(_hasher, _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct(enumerable, _hasher, _eqComp, enumerable->size());
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctEnumerable<TElem, THasher, TEqComp>(_hasher, _eqComp, enumerable));
+			}
+		};
+
+		template<typename TSelector, typename TSelect, typename TElem, typename THasher, typename TEqComp>
+		class _DistinctByEnumerator : public IEnumerator<TElem>
+		{
+			TSelector _selector;
+			std::unordered_set<TSelect, THasher, TEqComp> _set;
+			std::shared_ptr<IEnumerator<TElem>> _source;
+		public:
+			_DistinctByEnumerator(TSelector selector, const std::unordered_set<TSelect, THasher, TEqComp>& set, std::shared_ptr<IEnumerator<TElem>> source)
+				: _selector(selector), _set(set), _source(source) {}
+
+			bool next() override
+			{
+				while (_source->next())
+					if (_set.insert(_selector(_source->current())).second)
+						return true;
+				return false;
+			}
+
+			TElem current() override
+			{
+				return _source->current();
+			}
+
+			bool equals(std::shared_ptr<IEnumerator<TElem>> other) const override
+			{
+				auto pother = std::dynamic_pointer_cast<_DistinctByEnumerator<TSelector, TSelect, TElem, THasher, TEqComp>>(other);
+				if (!pother)
+					return false;
+				return this->_set.size() == pother->_set.size() &&
+					this->_source->equals(pother->_source);
+			}
+
+			std::shared_ptr<IEnumerator<TElem>> clone() const override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _DistinctByEnumerator<TSelector, TSelect, TElem, THasher, TEqComp>(this->_selector, this->_set, this->_source->clone()));
+			}
+		};
+
+		template<typename TSelector, typename TSelect, typename TElem, typename THasher, typename TEqComp>
+		class _DistinctByEnumerable : public IEnumerable<TElem>
+		{
+			const int default_buckets = 8;
+			TSelector _selector;
+			THasher _hasher;
+			TEqComp _eqComp;
+			std::shared_ptr<IEnumerable<TElem>> _source;
+		public:
+			_DistinctByEnumerable(TSelector selector, THasher hasher, TEqComp eqComp, std::shared_ptr<IEnumerable<TElem>> source)
+				: _selector(selector), _hasher(hasher), _eqComp(eqComp), _source(source) {}
+
+			std::shared_ptr<IEnumerator<TElem>> createEnumerator() override
+			{
+				return std::shared_ptr<IEnumerator<TElem>>(new _DistinctByEnumerator<TSelector, TSelect, TElem, THasher, TEqComp>(_selector, std::unordered_set<TSelect, THasher, TEqComp>(default_buckets, _hasher, _eqComp), _source->getEnumerator()));
 			}
 		};
 
 		template<typename TSelector>
 		class _DistinctByBuilder
 		{
-		private:
 			TSelector _selector;
 		public:
 			_DistinctByBuilder(TSelector selector) : _selector(selector) {}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), std::equal_to<TElem>(), _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, std::equal_to<TSelect>>(_selector, std::hash<TSelect>(), std::equal_to<TSelect>(), enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), std::equal_to<TElem>(), _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, std::equal_to<TSelect>>(_selector, std::hash<TSelect>(), std::equal_to<TSelect>(), enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), std::equal_to<TElem>(), _selector, enumerable->size());
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, std::equal_to<TSelect>>(_selector, std::hash<TSelect>(), std::equal_to<TSelect>(), enumerable));
 			}
 		};
 
@@ -185,25 +265,29 @@ namespace xlinq
 		private:
 			TSelector _selector;
 			TEqComp _eqComp;
+
 		public:
 			_DistinctByWithEqCompBuilder(TSelector selector, TEqComp eqComp) : _selector(selector), _eqComp(eqComp) {}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), _eqComp, _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, TEqComp>(_selector, std::hash<TSelect>(), _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), _eqComp, _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, TEqComp>(_selector, std::hash<TSelect>(), _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, std::hash<TElem>(), _eqComp, _selector, enumerable->size());
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, std::hash<TSelect>, TEqComp>(_selector, std::hash<TSelect>(), _eqComp, enumerable));
 			}
 		};
 
@@ -218,21 +302,24 @@ namespace xlinq
 			_DistinctByFullBuilder(TSelector selector, THasher hasher, TEqComp eqComp) : _selector(selector), _hasher(hasher), _eqComp(eqComp) {}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, _hasher, _eqComp, _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, THasher, TEqComp>(_selector, _hasher, _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, _hasher, _eqComp, _selector);
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, THasher, TEqComp>(_selector, _hasher, _eqComp, enumerable));
 			}
 
 			template<typename TElem>
-			std::shared_ptr<IBidirectionalEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			std::shared_ptr<IEnumerable<TElem>> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
 			{
-				return build_distinct_by(enumerable, _hasher, _eqComp, _selector, enumerable->size());
+				typedef typename unaryreturntype<TSelector, TElem>::type TSelect;
+				return std::shared_ptr<IEnumerable<TElem>>(new _DistinctByEnumerable<TSelector, TSelect, TElem, THasher, TEqComp>(_selector, _hasher, _eqComp, enumerable));
 			}
 		};
 	}

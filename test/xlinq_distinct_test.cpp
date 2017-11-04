@@ -43,6 +43,27 @@ TEST(XLinqDistinctTest, DistinctFromEnumerable)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqDistinctTest, DistinctEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct();
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+}
+
 TEST(XLinqDistinctTest, DistinctFromBidirectionalEnumerable)
 {
 	list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
@@ -92,6 +113,27 @@ TEST(XLinqDistinctTest, DistinctWithEqCompFromEnumerable)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(5, enumerator->current());
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqDistinctTest, DistinctWithEqCompEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct(Eq<int, int>());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
 }
 
 TEST(XLinqDistinctTest, DistinctWithEqCompFromBidirectionalEnumerable)
@@ -145,6 +187,27 @@ TEST(XLinqDistinctTest, DistinctFullFromEnumerable)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqDistinctTest, DistinctFullEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct(Hash<int>(), Eq<int, int>());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+}
+
 TEST(XLinqDistinctTest, DistinctFullFromBidirectionalEnumerable)
 {
 	list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
@@ -190,6 +253,27 @@ TEST(XLinqDistinctByTest, DistinctByFromEnumerable)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqDistinctByTest, DistinctByEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct_by([](int a) { return a % 2; });
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+}
+
 TEST(XLinqDistinctByTest, DistinctByFromBidirectionalEnumerable)
 {
 	list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
@@ -223,6 +307,27 @@ TEST(XLinqDistinctByTest, DistinctByWithEqCompFromEnumerable)
 	ASSERT_FALSE(enumerator->next());
 }
 
+TEST(XLinqDistinctByTest, DistinctByWithEqCompEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct_by([](int a) { return a % 2; }, Eq<int, int>());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
+}
+
 TEST(XLinqDistinctByTest, DistinctByWithEqCompFromBidirectionalEnumerable)
 {
 	list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
@@ -254,6 +359,27 @@ TEST(XLinqDistinctByTest, DistinctByFullFromEnumerable)
 	ASSERT_TRUE(enumerator->next());
 	ASSERT_EQ(2, enumerator->current());
 	ASSERT_FALSE(enumerator->next());
+}
+
+TEST(XLinqDistinctByTest, DistinctByFullEnumerable_CloneAndEqualsEnumeratorTest)
+{
+	forward_list<int> numbers = { 1, 1, 2, 2, 2, 3, 4, 4, 5 };
+	auto enumerable = from(numbers) >> distinct_by([](int a) { return a % 2; }, Hash<int>(), Eq<int, int>());
+	auto enumerator = enumerable >> getEnumerator();
+
+	ASSERT_TRUE(enumerator->next());
+	auto second = enumerator->clone();
+	ASSERT_TRUE(enumerator->equals(second));
+	ASSERT_TRUE(enumerator->next());
+	ASSERT_FALSE(enumerator->equals(second));
+	ASSERT_EQ(2, enumerator->current());
+	ASSERT_EQ(1, second->current());
+
+	while (enumerator->next());
+
+	ASSERT_EQ(1, second->current());
+	ASSERT_TRUE(second->next());
+	ASSERT_EQ(2, second->current());
 }
 
 TEST(XLinqDistinctByTest, DistinctByFullFromBidirectionalEnumerable)
