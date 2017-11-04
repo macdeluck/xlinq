@@ -84,21 +84,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>To start use xlinq you need only download code, add the include folder to your include path and voila!</p>
 <p>Here you may see some examples how to use xlinq:</p>
 <p>Iterate over array: </p>
-<p><code> int numbers[] = { 1, 2, 3, 4, 5 };<br/>
+<p><code> #include "xlinq/all.h"</code></p>
+<p><code>int numbers[] = { 1, 2, 3, 4, 5 };<br/>
  for (auto it = from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; <a class="el" href="namespacexlinq.html#a29c51dfbb405e91dbf589ba4864d700c" title="Function extracting enumerator from enumerable. ">getEnumerator()</a>; it-&gt;next();)<br/>
  {<br/>
  &#160; std::cout &lt;&lt; it-&gt;current() &lt;&lt; " ";<br/>
  }<br/>
  // Result: 2 4 6 8 10 <br/>
  </code></p>
+<p>or even: </p>
+<p><code> #include "xlinq/all.h"</code></p>
+<p><code>int numbers[] = { 1, 2, 3, 4, 5 };<br/>
+ for (auto val : from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; <a class="el" href="namespacexlinq.html#abca846a8e2bc4e36f0bb317552619b07" title="Converts IEnumerable to STL-like container. ">stl()</a>)<br/>
+ {<br/>
+ &#160; std::cout &lt;&lt; val &lt;&lt; " ";<br/>
+ }<br/>
+ // Result: 2 4 6 8 10 <br/>
+ </code></p>
 <p>Returning last element of vector:</p>
-<p><code> std::vector&lt;std::string&gt; vec = { "Eeny", "Meeny", "Miny", "Moe" };<br/>
+<p><code> #include "xlinq/all.h"</code></p>
+<p><code>std::vector&lt;std::string&gt; vec = { "Eeny", "Meeny", "Miny", "Moe" };<br/>
  auto lastOne = from(vec) &gt;&gt; <a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590" title="Extracts last element of collection. ">last()</a>;<br/>
  std::cout &lt;&lt; lastOne;<br/>
  // Result: Moe <br/>
  </code></p>
 <p>Returning enumerable from other function: </p>
-<p><code> std::shared_ptr&lt;IEnumerable&lt;size_t&gt;&gt; nameLengths()<br/>
+<p><code> #include "xlinq/all.h"</code></p>
+<p><code>std::shared_ptr&lt;IEnumerable&lt;size_t&gt;&gt; nameLengths()<br/>
  {<br/>
  &#160; std::vector&lt;std::string&gt; vec = { "Ken", "John", "David", "Thomas", "Richard" };<br/>
  &#160; return from(vec) &gt;&gt; select([](std::string name) { return name.size(); }) &gt;&gt; <a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b" title="Gathers elements of collection. ">gather()</a>;<br/>
@@ -113,6 +125,55 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  }<br/>
  // Result: 3 4 5 6 7 <br/>
  </code></p>
+<h1>Supported operations:</h1>
+<ul>
+<li><a class="el" href="namespacexlinq.html#a1e21281b58fabf0108275722e80b0785" title="Aggregates collection elements using given function. ">aggregate()</a></li>
+<li><a class="el" href="namespacexlinq.html#a7522bac658e1e418b98d363394d41876" title="Checks if all collection elements satysfy given condition. ">all()</a></li>
+<li><a class="el" href="namespacexlinq.html#a31ec2f776e1e1cf47cba4caf3c3f8a92" title="Checks if collection contains any element. ">any()</a></li>
+<li><a class="el" href="namespacexlinq.html#af95766c1fee43377ae641827f6453584" title="Calculates average value of collection elements. ">avg()</a></li>
+<li><a class="el" href="namespacexlinq.html#a4334e89a57a62a0fb827ab027bb54795" title="Function concatenating array with other enumerable into single collection. ">concat()</a></li>
+<li><a class="el" href="namespacexlinq.html#a9ec31d8cf9c65eb9f1b5065f7f28bd68" title="Returns number of elements in collection. ">count()</a></li>
+<li><a class="el" href="namespacexlinq.html#ae7ea3e14346bf47a9ec0f1291b0a447c" title="Filters unique elements from collection. ">distinct()</a></li>
+<li><a class="el" href="namespacexlinq.html#ab8b4455f5387f6bb2a06696ce3da7676" title="Filters unique elements from collection by given selector. ">distinct_by()</a></li>
+<li><a class="el" href="namespacexlinq.html#aa6951a4d487d915b4a1e5f1bd3d9c930" title="Extracts element at given index. ">element_at()</a></li>
+<li><a class="el" href="namespacexlinq.html#a76025ea5baeacd05026549215a379a2b" title="Extracts element at given index or returns default value if it is out of range. ">element_at_or_default()</a></li>
+<li><a class="el" href="namespacexlinq.html#ac4934fd57e65f73ac6f582462d7e0eab" title="Filters elements skipping those which were passed in container. ">except()</a></li>
+<li><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660" title="Extracts first element of collection. ">first()</a></li>
+<li><a class="el" href="namespacexlinq.html#a3ab2e8b1345af67bcf3ca417ec675106" title="Extracts first element of collection or returns provided default element. ">first_or_default()</a></li>
+<li><a class="el" href="namespacexlinq.html#a96961d816001f1a21a3de8483297b6b4" title="Creates enumerable from any dimension fixed size array. ">from_array()</a></li>
+<li><a class="el" href="namespacexlinq.html#aa014597a96853a8eb464f63a8e2560db" title="Creates enumerable from fixed size array. ">from()</a></li>
+<li><a class="el" href="namespacexlinq.html#ad8c906f78dfc6d4f875df1328acc010b" title="Gathers elements of collection. ">gather()</a></li>
+<li><a class="el" href="namespacexlinq.html#a5c7e04d87e3e2a92946119643a8a1b20" title="Gathers elements of collection while manually executing iteration. ">lazy_gather()</a></li>
+<li><a class="el" href="namespacexlinq.html#a45a4531c6d8f5ed93d81082d2318f9b9" title="Groups elements by common key. ">group_by()</a></li>
+<li><a class="el" href="namespacexlinq.html#a0e4ab6730f4bc732b61468003a2e7661" title="Filters elements skipping those which were not passed in container. ">intersect()</a></li>
+<li><a class="el" href="namespacexlinq.html#a8b3d981235b61d0edadcb029b2dd67f9" title="Correlates elements of two collections by common key. ">join()</a></li>
+<li><a class="el" href="namespacexlinq.html#a73c0c48c2ddd55173be4d492f7b72590" title="Extracts last element of collection. ">last()</a></li>
+<li><a class="el" href="namespacexlinq.html#aaaaa06b72fce6c574d114e5f8b3f370a" title="Extracts last element of collection or returns provided default element. ">last_or_default()</a></li>
+<li><a class="el" href="namespacexlinq.html#aca02e5a16b47e079ee3df711e037da43" title="Extracts maximum element of collection. ">max()</a></li>
+<li><a class="el" href="namespacexlinq.html#a8e27897b54000004b14067939caae6e7" title="Extracts minimal element of collection. ">min()</a></li>
+<li><a class="el" href="namespacexlinq.html#ad34b8077cab181bfa76791f8f56cae88" title="Reversees order of collection elements. ">reverse()</a></li>
+<li><a class="el" href="namespacexlinq.html#ab738e44970df0cc013b01175278396ff" title="Converts collection elements from one form to another. ">select()</a></li>
+<li><a class="el" href="namespacexlinq.html#a56fb6711f909024ee9f1b37f006858ad" title="Flattens collection by concatenating subelements of original collection. ">select_many()</a></li>
+<li><a class="el" href="namespacexlinq.html#a606abd3916c1b266c38c971b1d8cf817" title="Checks if collection elements sequence is equal. ">sequence_equals()</a></li>
+<li><a class="el" href="namespacexlinq.html#afc1ef7add9029ca553a353fd2fdeee79" title="Skips collection elements until first element not satisfying predicate occurs. ">skip_while()</a></li>
+<li><a class="el" href="namespacexlinq.html#a602e7473f6175415bcc40e7a67371fb6" title="Shortens collection by skipping specified number of elements from beginning of collection. ">skip()</a></li>
+<li><a class="el" href="namespacexlinq.html#af0e630334a679273d52c7c22ae1b4b87" title="Performs stable sort on collection. ">sort()</a></li>
+<li><a class="el" href="namespacexlinq.html#abca846a8e2bc4e36f0bb317552619b07" title="Converts IEnumerable to STL-like container. ">stl()</a></li>
+<li><a class="el" href="namespacexlinq.html#ac2fbddf94d11626d8f1fd76523883235" title="Calculates sum of collection elements. ">sum()</a></li>
+<li><a class="el" href="namespacexlinq.html#a8dfa8f864cc568360d08fac8c4ea2f1c" title="Allows to enumerate collection as long as given condition holds. ">take_while()</a></li>
+<li><a class="el" href="namespacexlinq.html#aa19bdc33eb3e8cdb940293862103a9fb" title="Shortens collection to have specified maximum elements. ">take()</a></li>
+<li><a class="el" href="namespacexlinq.html#a99dd8a5c66f3cb3e53f32904f8f223c0" title="Converts IEnumerable to STL vector. ">to_vector()</a></li>
+<li><a class="el" href="namespacexlinq.html#aa34215e5b7829e83a35b056acfb5e679" title="Converts IEnumerable to STL list. ">to_list()</a></li>
+<li><a class="el" href="namespacexlinq.html#ad51ebec70f405119bd1d08c9ed0dee02" title="Converts IEnumerable to STL forward list. ">to_forward_list()</a></li>
+<li><a class="el" href="namespacexlinq.html#aabbedc565d4ee4684d7de4be433e7ba9" title="Converts IEnumerable to STL set. ">to_set()</a></li>
+<li><a class="el" href="namespacexlinq.html#abcdd2ce095954ec65c03fa0a710ce1ae" title="Converts IEnumerable to STL multiset. ">to_multiset()</a></li>
+<li><a class="el" href="namespacexlinq.html#ade051e404b7e2fe37054bcf5c7f3a777" title="Converts IEnumerable to STL map. ">to_map()</a></li>
+<li><a class="el" href="namespacexlinq.html#a27e50bf86f8346c0673c1fe99b21f690" title="Converts IEnumerable to STL unordered set. ">to_unordered_set()</a></li>
+<li><a class="el" href="namespacexlinq.html#a7b85be5103cd8855d652e17613e4e82c" title="Converts IEnumerable to STL unordered multiset. ">to_unordered_multiset()</a></li>
+<li><a class="el" href="namespacexlinq.html#ac35cc8be775284511493c8f7f3edc71e" title="Converts IEnumerable to STL unordered map. ">to_unordered_map()</a></li>
+<li><a class="el" href="namespacexlinq.html#a7b78b3277b650aba66f9de8a695f59f1" title="Filters elements skipping those which were not passed in container. ">union_with()</a></li>
+<li><a class="el" href="namespacexlinq.html#a439f2d6992edc6ceb1d4457168f7d7b7" title="Filters elements of collection using predicate. ">where()</a> </li>
+</ul>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->

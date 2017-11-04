@@ -12,6 +12,8 @@ Here you may see some examples how to use xlinq:
 
 Iterate over array:
 ```C++
+#include "xlinq/all.h"
+
 int numbers[] = { 1, 2, 3, 4, 5 };
 for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumerator(); it->next();)
 {
@@ -20,9 +22,24 @@ for (auto it = from(numbers) >> select([](int n){ return n * 2; }) >> getEnumera
 /* Result: 2 4 6 8 10 */
 ```
 
+or even:
+
+```C++
+#include "xlinq/all.h"
+
+int numbers[] = { 1, 2, 3, 4, 5 };
+for (auto val : from(numbers) >> select([](int n){ return n * 2; }) >> stl())
+{
+    std::cout << val << " ";
+}
+/* Result: 2 4 6 8 10 */
+```
+
 Returning last element of vector:
 
 ```C++
+#include "xlinq/all.h"
+
 std::vector<std::string> vec = { "Eeny", "Meeny", "Miny", "Moe" };
 auto lastOne = from(vec) >> last();
 std::cout << lastOne;
@@ -31,6 +48,8 @@ std::cout << lastOne;
 
 Returning enumerable from other function:
 ```C++
+#include "xlinq/all.h"
+
 std::shared_ptr<IEnumerable<size_t>> nameLengths()
 {
     std::vector<std::string> vec = { "Ken", "John", "David", "Thomas", "Richard" };
@@ -46,3 +65,52 @@ void printNameLengths()
 }
 /* Result: 3 4 5 6 7 */
 ```
+
+# Supported operations:
+
+* aggregate()
+* all()
+* any()
+* avg()
+* concat()
+* count()
+* distinct()
+* distinct_by()
+* element_at()
+* element_at_or_default()
+* except()
+* first()
+* first_or_default()
+* from_array()
+* from()
+* gather()
+* lazy_gather()
+* group_by()
+* intersect()
+* join()
+* last()
+* last_or_default()
+* max()
+* min()
+* reverse()
+* select()
+* select_many()
+* sequence_equals()
+* skip_while()
+* skip()
+* sort()
+* stl()
+* sum()
+* take_while()
+* take()
+* to_vector()
+* to_list()
+* to_forward_list()
+* to_set()
+* to_multiset()
+* to_map()
+* to_unordered_set()
+* to_unordered_multiset()
+* to_unordered_map()
+* union_with()
+* where()

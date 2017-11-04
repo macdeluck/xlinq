@@ -8,6 +8,8 @@ Here you may see some examples how to use xlinq:
 
 Iterate over array:
 <p><code>
+#include "xlinq/all.h"
+
 int numbers[] = { 1, 2, 3, 4, 5 };<br/>
 for (auto it = from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; getEnumerator(); it-&gt;next();)<br/>
 {<br/>
@@ -16,9 +18,23 @@ for (auto it = from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt
 // Result: 2 4 6 8 10 <br/>
 </code></p>
 
+or even:
+<p><code>
+#include "xlinq/all.h"
+
+int numbers[] = { 1, 2, 3, 4, 5 };<br/>
+for (auto val : from(numbers) &gt;&gt; select([](int n){ return n * 2; }) &gt;&gt; stl())<br/>
+{<br/>
+&nbsp; std::cout &lt;&lt; val &lt;&lt; " ";<br/>
+}<br/>
+// Result: 2 4 6 8 10 <br/>
+</code></p>
+
 Returning last element of vector:
 
 <p><code>
+#include "xlinq/all.h"
+
 std::vector&lt;std::string&gt; vec = { "Eeny", "Meeny", "Miny", "Moe" };<br/>
 auto lastOne = from(vec) &gt;&gt; last();<br/>
 std::cout &lt;&lt; lastOne;<br/>
@@ -27,6 +43,8 @@ std::cout &lt;&lt; lastOne;<br/>
 
 Returning enumerable from other function:
 <p><code>
+#include "xlinq/all.h"
+
 std::shared_ptr&lt;IEnumerable&lt;size_t&gt;&gt; nameLengths()<br/>
 {<br/>
 &nbsp; std::vector&lt;std::string&gt; vec = { "Ken", "John", "David", "Thomas", "Richard" };<br/>
@@ -42,3 +60,52 @@ void printNameLengths()<br/>
 }<br/>
 // Result: 3 4 5 6 7 <br/>
 </code></p>
+
+# Supported operations:
+
+* aggregate()
+* all()
+* any()
+* avg()
+* concat()
+* count()
+* distinct()
+* distinct_by()
+* element_at()
+* element_at_or_default()
+* except()
+* first()
+* first_or_default()
+* from_array()
+* from()
+* gather()
+* lazy_gather()
+* group_by()
+* intersect()
+* join()
+* last()
+* last_or_default()
+* max()
+* min()
+* reverse()
+* select()
+* select_many()
+* sequence_equals()
+* skip_while()
+* skip()
+* sort()
+* stl()
+* sum()
+* take_while()
+* take()
+* to_vector()
+* to_list()
+* to_forward_list()
+* to_set()
+* to_multiset()
+* to_map()
+* to_unordered_set()
+* to_unordered_multiset()
+* to_unordered_map()
+* union_with()
+* where()
