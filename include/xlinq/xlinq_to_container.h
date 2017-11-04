@@ -31,9 +31,13 @@ SOFTWARE.
 
 #include "xlinq_base.h"
 #include "xlinq_stl.h"
+#include "xlinq_select.h"
+#include <utility>
 #include <vector>
 #include <list>
 #include <forward_list>
+#include <set>
+#include <map>
 
 namespace xlinq
 {
@@ -114,6 +118,191 @@ namespace xlinq
 				return std::forward_list<TElem>(container.begin(), container.end());
 			}
 		};
+
+		class _ToSetBuilder
+		{
+		public:
+			template<typename TElem>
+			std::set<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::set<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::set<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem>(container.begin(), container.end());
+			}
+		};
+
+		template<typename TLess>
+		class _ToSetWithLessBuilder
+		{
+		private:
+			TLess _less;
+		public:
+			_ToSetWithLessBuilder(TLess less) : _less(less) {}
+
+			template<typename TElem>
+			std::set<TElem, TLess> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			std::set<TElem, TLess> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			std::set<TElem, TLess> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::set<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+		};
+
+		class _ToMultiSetBuilder
+		{
+		public:
+			template<typename TElem>
+			std::multiset<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::multiset<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::multiset<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem>(container.begin(), container.end());
+			}
+		};
+
+		template<typename TLess>
+		class _ToMultiSetWithLessBuilder
+		{
+		private:
+			TLess _less;
+		public:
+			_ToMultiSetWithLessBuilder(TLess less) : _less(less) {}
+
+			template<typename TElem>
+			std::multiset<TElem, TLess> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			std::multiset<TElem, TLess> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			std::multiset<TElem, TLess> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::multiset<TElem, TLess>(container.begin(), container.end(), _less);
+			}
+		};
+
+		template<typename TKeySelector, typename TValueSelector>
+		class _ToMapBuilder
+		{
+		private:
+			TKeySelector _keySelector;
+			TValueSelector _valueSelector;
+		public:
+			_ToMapBuilder(TKeySelector keySelector, TValueSelector valueSelector) : _keySelector(keySelector), _valueSelector(valueSelector) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue>(container.begin(), container.end());
+			}
+		};
+
+		template<typename TKeySelector, typename TValueSelector, typename TLess>
+		class _ToMapWithLessBuilder
+		{
+		private:
+			TKeySelector _keySelector;
+			TValueSelector _valueSelector;
+			TLess _less;
+		public:
+			_ToMapWithLessBuilder(TKeySelector keySelector, TValueSelector valueSelector, TLess less) : _keySelector(keySelector), _valueSelector(valueSelector), _less(less) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, TLess>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, TLess>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue, TLess>(container.begin(), container.end(), _less);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, TLess>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::map<TKey, TValue, TLess>(container.begin(), container.end(), _less);
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -145,6 +334,77 @@ namespace xlinq
 	XLINQ_INLINE internal::_ToForwardListBuilder to_forward_list()
 	{
 		return internal::_ToForwardListBuilder();
+	}
+
+	/**
+	*	Converts IEnumerable to STL set.
+	*	This function allows to gather all enumerable elements to STL set.
+	*	@return to_set expression builder
+	*/
+	XLINQ_INLINE internal::_ToSetBuilder to_set()
+	{
+		return internal::_ToSetBuilder();
+	}
+
+	/**
+	*	Converts IEnumerable to STL set with specified comparer.
+	*	This function allows to gather all enumerable elements to STL set.
+	*	@param less Less than comparer.
+	*	@return to_set expression builder
+	*/
+	template<typename TLess>
+	XLINQ_INLINE internal::_ToSetWithLessBuilder<TLess> to_set(TLess less)
+	{
+		return internal::_ToSetWithLessBuilder<TLess>(less);
+	}
+
+	/**
+	*	Converts IEnumerable to STL multiset.
+	*	This function allows to gather all enumerable elements to STL multiset.
+	*	@return to_multiset expression builder
+	*/
+	XLINQ_INLINE internal::_ToMultiSetBuilder to_multiset()
+	{
+		return internal::_ToMultiSetBuilder();
+	}
+
+	/**
+	*	Converts IEnumerable to STL multiset with specified comparer.
+	*	This function allows to gather all enumerable elements to STL multiset.
+	*	@param less Less than comparer.
+	*	@return to_multiset expression builder
+	*/
+	template<typename TLess>
+	XLINQ_INLINE internal::_ToMultiSetWithLessBuilder<TLess> to_multiset(TLess less)
+	{
+		return internal::_ToMultiSetWithLessBuilder<TLess>(less);
+	}
+
+	/**
+	*	Converts IEnumerable to STL map.
+	*	This function allows to gather all enumerable elements to STL map.
+	*	@param keySelector selector of key from element
+	*	@param valueSelector selector of value from element
+	*	@return to_map expression builder
+	*/
+	template<typename TKeySelector, typename TValueSelector>
+	XLINQ_INLINE internal::_ToMapBuilder<TKeySelector, TValueSelector> to_map(TKeySelector keySelector, TValueSelector valueSelector)
+	{
+		return internal::_ToMapBuilder<TKeySelector, TValueSelector>(keySelector, valueSelector);
+	}
+
+	/**
+	*	Converts IEnumerable to STL map with specified comparer.
+	*	This function allows to gather all enumerable elements to STL map.
+	*	@param keySelector selector of key from element
+	*	@param valueSelector selector of value from element
+	*	@param less Less than comparer.
+	*	@return to_map expression builder
+	*/
+	template<typename TKeySelector, typename TValueSelector, typename TLess>
+	XLINQ_INLINE internal::_ToMapWithLessBuilder<TKeySelector, TValueSelector, TLess> to_map(TKeySelector keySelector, TValueSelector valueSelector, TLess less)
+	{
+		return internal::_ToMapWithLessBuilder<TKeySelector, TValueSelector, TLess>(keySelector, valueSelector, less);
 	}
 }
 
