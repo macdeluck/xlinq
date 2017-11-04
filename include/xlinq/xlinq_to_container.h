@@ -38,6 +38,8 @@ SOFTWARE.
 #include <forward_list>
 #include <set>
 #include <map>
+#include <unordered_set>
+#include <unordered_map>
 
 namespace xlinq
 {
@@ -303,6 +305,199 @@ namespace xlinq
 				return std::map<TKey, TValue, TLess>(container.begin(), container.end(), _less);
 			}
 		};
+
+		class _ToUnorderedSetBuilder
+		{
+		public:
+			template<typename TElem>
+			std::unordered_set<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::unordered_set<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::unordered_set<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem>(container.begin(), container.end());
+			}
+		};
+
+		template<typename THasher, typename TEqComp>
+		class _ToUnorderedSetFullBuilder
+		{
+		private:
+			const int default_buckets = 8;
+			THasher _hasher;
+			TEqComp _eqComp;
+
+		public:
+			_ToUnorderedSetFullBuilder(THasher hasher, TEqComp eqComp) : _hasher(hasher), _eqComp(eqComp) {}
+
+			template<typename TElem>
+			std::unordered_set<TElem, THasher, TEqComp> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			std::unordered_set<TElem, THasher, TEqComp> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			std::unordered_set<TElem, THasher, TEqComp> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_set<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+		};
+
+		class _ToUnorderedMultiSetBuilder
+		{
+		public:
+			template<typename TElem>
+			std::unordered_multiset<TElem> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::unordered_multiset<TElem> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			std::unordered_multiset<TElem> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem>(container.begin(), container.end());
+			}
+		};
+
+		template<typename THasher, typename TEqComp>
+		class _ToUnorderedMultiSetFullBuilder
+		{
+		private:
+			const int default_buckets = 8;
+			THasher _hasher;
+			TEqComp _eqComp;
+
+		public:
+			_ToUnorderedMultiSetFullBuilder(THasher hasher, TEqComp eqComp) : _hasher(hasher), _eqComp(eqComp) {}
+
+			template<typename TElem>
+			std::unordered_multiset<TElem, THasher, TEqComp> build(std::shared_ptr<IEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			std::unordered_multiset<TElem, THasher, TEqComp> build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			std::unordered_multiset<TElem, THasher, TEqComp> build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable)
+			{
+				auto container = enumerable >> stl();
+				return std::unordered_multiset<TElem, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+		};
+
+		template<typename TKeySelector, typename TValueSelector>
+		class _ToUnorderedMapBuilder
+		{
+		private:
+			TKeySelector _keySelector;
+			TValueSelector _valueSelector;
+		public:
+			_ToUnorderedMapBuilder(TKeySelector keySelector, TValueSelector valueSelector) : _keySelector(keySelector), _valueSelector(valueSelector) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue>(container.begin(), container.end());
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue>(container.begin(), container.end());
+			}
+		};
+
+		template<typename TKeySelector, typename TValueSelector, typename THasher, typename TEqComp>
+		class _ToUnorderedMapFullBuilder
+		{
+		private:
+			const int default_buckets = 8;
+			TKeySelector _keySelector;
+			TValueSelector _valueSelector;
+			THasher _hasher;
+			TEqComp _eqComp;
+		public:
+			_ToUnorderedMapFullBuilder(TKeySelector keySelector, TValueSelector valueSelector, THasher hasher, TEqComp eqComp) : _keySelector(keySelector), _valueSelector(valueSelector), _hasher(hasher), _eqComp(eqComp) {}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, THasher, TEqComp>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IBidirectionalEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, THasher, TEqComp>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+
+			template<typename TElem>
+			auto build(std::shared_ptr<IRandomAccessEnumerable<TElem>> enumerable) -> std::unordered_map<typename unaryreturntype<TKeySelector, TElem>::type, typename unaryreturntype<TValueSelector, TElem>::type, THasher, TEqComp>
+			{
+				typedef typename unaryreturntype<TKeySelector, TElem>::type TKey;
+				typedef typename unaryreturntype<TValueSelector, TElem>::type TValue;
+				auto container = enumerable >> select([this](TElem val) { return std::pair<TKey, TValue>(this->_keySelector(val), this->_valueSelector(val)); }) >> stl();
+				return std::unordered_map<TKey, TValue, THasher, TEqComp>(container.begin(), container.end(), default_buckets, _hasher, _eqComp);
+			}
+		};
 	}
 	/*@endcond*/
 
@@ -405,6 +600,80 @@ namespace xlinq
 	XLINQ_INLINE internal::_ToMapWithLessBuilder<TKeySelector, TValueSelector, TLess> to_map(TKeySelector keySelector, TValueSelector valueSelector, TLess less)
 	{
 		return internal::_ToMapWithLessBuilder<TKeySelector, TValueSelector, TLess>(keySelector, valueSelector, less);
+	}
+
+	/**
+	*	Converts IEnumerable to STL unordered set.
+	*	This function allows to gather all enumerable elements to STL unordered set.
+	*	@return to_unordered_set expression builder
+	*/
+	XLINQ_INLINE internal::_ToUnorderedSetBuilder to_unordered_set()
+	{
+		return internal::_ToUnorderedSetBuilder();
+	}
+
+	/**
+	*	Converts IEnumerable to STL unordered set with specified hasher and comparer.
+	*	This function allows to gather all enumerable elements to STL unordered set.
+	*	@param hasher Hasher of elements.
+	*	@param comparer Equality comparer of elements.
+	*	@return to_unordered_set expression builder
+	*/
+	template<typename THasher, typename TEqComp>
+	XLINQ_INLINE internal::_ToUnorderedSetFullBuilder<THasher, TEqComp> to_unordered_set(THasher hasher, TEqComp comparer)
+	{
+		return internal::_ToUnorderedSetFullBuilder<THasher, TEqComp>(hasher, comparer);
+	}
+
+	/**
+	*	Converts IEnumerable to STL unordered multiset.
+	*	This function allows to gather all enumerable elements to STL unordered multiset.
+	*	@return to_unordered_multiset expression builder
+	*/
+	XLINQ_INLINE internal::_ToUnorderedMultiSetBuilder to_unordered_multiset()
+	{
+		return internal::_ToUnorderedMultiSetBuilder();
+	}
+
+	/**
+	*	Converts IEnumerable to STL unordered multiset with specified hasher and comparer.
+	*	This function allows to gather all enumerable elements to STL unordered multiset.
+	*	@param hasher Hasher of elements.
+	*	@param comparer Equality comparer of elements.
+	*	@return to_unordered_multiset expression builder
+	*/
+	template<typename THasher, typename TEqComp>
+	XLINQ_INLINE internal::_ToUnorderedMultiSetFullBuilder<THasher, TEqComp> to_unordered_multiset(THasher hasher, TEqComp comparer)
+	{
+		return internal::_ToUnorderedMultiSetFullBuilder<THasher, TEqComp>(hasher, comparer);
+	}
+
+	/**
+	*	Converts IEnumerable to STL unordered map.
+	*	This function allows to gather all enumerable elements to STL unordered map.
+	*	@param keySelector selector of key from element
+	*	@param valueSelector selector of value from element
+	*	@return to_unordered_map expression builder
+	*/
+	template<typename TKeySelector, typename TValueSelector>
+	XLINQ_INLINE internal::_ToUnorderedMapBuilder<TKeySelector, TValueSelector> to_unordered_map(TKeySelector keySelector, TValueSelector valueSelector)
+	{
+		return internal::_ToUnorderedMapBuilder<TKeySelector, TValueSelector>(keySelector, valueSelector);
+	}
+
+	/**
+	*	Converts IEnumerable to STL map with specified comparer.
+	*	This function allows to gather all enumerable elements to STL map.
+	*	@param keySelector selector of key from element
+	*	@param valueSelector selector of value from element
+	*	@param hasher Hasher of elements.
+	*	@param comparer Equality comparer of elements.
+	*	@return to_unordered_map expression builder
+	*/
+	template<typename TKeySelector, typename TValueSelector, typename THasher, typename TEqComp>
+	XLINQ_INLINE internal::_ToUnorderedMapFullBuilder<TKeySelector, TValueSelector, THasher, TEqComp> to_unordered_map(TKeySelector keySelector, TValueSelector valueSelector, THasher hasher, TEqComp comparer)
+	{
+		return internal::_ToUnorderedMapFullBuilder<TKeySelector, TValueSelector, THasher, TEqComp>(keySelector, valueSelector, hasher, comparer);
 	}
 }
 
