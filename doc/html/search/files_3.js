@@ -22,6 +22,7 @@ var searchData=
   ['xlinq_5ffrom_5fenumerable_2eh',['xlinq_from_enumerable.h',['../xlinq__from__enumerable_8h.html',1,'']]],
   ['xlinq_5fgather_2eh',['xlinq_gather.h',['../xlinq__gather_8h.html',1,'']]],
   ['xlinq_5fgroup_5fby_2eh',['xlinq_group_by.h',['../xlinq__group__by_8h.html',1,'']]],
+  ['xlinq_5fintersect_2eh',['xlinq_intersect.h',['../xlinq__intersect_8h.html',1,'']]],
   ['xlinq_5fjoin_2eh',['xlinq_join.h',['../xlinq__join_8h.html',1,'']]],
   ['xlinq_5flast_2eh',['xlinq_last.h',['../xlinq__last_8h.html',1,'']]],
   ['xlinq_5flookup_2eh',['xlinq_lookup.h',['../xlinq__lookup_8h.html',1,'']]],

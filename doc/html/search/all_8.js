@@ -5,6 +5,7 @@ var searchData=
   ['ienumerable',['IEnumerable',['../classxlinq_1_1IEnumerable.html',1,'xlinq']]],
   ['ienumerator',['IEnumerator',['../classxlinq_1_1IEnumerator.html',1,'xlinq']]],
   ['igrouping',['IGrouping',['../classxlinq_1_1IGrouping.html',1,'xlinq']]],
+  ['intersect',['intersect',['../namespacexlinq.html#a0e4ab6730f4bc732b61468003a2e7661',1,'xlinq::intersect(TContainer container)'],['../namespacexlinq.html#ace7c6d715e7dbddd864cbf7d13fe1dcf',1,'xlinq::intersect(TContainer container, TComparer comparer)'],['../namespacexlinq.html#aac6af2c645769382ea3450e83a5975a0',1,'xlinq::intersect(TContainer container, THasher hasher, TComparer comparer)']]],
   ['irandomaccessenumerable',['IRandomAccessEnumerable',['../classxlinq_1_1IRandomAccessEnumerable.html',1,'xlinq']]],
   ['irandomaccessenumerator',['IRandomAccessEnumerator',['../classxlinq_1_1IRandomAccessEnumerator.html',1,'xlinq']]],
   ['iterationfinishedexception',['IterationFinishedException',['../classxlinq_1_1IterationFinishedException.html',1,'xlinq']]],

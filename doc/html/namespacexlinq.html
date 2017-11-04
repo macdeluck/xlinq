@@ -395,6 +395,25 @@ internal::_GroupByResultBuilderWithHashAndEqComp<br class="typebreak"/>
 THasher, TEqComp &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ae4f9282e112a988ef774942efbd081f0">group_by</a> (TKeySelector keySelector, TSelector selector, THasher hasher, TEqComp eqComp)</td></tr>
 <tr class="memdesc:ae4f9282e112a988ef774942efbd081f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups elements by common key with specified key hasher and equality comparer.  <a href="#ae4f9282e112a988ef774942efbd081f0">More...</a><br/></td></tr>
 <tr class="separator:ae4f9282e112a988ef774942efbd081f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e4ab6730f4bc732b61468003a2e7661"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:a0e4ab6730f4bc732b61468003a2e7661"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_IntersectBuilder<br class="typebreak"/>
+&lt; TContainer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a0e4ab6730f4bc732b61468003a2e7661">intersect</a> (TContainer container)</td></tr>
+<tr class="memdesc:a0e4ab6730f4bc732b61468003a2e7661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container.  <a href="#a0e4ab6730f4bc732b61468003a2e7661">More...</a><br/></td></tr>
+<tr class="separator:a0e4ab6730f4bc732b61468003a2e7661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace7c6d715e7dbddd864cbf7d13fe1dcf"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename TComparer &gt; </td></tr>
+<tr class="memitem:ace7c6d715e7dbddd864cbf7d13fe1dcf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_IntersectBuilderWithEqCompBuilder<br class="typebreak"/>
+&lt; TContainer, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ace7c6d715e7dbddd864cbf7d13fe1dcf">intersect</a> (TContainer container, TComparer comparer)</td></tr>
+<tr class="memdesc:ace7c6d715e7dbddd864cbf7d13fe1dcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container using specified equality comparer.  <a href="#ace7c6d715e7dbddd864cbf7d13fe1dcf">More...</a><br/></td></tr>
+<tr class="separator:ace7c6d715e7dbddd864cbf7d13fe1dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6af2c645769382ea3450e83a5975a0"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename THasher , typename TComparer &gt; </td></tr>
+<tr class="memitem:aac6af2c645769382ea3450e83a5975a0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_IntersectBuilderFullBuilder<br class="typebreak"/>
+&lt; TContainer, THasher, <br class="typebreak"/>
+TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aac6af2c645769382ea3450e83a5975a0">intersect</a> (TContainer container, THasher hasher, TComparer comparer)</td></tr>
+<tr class="memdesc:aac6af2c645769382ea3450e83a5975a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were not passed in container using specified equality comparer and hasher.  <a href="#aac6af2c645769382ea3450e83a5975a0">More...</a><br/></td></tr>
+<tr class="separator:aac6af2c645769382ea3450e83a5975a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplParams" colspan="2">template&lt;typename TOuter , typename TKeySelector , typename TOuterKeySelector , typename TResultSelector &gt; </td></tr>
 <tr class="memitem:a8b3d981235b61d0edadcb029b2dd67f9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_JoinBuilder&lt; TOuter, <br class="typebreak"/>
@@ -1792,6 +1811,119 @@ template&lt;typename TKeySelector , typename TSelector , typename THasher , type
 <p>Groups elements by common key with specified key hasher and equality comparer. </p>
 <p>This function may be used to group elements by common key which is extracted from them by keySelector provided by user. Key must be hashable by specified hash function and comparable with specified equality comparer. See std::hash and std::equal_to for details. The grouping is transformed to form specified by user using selector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of group_by expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0e4ab6730f4bc732b61468003a2e7661"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_IntersectBuilder&lt;TContainer&gt; xlinq::intersect </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be equality comparable and hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of intersect expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ace7c6d715e7dbddd864cbf7d13fe1dcf"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_IntersectBuilderWithEqCompBuilder&lt;TContainer, TComparer&gt; xlinq::intersect </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container using specified equality comparer. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of intersect expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aac6af2c645769382ea3450e83a5975a0"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename THasher , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_IntersectBuilderFullBuilder&lt;TContainer, THasher, TComparer&gt; xlinq::intersect </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were not passed in container using specified equality comparer and hasher. </p>
+<p>This function may be used to create collection with unique set of elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">hasher</td><td>Functor used to hash elements. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of intersect expression. </dd></dl>
 
 </div>
 </div>
