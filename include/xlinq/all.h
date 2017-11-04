@@ -41,6 +41,7 @@ SOFTWARE.
 #include "xlinq_distinct.h"
 #include "xlinq_element_at.h"
 #include "xlinq_enumerable.h"
+#include "xlinq_except.h"
 #include "xlinq_first.h"
 #include "xlinq_from_array.h"
 #include "xlinq_from_container.h"

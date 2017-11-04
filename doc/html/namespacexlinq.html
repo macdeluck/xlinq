@@ -285,6 +285,25 @@ internal::_ElementAtOrDefaultBuilder<br class="typebreak"/>
 &lt; TElem &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a76025ea5baeacd05026549215a379a2b">element_at_or_default</a> (int index, TElem defaultElem)</td></tr>
 <tr class="memdesc:a76025ea5baeacd05026549215a379a2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts element at given index or returns default value if it is out of range.  <a href="#a76025ea5baeacd05026549215a379a2b">More...</a><br/></td></tr>
 <tr class="separator:a76025ea5baeacd05026549215a379a2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4934fd57e65f73ac6f582462d7e0eab"><td class="memTemplParams" colspan="2">template&lt;typename TContainer &gt; </td></tr>
+<tr class="memitem:ac4934fd57e65f73ac6f582462d7e0eab"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ExceptBuilder<br class="typebreak"/>
+&lt; TContainer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#ac4934fd57e65f73ac6f582462d7e0eab">except</a> (TContainer container)</td></tr>
+<tr class="memdesc:ac4934fd57e65f73ac6f582462d7e0eab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were passed in container.  <a href="#ac4934fd57e65f73ac6f582462d7e0eab">More...</a><br/></td></tr>
+<tr class="separator:ac4934fd57e65f73ac6f582462d7e0eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4139daf6045dd2e912286907ff0d5d2"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename TComparer &gt; </td></tr>
+<tr class="memitem:aa4139daf6045dd2e912286907ff0d5d2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ExceptBuilderWithEqCompBuilder<br class="typebreak"/>
+&lt; TContainer, TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#aa4139daf6045dd2e912286907ff0d5d2">except</a> (TContainer container, TComparer comparer)</td></tr>
+<tr class="memdesc:aa4139daf6045dd2e912286907ff0d5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were passed in container using specified equality comparer.  <a href="#aa4139daf6045dd2e912286907ff0d5d2">More...</a><br/></td></tr>
+<tr class="separator:aa4139daf6045dd2e912286907ff0d5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd7ce77b6da78b2cf6720b7698089618"><td class="memTemplParams" colspan="2">template&lt;typename TContainer , typename THasher , typename TComparer &gt; </td></tr>
+<tr class="memitem:afd7ce77b6da78b2cf6720b7698089618"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
+internal::_ExceptBuilderFullBuilder<br class="typebreak"/>
+&lt; TContainer, THasher, <br class="typebreak"/>
+TComparer &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#afd7ce77b6da78b2cf6720b7698089618">except</a> (TContainer container, THasher hasher, TComparer comparer)</td></tr>
+<tr class="memdesc:afd7ce77b6da78b2cf6720b7698089618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filters elements skipping those which were passed in container using specified equality comparer and hasher.  <a href="#afd7ce77b6da78b2cf6720b7698089618">More...</a><br/></td></tr>
+<tr class="separator:afd7ce77b6da78b2cf6720b7698089618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921234e8bf3e9579a5aa0a81700c5660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> <br class="typebreak"/>
 internal::_FirstBuilder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexlinq.html#a921234e8bf3e9579a5aa0a81700c5660">first</a> ()</td></tr>
 <tr class="memdesc:a921234e8bf3e9579a5aa0a81700c5660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts first element of collection.  <a href="#a921234e8bf3e9579a5aa0a81700c5660">More...</a><br/></td></tr>
@@ -1131,6 +1150,119 @@ template&lt;typename TElem &gt; </div>
 <p>Extracts element at given index or returns default value if it is out of range. </p>
 <p>This function may be used to extract element at given index. It will return defaultElem if specified index is out of range. </p>
 <dl class="section return"><dt>Returns</dt><dd>Builder of element_at_or_default expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac4934fd57e65f73ac6f582462d7e0eab"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ExceptBuilder&lt;TContainer&gt; xlinq::except </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were passed in container. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be equality comparable and hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of except expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa4139daf6045dd2e912286907ff0d5d2"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ExceptBuilderWithEqCompBuilder&lt;TContainer, TComparer&gt; xlinq::except </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were passed in container using specified equality comparer. </p>
+<p>This function may be used to create collection with unique set of elements. Elements should be hashable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of except expression. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afd7ce77b6da78b2cf6720b7698089618"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TContainer , typename THasher , typename TComparer &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="xlinq__defs_8h.html#a6318da9f1c33143464070eb48ed158b7">XLINQ_INLINE</a> internal::_ExceptBuilderFullBuilder&lt;TContainer, THasher, TComparer&gt; xlinq::except </td>
+          <td>(</td>
+          <td class="paramtype">TContainer&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">THasher&#160;</td>
+          <td class="paramname"><em>hasher</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TComparer&#160;</td>
+          <td class="paramname"><em>comparer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Filters elements skipping those which were passed in container using specified equality comparer and hasher. </p>
+<p>This function may be used to create collection with unique set of elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>Container with elements to skip. </td></tr>
+    <tr><td class="paramname">hasher</td><td>Functor used to hash elements. </td></tr>
+    <tr><td class="paramname">comparer</td><td>Functor used to compare elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Builder of except expression. </dd></dl>
 
 </div>
 </div>

@@ -11,6 +11,7 @@ var searchData=
   ['xlinq_5fdistinct_2eh',['xlinq_distinct.h',['../xlinq__distinct_8h.html',1,'']]],
   ['xlinq_5felement_5fat_2eh',['xlinq_element_at.h',['../xlinq__element__at_8h.html',1,'']]],
   ['xlinq_5fenumerable_2eh',['xlinq_enumerable.h',['../xlinq__enumerable_8h.html',1,'']]],
+  ['xlinq_5fexcept_2eh',['xlinq_except.h',['../xlinq__except_8h.html',1,'']]],
   ['xlinq_5fexception_2eh',['xlinq_exception.h',['../xlinq__exception_8h.html',1,'']]],
   ['xlinq_5ffirst_2eh',['xlinq_first.h',['../xlinq__first_8h.html',1,'']]],
   ['xlinq_5ffrom_2eh',['xlinq_from.h',['../xlinq__from_8h.html',1,'']]],
